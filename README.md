@@ -67,7 +67,7 @@ Also provide a short textual description of each concept (domain class).
 
 Example:
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2022-23/templates/blob/main/images/DomainModel.png"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/tree/main/images/DomainModel.png"/>
 </p>
 
 
