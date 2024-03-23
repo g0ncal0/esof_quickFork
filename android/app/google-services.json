@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "948297930183",
+    "project_id": "esof-kcfxqr",
+    "storage_bucket": "esof-kcfxqr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948297930183:android:5d38f69f43af15e2d075e2",
+        "android_client_info": {
+          "package_name": "com.esof.quickfork"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQAPQliv4n3hmHEh5_I9whynwoj4nVn0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
