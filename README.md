@@ -9,7 +9,6 @@ You can find here details about the QuickFork, from a high-level vision to low-l
   * [Features and Assumptions](#Features-and-Assumptions)
   * [Elevator Pitch](#Elevator-pitch)
 * [Requirements](#Requirements)
-  * [User stories](#User-stories)
   * [Domain model](#Domain-model)
 * [Architecture and Design](#Architecture-And-Design)
   * [Logical architecture](#Logical-Architecture)
@@ -77,13 +76,17 @@ Take a look at the following links to learn some techniques:
 
 ### Logical architecture
 
-![LogicalView](https://user-images.githubusercontent.com/9655877/160585416-b1278ad7-18d7-463c-b8c6-afa4f7ac7639.png)
+<p align="center" justify="center">
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/becca77738264bed0cfa3b8cc3a72b8dd9e52ebc/images/LogicalView.png?raw=true"/>
+</p>
 
 **Descrição aqui**
 
 ### Physical architecture
 
-![DeploymentView](https://user-images.githubusercontent.com/9655877/160592491-20e85af9-0758-4e1e-a704-0db1be3ee65d.png)
+<p align="center" justify="center">
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/becca77738264bed0cfa3b8cc3a72b8dd9e52ebc/images/DeploymentView.png?raw=true"/>
+</p>
 
 **Descrição aqui**
 
