@@ -66,7 +66,7 @@ Take a look at the following links to learn some techniques:
 ### Domain model
 
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/41f3b3b817df6caa9ea5b7d0eb6c3f0e9f89fce5/images/DomainModel.png?raw=true"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b3850ba15a4176be8e03639a0955b117643e0ebf/images/DomainModel.png?raw=true"/>
 </p>
 
 **Descrição aqui**
