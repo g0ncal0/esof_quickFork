@@ -87,7 +87,9 @@ Take a look at the following links to learn some techniques:
 **Descrição aqui**
 
 ### Vertical prototype
-**Imagem do protótipo aqui**
+<p align="center" justify="center">
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b2394cff3a2616ee6fd7914d7a1fe62c523f75ca/images/Prototype.jpeg?raw=true"/>
+</p>
 
 **Talvez pequena descrição aqui**
 
