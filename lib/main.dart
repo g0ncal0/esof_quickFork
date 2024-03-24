@@ -19,19 +19,19 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  runApp(MyApp());
+  runApp(QuickFork());
 }
 
-class MyApp extends StatefulWidget {
+class QuickFork extends StatefulWidget {
   // This widget is the root of your application.
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<QuickFork> createState() => _MyAppState();
 
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<QuickFork> {
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
   late AppStateNotifier _appStateNotifier;
@@ -53,8 +53,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp.router(
-      title: 'ESOF',
+      title: 'QuickFork',
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -63,11 +64,11 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
         brightness: Brightness.light,
-        useMaterial3: false,
+        useMaterial3: true,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        useMaterial3: false,
+        useMaterial3: true,
       ),
       themeMode: _themeMode,
       routerConfig: _router,
@@ -108,44 +109,52 @@ class _NavBarPageState extends State<NavBarPage> {
 
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (i) => setState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
-        backgroundColor: Color(0xFF2E1F1F),
-        selectedItemColor: FlutterFlowTheme.of(context).alternate,
-        unselectedItemColor: Color(0x8A000000),
-        showSelectedLabels: false,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.storefront_sharp,
-              size: 24.0,
+      bottomNavigationBar:
+      Theme(
+        data: ThemeData(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+        child: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (i) => setState(() {
+            _currentPage = null;
+            _currentPageName = tabs.keys.toList()[i];
+          }),
+          backgroundColor: Color(0xFF2E1F1F),
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+          showSelectedLabels: false,
+          showUnselectedLabels: true,
+          enableFeedback: false,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.storefront_sharp,
+                size: 24.0,
+              ),
+              label: 'Store',
+              tooltip: '',
             ),
-            label: 'Store',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              size: 24.0,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                size: 24.0,
+              ),
+              label: 'Home',
+              tooltip: '',
             ),
-            label: 'Home',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.deck_outlined,
-            ),
-            label: 'Tickets',
-            tooltip: '',
-          )
-        ],
-      ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.deck_outlined,
+              ),
+              label: 'Tickets',
+              tooltip: '',
+            )
+          ],
+        ),
+      )
     );
   }
 }

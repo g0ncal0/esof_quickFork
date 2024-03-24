@@ -41,7 +41,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Theme.of(context).brightness.name == "dark" ? Colors.black12 : Color(0xFFf2cece),
         appBar: AppBar(
           backgroundColor: Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -82,7 +82,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                               .override(
                                 fontFamily: 'Readex Pro',
                                 color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                FlutterFlowTheme.of(context).secondaryText,
                               ),
                         ),
                         Padding(
@@ -93,8 +93,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                     ),
                           ),
                         ),
@@ -106,8 +105,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                     ),
                           ),
                         ),
@@ -119,8 +117,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                     ),
                           ),
                         ),
@@ -132,8 +129,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                     ),
                           ),
                         ),
@@ -145,8 +141,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                     ),
                           ),
                         ),
@@ -158,7 +153,31 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
+                      return showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Hello World'),
+                              content: const SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text("Isn't this a good demo"),
+                                    Text('Press the button!'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Approve'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                      );
                     },
                     text: 'Print Hello World',
                     options: FFButtonOptions(

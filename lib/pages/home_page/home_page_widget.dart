@@ -41,7 +41,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Theme.of(context).brightness.name == "dark" ? Colors.black12 : Color(0xFFf2cece),
         appBar: AppBar(
           backgroundColor: Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -71,6 +71,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     style: FlutterFlowTheme.of(context).titleMedium.override(
                           fontFamily: 'Readex Pro',
                           fontSize: 26.0,
+                          color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
                         ),
                   ),
                 ),
@@ -84,6 +85,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     style: FlutterFlowTheme.of(context).titleMedium.override(
                           fontFamily: 'Readex Pro',
                           fontSize: 26.0,
+                          color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
                         ),
                   ),
                 ),
@@ -173,8 +175,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                    color: Colors.white,
                                   ),
                             ),
                           ),
@@ -269,8 +270,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                    color: Colors.white,
                                   ),
                             ),
                           ),

@@ -41,7 +41,7 @@ class _StoreWidgetState extends State<StoreWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Theme.of(context).brightness.name == "dark" ? Colors.black12 : Color(0xFFf2cece),
         appBar: AppBar(
           backgroundColor: Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -65,12 +65,13 @@ class _StoreWidgetState extends State<StoreWidget> {
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 Container(
                   width: 100.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: null,
                   ),
                   child: Stack(
                     children: [
@@ -83,9 +84,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 0.0,
                             mainAxisSpacing: 0.0,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: 1.6,
                           ),
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -94,8 +96,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(0.0),
                                     bottomRight: Radius.circular(0.0),
@@ -138,8 +139,13 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     0.0, 10.0, 0.0, 0.0),
                                 child: Text(
                                   'Monday',
+
                                   style:
-                                      FlutterFlowTheme.of(context).titleMedium,
+                                      FlutterFlowTheme.of(context).titleMedium.override(
+                                        fontFamily: 'Readex Pro',
+                                        fontSize: 18.0,
+                                        color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
+                                      ),
                                 ),
                               ),
                             ),
@@ -150,8 +156,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -191,7 +196,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                   width: 100.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: null,
                   ),
                   child: Stack(
                     children: [
@@ -204,9 +209,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 0.0,
                             mainAxisSpacing: 0.0,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: 1.6,
                           ),
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -215,8 +221,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -250,14 +255,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Text(
                                 'Tuesday',
-                                style: FlutterFlowTheme.of(context).titleMedium,
+                                style: FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 18.0,
+                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
+                                ),
                               ),
                             ),
                             Container(
                               width: 100.0,
                               height: 100.0,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: null,
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
@@ -300,7 +309,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                   width: 100.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: null,
                   ),
                   child: Stack(
                     children: [
@@ -313,9 +322,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 0.0,
                             mainAxisSpacing: 0.0,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: 1.6,
                           ),
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -324,8 +334,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -359,7 +368,11 @@ class _StoreWidgetState extends State<StoreWidget> {
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Text(
                                 'Wednesday',
-                                style: FlutterFlowTheme.of(context).titleMedium,
+                                style: FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 18.0,
+                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
+                                ),
                               ),
                             ),
                             Padding(
@@ -369,8 +382,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -410,7 +422,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                   width: 100.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: null,
                   ),
                   child: Stack(
                     children: [
@@ -423,9 +435,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 0.0,
                             mainAxisSpacing: 0.0,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: 1.6,
                           ),
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -434,8 +447,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -469,7 +481,11 @@ class _StoreWidgetState extends State<StoreWidget> {
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Text(
                                 'Thursday',
-                                style: FlutterFlowTheme.of(context).titleMedium,
+                                style: FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 18.0,
+                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
+                                ),
                               ),
                             ),
                             Padding(
@@ -479,8 +495,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -520,7 +535,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                   width: 100.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: null,
                   ),
                   child: Stack(
                     children: [
@@ -533,9 +548,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 0.0,
                             mainAxisSpacing: 0.0,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: 1.6,
                           ),
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -544,8 +560,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -579,7 +594,11 @@ class _StoreWidgetState extends State<StoreWidget> {
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Text(
                                 'Friday',
-                                style: FlutterFlowTheme.of(context).titleMedium,
+                                style: FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 18.0,
+                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
+                                ),
                               ),
                             ),
                             Padding(
@@ -589,8 +608,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () {
@@ -630,7 +648,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                   width: 100.0,
                   height: 100.0,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: null,
                   ),
                   child: Stack(
                     children: [
@@ -643,10 +661,11 @@ class _StoreWidgetState extends State<StoreWidget> {
                             crossAxisCount: 3,
                             crossAxisSpacing: 0.0,
                             mainAxisSpacing: 0.0,
-                            childAspectRatio: 1.4,
+                            childAspectRatio: 1.6,
                           ),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -655,8 +674,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 width: 100.0,
                                 height: 100.0,
                                 decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: null,
                                   shape: BoxShape.rectangle,
                                 ),
                                 child: FFButtonWidget(
@@ -691,14 +709,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                               alignment: AlignmentDirectional(0.0, -1.0),
                               child: Text(
                                 'Saturday',
-                                style: FlutterFlowTheme.of(context).titleMedium,
+                                style: FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    fontSize: 18.0,
+                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
+                                ),
                               ),
                             ),
                             Container(
                               width: 100.0,
                               height: 100.0,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: null,
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
