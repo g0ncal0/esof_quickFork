@@ -22,13 +22,13 @@ Please contact us!
 
 Thank you!
 
-*António Abílio* (email@up.pt)
+*António Abílio* (up202205469@up.pt)
 
 *Gonçalo Nunes* (up202205538@up.pt)
 
-*Tiago1* (up@up.pt)
+*Tiago Pinheiro* (up202207890@up.pt)
 
-*Tiago2* (up@up.pt)
+*Tiago Rocha* (up202206232@up.pt)
 
 *Vanessa Queirós* (up202207919@up.pt)
 
@@ -37,11 +37,7 @@ Thank you!
 
 ### Product Vision
 
-Start by defining a clear and concise vision for your app, to help members of the team, contributors, and users into focusing their often disparate views into a concise, visual, and short textual form. It provides a "high concept" of the product for marketers, developers, and managers.
-
-A product vision describes the essential of the product and sets the direction to where a product is headed, and what the product will deliver in the future. 
-
-**We favor a catchy and concise statement, ideally one sentence.**
+Skip the line, save time. A revolutionary app designed to transform the canteen experience at FEUP by simplifying the queuing process. Our vision to create an organized and efficient platform that’s not only user-friendly but also allows students to maximize their time.
 
 ### Features and Assumptions
  - Buy canteen tickets - Purchase canteen tickets effortlessly without needing physical copies and wainting in the line. 
