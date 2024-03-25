@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -65,90 +67,6 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Design & Development',
-                          style: FlutterFlowTheme.of(context)
-                              .titleMedium
-                              .override(
-                                fontFamily: 'Readex Pro',
-                                color:
-                                FlutterFlowTheme.of(context).secondaryText,
-                              ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'Gonçalo Nunes - up202205538',
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                    ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'Vanessa Queirós - up202207919',
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                    ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'António Abílio - up202205469',
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                    ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'Tiago Rocha - up202206232',
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                    ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'Tiago Pinheiro - up202207890',
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                    ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: FFButtonWidget(
@@ -158,12 +76,15 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                           barrierDismissible: false, // user must tap button!
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Hello World'),
+                              title: const Text('These are the people working on QuickFork:'),
                               content: const SingleChildScrollView(
                                 child: ListBody(
                                   children: <Widget>[
-                                    Text("Isn't this a good demo"),
-                                    Text('Press the button!'),
+                                    Text('Gonçalo Nunes - up202205538'),
+                                    Text('Vanessa Queirós - up202207919'),
+                                    Text('António Abílio - up202205469'),
+                                    Text('Tiago Rocha - up202206232'),
+                                    Text('Tiago Pinheiro - up202207890')
                                   ],
                                 ),
                               ),
@@ -174,12 +95,28 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                                     Navigator.of(context).pop();
                                   },
                                 ),
+                                TextButton(
+                                  child: const Text('Disapprove'),
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
+
+                                    DocumentReference<Map<String, dynamic>> amount = FirebaseFirestore.instance.collection("DisaproveButton").doc("AmountPressed");
+
+                                    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await amount.get();
+
+                                    dynamic amountOfButtonPressed = documentSnapshot.data()!["buttonPressed"];
+
+                                    FirebaseFirestore.instance.collection("DisaproveButton").doc("AmountPressed").set({
+                                                                                                    "buttonPressed" : 1 + amountOfButtonPressed
+                                                                                                    });
+                                  },
+                                ),
                               ],
                             );
                           }
                       );
                     },
-                    text: 'Print Hello World',
+                    text: 'Design & Development',
                     options: FFButtonOptions(
                       width: double.infinity,
                       height: 55.0,

@@ -101,7 +101,9 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
+      /*
       'Store': StoreWidget(),
+       */
       'HomePage': HomePageWidget(),
       'PlaceHolder': PlaceHolderWidget(),
     };
@@ -124,11 +126,12 @@ class _NavBarPageState extends State<NavBarPage> {
           backgroundColor: Color(0xFF2E1F1F),
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          showSelectedLabels: false,
+          showSelectedLabels: true,
           showUnselectedLabels: true,
           enableFeedback: false,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
+            /*
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.storefront_sharp,
@@ -137,6 +140,7 @@ class _NavBarPageState extends State<NavBarPage> {
               label: 'Store',
               tooltip: '',
             ),
+             */
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
@@ -149,9 +153,9 @@ class _NavBarPageState extends State<NavBarPage> {
               icon: Icon(
                 Icons.deck_outlined,
               ),
-              label: 'Tickets',
+              label: 'Credits',
               tooltip: '',
-            )
+            ),
           ],
         ),
       )
