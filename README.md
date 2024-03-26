@@ -120,13 +120,18 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 
 ## Project management
 
+* Backlog management: [Github Projects Board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/16)
+* Release management:
+  * [v0.0.2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/Sprint_0)
+* Sprint planning and retrospectives:
+
 ### Sprint 0
 
 >   ### Github Projects Board
 >  
 >   #### Beginning
 >   <p align="center" justify="center">
->  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="50%"/>
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="100%"/>
 >   </p>
 >
 >   ### Retrospectives
