@@ -125,7 +125,9 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >   #### Github Projects Board
 >  
 >   Beginning
->   ![Plan0_before](../images/releasePlans/plan0.png)
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b2394cff3a2616ee6fd7914d7a1fe62c523f75ca/images/product_backlog_s0b.png?raw=true" width="50%"/>
+>   </p>
 >
 >   #### Retrospectives: 
 >
