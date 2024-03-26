@@ -122,13 +122,13 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 
 ### Sprint 0
 
->   #### Github Projects Board
+>   ### Github Projects Board
 >  
->   Beginning
+>   #### Beginning
 >   <p align="center" justify="center">
->  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b2394cff3a2616ee6fd7914d7a1fe62c523f75ca/images/product_backlog_s0b.png?raw=true" width="50%"/>
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="50%"/>
 >   </p>
 >
->   #### Retrospectives: 
+>   ### Retrospectives
 >
 >   This sprint does not add any valuable functions to the app. The current state of the app is a simple menu with simple buttons. We also planned ahead the project, by establishing the workflow.
