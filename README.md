@@ -120,11 +120,13 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 
 ## Project management
 
-### Sprint 0 
+### Sprint 0
 
-<p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/becca77738264bed0cfa3b8cc3a72b8dd9e52ebc/images/product_backlog_s0b.png"/>
-</p>
-
-### Retrospectives 
-This sprint does not add any valuable functions to the app. The current state of the app is a simple menu with simple buttons. We also planned ahead the project, by establishing the workflow.
+>   #### Github Projects Board
+>  
+>   Beginning
+>   ![Plan0_before](../images/releasePlans/plan0.png)
+>
+>   #### Retrospectives: 
+>
+>   This sprint does not add any valuable functions to the app. The current state of the app is a simple menu with simple buttons. We also planned ahead the project, by establishing the workflow.
