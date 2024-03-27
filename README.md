@@ -113,7 +113,7 @@ The fifth one is the "Sigarra Server", represented by the SIGARRA_API, which is 
 
 ### Vertical prototype
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b2394cff3a2616ee6fd7914d7a1fe62c523f75ca/images/Prototype.jpeg?raw=true" width="50%"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/d8b1a24db565edbf4bbcbb71a105e8953603d12f/images/Prototype.jpeg?raw=true" width="50%"/>
 </p>
 
 A vertical prototype was created with a simple menu, using both flutter and firebase, which will be used later on to keep track of crucial information.
