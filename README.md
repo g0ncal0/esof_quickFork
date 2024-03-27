@@ -87,11 +87,11 @@ App UI is used to view the application pages;
 
 App Business Logic is used to manage and alter the user's data
 
-App Database Scheme is where some of the data off the app is stored
+App Database Scheme is where some of the data of the app is stored
 
 Sigarra is an external database that has the information about the student/worker.
 
-Payment Gateway is the method that allows the transation to occur between the bank of the buyer and the canteen shop.
+Payment Gateway is the method that allows the transaction to occur between the bank of the buyer and the canteen shop.
 
 ### Physical architecture
 
