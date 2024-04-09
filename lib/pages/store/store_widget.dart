@@ -1,3 +1,5 @@
+import 'package:esof/index.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -107,6 +109,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -161,6 +164,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -226,6 +230,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -274,6 +279,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -339,6 +345,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -387,6 +394,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -452,6 +460,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -500,6 +509,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -565,6 +575,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -613,6 +624,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -680,6 +692,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(
@@ -728,6 +741,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
+                                    context.pushNamed('Checkout');
                                   },
                                   text: 'Buy lunch',
                                   options: FFButtonOptions(

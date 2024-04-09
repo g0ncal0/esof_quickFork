@@ -101,11 +101,11 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      /*
+
       'Store': StoreWidget(),
-       */
       'HomePage': HomePageWidget(),
       'PlaceHolder': PlaceHolderWidget(),
+      'Meal' : MealWidget()
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -131,7 +131,7 @@ class _NavBarPageState extends State<NavBarPage> {
           enableFeedback: false,
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
-            /*
+
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.storefront_sharp,
@@ -140,7 +140,7 @@ class _NavBarPageState extends State<NavBarPage> {
               label: 'Store',
               tooltip: '',
             ),
-             */
+
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
@@ -156,6 +156,12 @@ class _NavBarPageState extends State<NavBarPage> {
               label: 'Credits',
               tooltip: '',
             ),
+            BottomNavigationBarItem(icon: Icon(
+              Icons.food_bank
+            ),
+              label: 'Meal',
+              tooltip: ','
+            )
           ],
         ),
       )
