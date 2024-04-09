@@ -53,7 +53,7 @@ Hi! I'm part of a group of students that is developing an app that will allow fo
 
 Our flutter app provides the solution to this while being easy to use. Just use your already existing Sigarra's login and associate your prefered payment method, either using MbWay or using your debit/credit card. After this you'll be able to access our shop from where you can select which ticket you wanna buy. Finally, in the canteen, when you're asked to, just click the bought ticket and show it.
 
-That's it, if you are a user of FEUP's canteen you'll surelly love our app.
+That's it, if you are a user of FEUP's canteen you'll surely love our app.
 
 "So, how much time do you spend on the queues?"
 
@@ -87,11 +87,11 @@ App UI is used to view the application pages;
 
 App Business Logic is used to manage and alter the user's data
 
-App Database Scheme is where some of the data off the app is stored
+App Database Scheme is where some of the data of the app is stored
 
 Sigarra is an external database that has the information about the student/worker.
 
-Payment Gateway is the method that allows the transation to occur between the bank of the buyer and the canteen shop.
+Payment Gateway is the method that allows the transaction to occur between the bank of the buyer and the canteen shop.
 
 ### Physical architecture
 
@@ -113,11 +113,27 @@ The fifth one is the "Sigarra Server", represented by the SIGARRA_API, which is 
 
 ### Vertical prototype
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b2394cff3a2616ee6fd7914d7a1fe62c523f75ca/images/Prototype.jpeg?raw=true" width="50%"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/d8b1a24db565edbf4bbcbb71a105e8953603d12f/images/Prototype.jpeg?raw=true" width="50%"/>
 </p>
 
-**Talvez pequena descrição aqui**
+A vertical prototype was created with a simple menu, using both flutter and firebase, which will be used later on to keep track of crucial information.
 
 ## Project management
 
-**Não percebo bem o que é para pôr aqui**
+* Backlog management: [Github Projects Board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/16)
+* Release management:
+  * [v0.0.2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/Sprint_0)
+* Sprint planning and retrospectives:
+
+### Sprint 0
+
+>   ### Github Projects Board
+>  
+>   #### Beginning
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="100%"/>
+>   </p>
+>
+>   ### Retrospectives
+>
+>   This sprint does not add any valuable functions to the app. The current state of the app is a simple menu with simple buttons. We also planned ahead the project, by establishing the workflow.
