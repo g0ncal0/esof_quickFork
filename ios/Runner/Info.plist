@@ -53,7 +53,12 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
+<<<<<<< HEAD
 
+=======
+	<key>NSCameraUsageDescription</key>
+    <string>In order to take a picture or video, this app requires permission to access the camera.</string>
+>>>>>>> 4ef6844 (Added a Login page to integrate Stripe)
 
 
 
@@ -77,9 +82,12 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
+<<<<<<< HEAD
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+=======
+>>>>>>> 4ef6844 (Added a Login page to integrate Stripe)
 </dict>
 </plist>

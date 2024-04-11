@@ -6,13 +6,12 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 
 class UserBoughtTicketsRecord extends FirestoreRecord {
   UserBoughtTicketsRecord._(
-    DocumentReference reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+    super.reference,
+    super.data,
+  ) {
     _initializeFields();
   }
 
@@ -31,10 +30,28 @@ class UserBoughtTicketsRecord extends FirestoreRecord {
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
+  // "display_name" field.
+  String? _displayName;
+  String get displayName => _displayName ?? '';
+  bool hasDisplayName() => _displayName != null;
+
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
+
+  // "phone_number" field.
+  String? _phoneNumber;
+  String get phoneNumber => _phoneNumber ?? '';
+  bool hasPhoneNumber() => _phoneNumber != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
+    _displayName = snapshotData['display_name'] as String?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _phoneNumber = snapshotData['phone_number'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -76,12 +93,18 @@ Map<String, dynamic> createUserBoughtTicketsRecordData({
   String? email,
   String? uid,
   DateTime? createdTime,
+  String? displayName,
+  String? photoUrl,
+  String? phoneNumber,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'email': email,
       'uid': uid,
       'created_time': createdTime,
+      'display_name': displayName,
+      'photo_url': photoUrl,
+      'phone_number': phoneNumber,
     }.withoutNulls,
   );
 
@@ -96,12 +119,21 @@ class UserBoughtTicketsRecordDocumentEquality
   bool equals(UserBoughtTicketsRecord? e1, UserBoughtTicketsRecord? e2) {
     return e1?.email == e2?.email &&
         e1?.uid == e2?.uid &&
-        e1?.createdTime == e2?.createdTime;
+        e1?.createdTime == e2?.createdTime &&
+        e1?.displayName == e2?.displayName &&
+        e1?.photoUrl == e2?.photoUrl &&
+        e1?.phoneNumber == e2?.phoneNumber;
   }
 
   @override
-  int hash(UserBoughtTicketsRecord? e) =>
-      const ListEquality().hash([e?.email, e?.uid, e?.createdTime]);
+  int hash(UserBoughtTicketsRecord? e) => const ListEquality().hash([
+        e?.email,
+        e?.uid,
+        e?.createdTime,
+        e?.displayName,
+        e?.photoUrl,
+        e?.phoneNumber
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is UserBoughtTicketsRecord;

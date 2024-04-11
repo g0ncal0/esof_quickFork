@@ -3,9 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'perfil_model.dart';
 export 'perfil_model.dart';
 
@@ -42,16 +39,16 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF1F1D1D),
+        backgroundColor: const Color(0xFF1F1D1D),
         appBar: AppBar(
-          backgroundColor: Color(0xFF2E1F1F),
+          backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 60.0,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 30.0,
@@ -61,17 +58,18 @@ class _PerfilWidgetState extends State<PerfilWidget> {
             },
           ),
           title: Align(
-            alignment: AlignmentDirectional(-1.29, -1.0),
+            alignment: const AlignmentDirectional(-1.29, -1.0),
             child: Text(
               'MainMenu',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Colors.white,
                     fontSize: 22.0,
+                    letterSpacing: 0.0,
                   ),
             ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: true,
           elevation: 2.0,
         ),
@@ -80,17 +78,18 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           child: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(-0.59, -0.77),
+                alignment: const AlignmentDirectional(-0.59, -0.77),
                 child: Text(
                   'Profile',
                   style: FlutterFlowTheme.of(context).headlineLarge.override(
                         fontFamily: 'Outfit',
-                        color: Color(0xFFD2AD94),
+                        color: const Color(0xFFD2AD94),
+                        letterSpacing: 0.0,
                       ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.82, -0.92),
+                alignment: const AlignmentDirectional(0.82, -0.92),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(18.0),
                   child: Image.network(
@@ -102,28 +101,29 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.76, -0.43),
+                alignment: const AlignmentDirectional(-0.76, -0.43),
                 child: Text(
                   'Associated Credit Cards:',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
-                        color: Color(0xFFD2AD94),
+                        color: const Color(0xFFD2AD94),
+                        letterSpacing: 0.0,
                       ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.08, -0.18),
+                alignment: const AlignmentDirectional(0.08, -0.18),
                 child: Container(
                   width: 340.0,
                   height: 146.0,
                   decoration: BoxDecoration(
-                    color: Color(0xFF252322),
+                    color: const Color(0xFF252322),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Stack(
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(-0.74, -0.44),
+                        alignment: const AlignmentDirectional(-0.74, -0.44),
                         child: Text(
                           'xxxx xxxx xxxx 1535',
                           style:
@@ -132,11 +132,12 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     fontSize: 20.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-0.76, 0.44),
+                        alignment: const AlignmentDirectional(-0.76, 0.44),
                         child: Text(
                           'xxxx xxxx xxxx 2780',
                           style:
@@ -145,6 +146,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     fontSize: 20.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ),
@@ -153,7 +155,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.04, 0.34),
+                alignment: const AlignmentDirectional(0.04, 0.34),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -163,17 +165,18 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                     width: 300.0,
                     height: 68.0,
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                     iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).primaryBackground,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Readex Pro',
                           color: FlutterFlowTheme.of(context).primaryText,
                           fontSize: 25.0,
+                          letterSpacing: 0.0,
                         ),
                     elevation: 3.0,
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.transparent,
                       width: 1.0,
                     ),
@@ -182,7 +185,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.01, 0.92),
+                alignment: const AlignmentDirectional(-0.01, 0.92),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -192,17 +195,18 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                     width: 200.0,
                     height: 66.0,
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                     iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: Color(0xFF252322),
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: const Color(0xFF252322),
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Readex Pro',
-                          color: Color(0xFFD2AD94),
+                          color: const Color(0xFFD2AD94),
                           fontSize: 25.0,
+                          letterSpacing: 0.0,
                         ),
                     elevation: 3.0,
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.transparent,
                       width: 1.0,
                     ),

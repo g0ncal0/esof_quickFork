@@ -12,6 +12,6 @@ import 'package:esof/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(QuickFork());
+    await tester.pumpWidget(MyApp());
   });
 }

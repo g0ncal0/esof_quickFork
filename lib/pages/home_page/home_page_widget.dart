@@ -1,10 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -41,21 +37,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Theme.of(context).brightness.name == "dark" ? Colors.black12 : Color(0xFFf2cece),
+        backgroundColor: FlutterFlowTheme.of(context).primaryText,
         appBar: AppBar(
-          backgroundColor: Color(0xFF2E1F1F),
+          backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
           title: Text(
             'Home Page',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Outfit',
-                  color: Colors.white,
-                  fontSize: 22.0,
-                ),
+              fontFamily: 'Outfit',
+              color: Colors.white,
+              fontSize: 22.0,
+              letterSpacing: 0.0,
+            ),
           ),
           actions: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 10.0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -65,17 +62,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   context.pushNamed('Perfil');
                 },
                 child: Container(
-                  width: 49,
-                  height: 100,
+                  width: 49.0,
+                  height: 100.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.0),
                     shape: BoxShape.rectangle,
                   ),
                 ),
               ),
-            )
-
+            ),
           ],
           centerTitle: false,
           elevation: 2.0,
@@ -86,41 +82,41 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Align(
-                alignment: AlignmentDirectional(-1.0, 0.0),
+                alignment: const AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 0.0, 0.0),
                   child: Text(
                     'Welcome back,',
                     style: FlutterFlowTheme.of(context).titleMedium.override(
-                          fontFamily: 'Readex Pro',
-                          fontSize: 26.0,
-                          color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
-                        ),
+                      fontFamily: 'Readex Pro',
+                      fontSize: 26.0,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-1.0, 0.0),
+                alignment: const AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 0.0, 0.0),
                   child: Text(
                     'John Doe',
                     style: FlutterFlowTheme.of(context).titleMedium.override(
-                          fontFamily: 'Readex Pro',
-                          fontSize: 26.0,
-                          color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black
-                        ),
+                      fontFamily: 'Readex Pro',
+                      fontSize: 26.0,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
                   child: Container(
                     width: 333.0,
                     height: 145.0,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFF252322),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
@@ -132,9 +128,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Stack(
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(-1.0, -1.0),
+                          alignment: const AlignmentDirectional(-1.0, -1.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 10.0, 10.0, 0.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -142,16 +138,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1.0, -1.0),
+                                  alignment: const AlignmentDirectional(-1.0, -1.0),
                                   child: Text(
                                     'Lunch',
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
-                                        ),
+                                      fontFamily: 'Readex Pro',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiary,
+                                      letterSpacing: 0.0,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -159,9 +156,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(1.0, -1.0),
+                          alignment: const AlignmentDirectional(1.0, -1.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 10.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -169,17 +166,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(1.0, -1.0),
+                                  alignment: const AlignmentDirectional(1.0, -1.0),
                                   child: Text(
                                     '12:40 - 14:30',
                                     textAlign: TextAlign.end,
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
-                                        ),
+                                      fontFamily: 'Readex Pro',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiary,
+                                      letterSpacing: 0.0,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -187,9 +185,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 10.0, 20.0, 10.0, 0.0),
                             child: Text(
                               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque congue diam ut efficitur aliquet. Sed at metus sed lectus feugiat lobortis vel non nulla. Ut quis elit at nunc lacinia elementum.',
@@ -197,9 +195,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                  ),
+                                fontFamily: 'Readex Pro',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                              ),
                             ),
                           ),
                         ),
@@ -209,13 +209,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
                   child: Container(
                     width: 333.0,
                     height: 145.0,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFF252322),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
@@ -227,9 +227,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Stack(
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(-1.0, -1.0),
+                          alignment: const AlignmentDirectional(-1.0, -1.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 10.0, 10.0, 0.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -237,16 +237,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1.0, -1.0),
+                                  alignment: const AlignmentDirectional(-1.0, -1.0),
                                   child: Text(
                                     'Dinner',
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
-                                        ),
+                                      fontFamily: 'Readex Pro',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiary,
+                                      letterSpacing: 0.0,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -254,9 +255,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(1.0, -1.0),
+                          alignment: const AlignmentDirectional(1.0, -1.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 10.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -264,17 +265,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(1.0, -1.0),
+                                  alignment: const AlignmentDirectional(1.0, -1.0),
                                   child: Text(
                                     '19:00 - 20:00',
                                     textAlign: TextAlign.end,
                                     style: FlutterFlowTheme.of(context)
                                         .titleMedium
                                         .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
-                                        ),
+                                      fontFamily: 'Readex Pro',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiary,
+                                      letterSpacing: 0.0,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -282,9 +284,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 10.0, 20.0, 10.0, 0.0),
                             child: Text(
                               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque congue diam ut efficitur aliquet. Sed at metus sed lectus feugiat lobortis vel non nulla. Ut quis elit at nunc lacinia elementum.',
@@ -292,9 +294,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                  ),
+                                fontFamily: 'Readex Pro',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                              ),
                             ),
                           ),
                         ),

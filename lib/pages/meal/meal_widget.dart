@@ -1,11 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'meal_model.dart';
 export 'meal_model.dart';
 
@@ -42,11 +38,11 @@ class _MealWidgetState extends State<MealWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF1F1D1D),
+        backgroundColor: const Color(0xFF1F1D1D),
         appBar: AppBar(
-          backgroundColor: Color(0xFF413433),
+          backgroundColor: const Color(0xFF413433),
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -55,7 +51,7 @@ class _MealWidgetState extends State<MealWidget> {
           child: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(-0.04, -0.66),
+                alignment: const AlignmentDirectional(-0.04, -0.66),
                 child: Text(
                   'ID: XXXXXX-XX\nStudent Nº: 202200000\nType: Ref. Completa',
                   textAlign: TextAlign.center,
@@ -63,11 +59,12 @@ class _MealWidgetState extends State<MealWidget> {
                         fontFamily: 'Readex Pro',
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         fontSize: 18.0,
+                        letterSpacing: 0.0,
                       ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.04, 0.59),
+                alignment: const AlignmentDirectional(-0.04, 0.59),
                 child: Text(
                   'Show this QR Code when \nprompted',
                   textAlign: TextAlign.center,
@@ -75,11 +72,12 @@ class _MealWidgetState extends State<MealWidget> {
                         fontFamily: 'Readex Pro',
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         fontSize: 18.0,
+                        letterSpacing: 0.0,
                       ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Container(
                   width: 250.0,
                   height: 250.0,
@@ -90,7 +88,7 @@ class _MealWidgetState extends State<MealWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.01, 0.01),
+                alignment: const AlignmentDirectional(0.01, 0.01),
                 child: BarcodeWidget(
                   data: 'Barcode',
                   barcode: Barcode.qrCode(),
@@ -98,7 +96,7 @@ class _MealWidgetState extends State<MealWidget> {
                   height: 210.0,
                   color: FlutterFlowTheme.of(context).primaryText,
                   backgroundColor: Colors.transparent,
-                  errorBuilder: (_context, _error) => SizedBox(
+                  errorBuilder: (context, error) => const SizedBox(
                     width: 210.0,
                     height: 210.0,
                   ),
