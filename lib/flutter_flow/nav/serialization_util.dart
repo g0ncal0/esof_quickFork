@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:from_css_color/from_css_color.dart';
 
 import '/backend/backend.dart';
 
-import '../../flutter_flow/lat_lng.dart';
 import '../../flutter_flow/place.dart';
 import '../../flutter_flow/uploaded_file.dart';
 
@@ -18,14 +16,14 @@ String dateTimeRangeToString(DateTimeRange dateTimeRange) {
 }
 
 String placeToString(FFPlace place) => jsonEncode({
-      'latLng': place.latLng.serialize(),
-      'name': place.name,
-      'address': place.address,
-      'city': place.city,
-      'state': place.state,
-      'country': place.country,
-      'zipCode': place.zipCode,
-    });
+  'latLng': place.latLng.serialize(),
+  'name': place.name,
+  'address': place.address,
+  'city': place.city,
+  'state': place.state,
+  'country': place.country,
+  'zipCode': place.zipCode,
+});
 
 String uploadedFileToString(FFUploadedFile uploadedFile) =>
     uploadedFile.serialize();
@@ -44,10 +42,10 @@ String _serializeDocumentReference(DocumentReference ref) {
 }
 
 String? serializeParam(
-  dynamic param,
-  ParamType paramType, [
-  bool isList = false,
-]) {
+    dynamic param,
+    ParamType paramType, [
+      bool isList = false,
+    ]) {
   try {
     if (param == null) {
       return null;
@@ -152,9 +150,9 @@ FFUploadedFile uploadedFileFromString(String uploadedFileStr) =>
     FFUploadedFile.deserialize(uploadedFileStr);
 
 DocumentReference _deserializeDocumentReference(
-  String refStr,
-  List<String> collectionNamePath,
-) {
+    String refStr,
+    List<String> collectionNamePath,
+    ) {
   var path = '';
   final docIds = refStr.split(_kDocIdDelimeter);
   for (int i = 0; i < docIds.length && i < collectionNamePath.length; i++) {
@@ -180,11 +178,11 @@ enum ParamType {
 }
 
 dynamic deserializeParam<T>(
-  String? param,
-  ParamType paramType,
-  bool isList, {
-  List<String>? collectionNamePath,
-}) {
+    String? param,
+    ParamType paramType,
+    bool isList, {
+      List<String>? collectionNamePath,
+    }) {
   try {
     if (param == null) {
       return null;
@@ -195,10 +193,10 @@ dynamic deserializeParam<T>(
         return null;
       }
       return paramValues
-          .where((p) => p is String)
-          .map((p) => p as String)
+          .whereType<String>()
+          .map((p) => p)
           .map((p) => deserializeParam<T>(p, paramType, false,
-              collectionNamePath: collectionNamePath))
+          collectionNamePath: collectionNamePath))
           .where((p) => p != null)
           .map((p) => p! as T)
           .toList();
@@ -242,27 +240,27 @@ dynamic deserializeParam<T>(
 }
 
 Future<dynamic> Function(String) getDoc(
-  List<String> collectionNamePath,
-  RecordBuilder recordBuilder,
-) {
+    List<String> collectionNamePath,
+    RecordBuilder recordBuilder,
+    ) {
   return (String ids) => _deserializeDocumentReference(ids, collectionNamePath)
       .get()
       .then((s) => recordBuilder(s));
 }
 
 Future<List<T>> Function(String) getDocList<T>(
-  List<String> collectionNamePath,
-  RecordBuilder<T> recordBuilder,
-) {
+    List<String> collectionNamePath,
+    RecordBuilder<T> recordBuilder,
+    ) {
   return (String idsList) {
     List<String> docIds = [];
     try {
       final ids = json.decode(idsList) as Iterable;
-      docIds = ids.where((d) => d is String).map((d) => d as String).toList();
+      docIds = ids.whereType<String>().map((d) => d).toList();
     } catch (_) {}
     return Future.wait(
       docIds.map(
-        (ids) => _deserializeDocumentReference(ids, collectionNamePath)
+            (ids) => _deserializeDocumentReference(ids, collectionNamePath)
             .get()
             .then((s) => recordBuilder(s)),
       ),

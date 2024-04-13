@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/stripe/payment_manager.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
@@ -6,15 +8,21 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'checkout_model.dart';
 export 'checkout_model.dart';
 
 class CheckoutWidget extends StatefulWidget {
-  const CheckoutWidget({super.key});
+  const CheckoutWidget({
+    super.key,
+    required this.weekDay,
+    double? mealPrice,
+    bool? fullMeal,
+  })  : mealPrice = mealPrice ?? 99.99,
+        fullMeal = fullMeal ?? true;
+
+  final String? weekDay;
+  final double mealPrice;
+  final bool fullMeal;
 
   @override
   State<CheckoutWidget> createState() => _CheckoutWidgetState();
@@ -48,34 +56,37 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         appBar: AppBar(
-          backgroundColor: Color(0xFF2E1F1F),
+          backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_rounded,
               color: FlutterFlowTheme.of(context).primaryBackground,
-              size: 30,
+              size: 30.0,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              context.pushNamed('Store');
             },
           ),
           title: Text(
-            'Monday - Lunch (**Add date**)',
-            style: FlutterFlowTheme.of(context).bodyMedium.override(
-              fontFamily: 'Readex Pro',
-              color: FlutterFlowTheme.of(context).warning,
-              fontSize: 22,
-              letterSpacing: 0,
+            valueOrDefault<String>(
+              widget.weekDay,
+              'ERROR',
             ),
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: FlutterFlowTheme.of(context).warning,
+                  fontSize: 22.0,
+                  letterSpacing: 0.0,
+                ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: true,
-          elevation: 0,
+          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,
@@ -83,56 +94,57 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 30, 16, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 30.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xFF2E1F1F),
-                    boxShadow: [
+                    color: const Color(0xFF2E1F1F),
+                    boxShadow: const [
                       BoxShadow(
-                        blurRadius: 5,
+                        blurRadius: 5.0,
                         color: Color(0x44111417),
                         offset: Offset(
                           0.0,
-                          2,
+                          2.0,
                         ),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 4.0, 8.0, 4.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 2.0, 0.0, 0.0),
                                 child: Icon(
                                   Icons.fastfood_rounded,
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
-                                  size: 24,
+                                  size: 24.0,
                                 ),
                               ),
                               Expanded(
                                 child: Align(
-                                  alignment: AlignmentDirectional(1, 0),
+                                  alignment: const AlignmentDirectional(1.0, 0.0),
                                   child: Text(
                                     'Choose your meal',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      letterSpacing: 0,
-                                    ),
+                                          fontFamily: 'Readex Pro',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                          letterSpacing: 0.0,
+                                        ),
                                   ),
                                 ),
                               ),
@@ -140,65 +152,74 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 4.0, 8.0, 4.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Align(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
                                   child: FlutterFlowChoiceChips(
-                                    options: [
+                                    options: const [
                                       ChipData('Full Meal',
-                                          Icons.attach_money_outlined),
+                                          Icons.attach_money_sharp),
                                       ChipData('Only Main Dish',
                                           Icons.attach_money_sharp)
                                     ],
-                                    onChanged: (val) => setState(() => _model
-                                        .choiceChipsValue = val?.firstOrNull),
+                                    onChanged: (val) async {
+                                      setState(() => _model.choiceChipsValue =
+                                          val?.firstOrNull);
+                                      setState(() {
+                                        _model.fullMeal = !_model.fullMeal;
+                                      });
+                                    },
                                     selectedChipStyle: ChipStyle(
                                       backgroundColor:
-                                      FlutterFlowTheme.of(context)
-                                          .secondary,
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            letterSpacing: 0.0,
+                                          ),
                                       iconColor: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      iconSize: 18,
-                                      elevation: 4,
-                                      borderRadius: BorderRadius.circular(16),
+                                      iconSize: 18.0,
+                                      elevation: 4.0,
+                                      borderColor: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                     unselectedChipStyle: ChipStyle(
-                                      backgroundColor: Color(0xFF4F3B3B),
+                                      backgroundColor: const Color(0xFF4F3B3B),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            letterSpacing: 0.0,
+                                          ),
                                       iconColor: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      iconSize: 18,
-                                      elevation: 0,
-                                      borderRadius: BorderRadius.circular(16),
+                                          .secondaryBackground,
+                                      iconSize: 18.0,
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
-                                    chipSpacing: 12,
-                                    rowSpacing: 12,
+                                    chipSpacing: 12.0,
+                                    rowSpacing: 12.0,
                                     multiselect: false,
+                                    initialized:
+                                        _model.choiceChipsValue != null,
                                     alignment: WrapAlignment.start,
                                     controller:
-                                    _model.choiceChipsValueController ??=
-                                        FormFieldController<List<String>>(
-                                          [],
-                                        ),
+                                        _model.choiceChipsValueController ??=
+                                            FormFieldController<List<String>>(
+                                      ['Full Meal'],
+                                    ),
                                     wrapped: true,
                                   ),
                                 ),
@@ -207,12 +228,13 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 4.0, 8.0, 4.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: FlutterFlowRadioButton(
                                   options: [
                                     'Meat - Carne de vaca',
@@ -221,31 +243,31 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   ].toList(),
                                   onChanged: (val) => setState(() {}),
                                   controller:
-                                  _model.radioButtonValueController ??=
-                                      FormFieldController<String>(null),
-                                  optionHeight: 32,
+                                      _model.radioButtonValueController ??=
+                                          FormFieldController<String>(null),
+                                  optionHeight: 32.0,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .warning,
-                                    letterSpacing: 0,
-                                  ),
+                                        fontFamily: 'Readex Pro',
+                                        color: FlutterFlowTheme.of(context)
+                                            .warning,
+                                        letterSpacing: 0.0,
+                                      ),
                                   selectedTextStyle:
-                                  FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .warning,
-                                    letterSpacing: 0,
-                                  ),
+                                      FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            color: FlutterFlowTheme.of(context)
+                                                .warning,
+                                            letterSpacing: 0.0,
+                                          ),
                                   buttonPosition: RadioButtonPosition.left,
                                   direction: Axis.vertical,
                                   radioButtonColor: FlutterFlowTheme.of(context)
                                       .primaryBackground,
-                                  inactiveRadioButtonColor: Color(0xFFC6A9A9),
+                                  inactiveRadioButtonColor: const Color(0xFFC6A9A9),
                                   toggleable: false,
                                   horizontalAlignment: WrapAlignment.start,
                                   verticalAlignment: WrapCrossAlignment.start,
@@ -260,31 +282,33 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
                 child: Text(
                   'Your total is:',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Readex Pro',
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    fontSize: 30,
-                    letterSpacing: 0,
-                  ),
+                        fontFamily: 'Readex Pro',
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        fontSize: 30.0,
+                        letterSpacing: 0.0,
+                      ),
                 ),
               ),
               Text(
-                '2,75€',
+                (bool fullMeal) {
+                  return fullMeal ? '2,75' : '2,95';
+                }(_model.fullMeal),
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  fontFamily: 'Readex Pro',
-                  color: FlutterFlowTheme.of(context).warning,
-                  fontSize: 30,
-                  letterSpacing: 0,
-                ),
+                      fontFamily: 'Readex Pro',
+                      color: FlutterFlowTheme.of(context).warning,
+                      fontSize: 30.0,
+                      letterSpacing: 0.0,
+                    ),
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -292,38 +316,63 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       Text(
                         'Your total is:',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0,
-                        ),
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            final paymentResponse = await processStripePayment(
+                              context,
+                              amount: (bool fullMeal) {
+                                return fullMeal ? 275 : 295;
+                              }(_model.fullMeal),
+                              currency: 'EUR',
+                              customerEmail: currentUserEmail,
+                              description: 'Meal',
+                              allowGooglePay: false,
+                              allowApplePay: false,
+                              buttonColor: FlutterFlowTheme.of(context).primary,
+                              buttonTextColor:
+                                  FlutterFlowTheme.of(context).secondary,
+                            );
+                            if (paymentResponse.paymentId == null &&
+                                paymentResponse.errorMessage != null) {
+                              showSnackbar(
+                                context,
+                                'Error: ${paymentResponse.errorMessage}',
+                              );
+                            }
+                            _model.paymentId = paymentResponse.paymentId ?? '';
+
+                            setState(() {});
                           },
                           text: 'Pay with card',
                           options: FFButtonOptions(
-                            width: 270,
-                            height: 50,
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            color: Color(0xFF2E1F1F),
+                            width: 270.0,
+                            height: 50.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: const Color(0xFF2E1F1F),
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
-                              fontFamily: 'Readex Pro',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              letterSpacing: 0,
-                            ),
-                            elevation: 2,
-                            borderSide: BorderSide(
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 2.0,
+                            borderSide: const BorderSide(
                               color: Colors.transparent,
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
                       ),
@@ -333,25 +382,26 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         },
                         text: 'Pay with MBWay',
                         options: FFButtonOptions(
-                          width: 270,
-                          height: 50,
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: Color(0xFF2E1F1F),
+                          width: 270.0,
+                          height: 50.0,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: const Color(0xFF2E1F1F),
                           textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                            fontFamily: 'Readex Pro',
-                            color: FlutterFlowTheme.of(context)
-                                .primaryBackground,
-                            letterSpacing: 0,
-                          ),
-                          elevation: 2,
-                          borderSide: BorderSide(
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    letterSpacing: 0.0,
+                                  ),
+                          elevation: 2.0,
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
                     ],

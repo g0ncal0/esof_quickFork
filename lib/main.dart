@@ -1,6 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -10,8 +8,6 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -26,10 +22,12 @@ void main() async {
 
   await initializeStripe();
 
-  runApp(QuickFork());
+  runApp(const QuickFork());
 }
 
 class QuickFork extends StatefulWidget {
+  const QuickFork({super.key});
+
   // This widget is the root of your application.
   @override
   State<QuickFork> createState() => _MyAppState();
@@ -41,6 +39,8 @@ class QuickFork extends StatefulWidget {
 class _MyAppState extends State<QuickFork> {
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
+  late Stream<BaseAuthUser> userStream;
+
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
@@ -50,20 +50,25 @@ class _MyAppState extends State<QuickFork> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
+    userStream = esofFirebaseUserStream()
+      ..listen((user) => _appStateNotifier.update(user));
+    jwtTokenStream.listen((_) {});
+    Future.delayed(
+      const Duration(milliseconds: 1000),
+          () => _appStateNotifier.stopShowingSplashImage(),
+    );
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
-        _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
-      });
+    _themeMode = mode;
+    FlutterFlowTheme.saveThemeMode(mode);
+  });
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MaterialApp.router(
-      title: 'QuickFork',
-      localizationsDelegates: [
+      title: 'ESOF',
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -71,11 +76,11 @@ class _MyAppState extends State<QuickFork> {
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
         brightness: Brightness.light,
-        useMaterial3: true,
+        useMaterial3: false,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        useMaterial3: true,
+        useMaterial3: false,
       ),
       themeMode: _themeMode,
       routerConfig: _router,
@@ -84,7 +89,7 @@ class _MyAppState extends State<QuickFork> {
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
+  const NavBarPage({super.key, this.initialPage, this.page});
 
   final String? initialPage;
   final Widget? page;
@@ -108,70 +113,52 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-
-      'Store': StoreWidget(),
-      'HomePage': HomePageWidget(),
-      'PlaceHolder': PlaceHolderWidget(),
-      'Meal' : MealWidget()
+      'Store': const StoreWidget(),
+      'HomePage': const HomePageWidget(),
+      'PlaceHolder': const PlaceHolderWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar:
-      Theme(
-        data: ThemeData(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-        ),
-        child: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (i) => setState(() {
-            _currentPage = null;
-            _currentPageName = tabs.keys.toList()[i];
-          }),
-          backgroundColor: Color(0xFF2E1F1F),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          enableFeedback: false,
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.storefront_sharp,
-                size: 24.0,
-              ),
-              label: 'Store',
-              tooltip: '',
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (i) => setState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
+        backgroundColor: const Color(0xFF2E1F1F),
+        selectedItemColor: FlutterFlowTheme.of(context).alternate,
+        unselectedItemColor: const Color(0x8A000000),
+        showSelectedLabels: false,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.storefront_sharp,
+              size: 24.0,
             ),
-
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                size: 24.0,
-              ),
-              label: 'Home',
-              tooltip: '',
+            label: 'Store',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              size: 24.0,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.deck_outlined,
-              ),
-              label: 'Credits',
-              tooltip: '',
+            label: 'Home',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.deck_outlined,
             ),
-            BottomNavigationBarItem(icon: Icon(
-              Icons.food_bank
-            ),
-              label: 'Meal',
-              tooltip: ','
-            )
-          ],
-        ),
-      )
+            label: 'Tickets',
+            tooltip: '',
+          )
+        ],
+      ),
     );
   }
 }
