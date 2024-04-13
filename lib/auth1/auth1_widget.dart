@@ -376,7 +376,6 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
-                                                    minLines: null,
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
@@ -505,7 +504,6 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
-                                                    minLines: null,
                                                     cursorColor:
                                                         const Color(0xFF4B39EF),
                                                     validator: _model
@@ -1036,7 +1034,6 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
-                                                    minLines: null,
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
@@ -1165,7 +1162,6 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
-                                                    minLines: null,
                                                     cursorColor:
                                                         const Color(0xFF4B39EF),
                                                     validator: _model
@@ -1293,6 +1289,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
+                                                    minLines: 1,
                                                     cursorColor:
                                                         const Color(0xFF4B39EF),
                                                     validator: _model

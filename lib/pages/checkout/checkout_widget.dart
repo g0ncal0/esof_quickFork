@@ -14,7 +14,15 @@ export 'checkout_model.dart';
 class CheckoutWidget extends StatefulWidget {
   const CheckoutWidget({
     super.key,
-  });
+    required this.weekDay,
+    double? mealPrice,
+    bool? fullMeal,
+  })  : mealPrice = mealPrice ?? 99.99,
+        fullMeal = fullMeal ?? true;
+
+  final String? weekDay;
+  final double mealPrice;
+  final bool fullMeal;
 
   @override
   State<CheckoutWidget> createState() => _CheckoutWidgetState();
@@ -46,7 +54,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Color(0xFFf2cece)
+            : Color(0x0000001F),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -57,7 +67,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryBackground,
+              color: Colors.white,
               size: 30.0,
             ),
             onPressed: () async {
@@ -65,10 +75,13 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             },
           ),
           title: Text(
-            'Monday - Lunch (**Add date**)',
+            valueOrDefault<String>(
+              widget.weekDay,
+              'ERROR',
+            ),
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Readex Pro',
-                  color: FlutterFlowTheme.of(context).warning,
+                  color: Colors.white,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
                 ),
@@ -116,8 +129,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                     0.0, 2.0, 0.0, 0.0),
                                 child: Icon(
                                   Icons.fastfood_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                  color: Colors.white,
                                   size: 24.0,
                                 ),
                               ),
@@ -130,8 +142,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
+                                          color: Colors.white,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -152,12 +163,17 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   child: FlutterFlowChoiceChips(
                                     options: const [
                                       ChipData('Full Meal',
-                                          Icons.attach_money_outlined),
+                                          Icons.attach_money_sharp),
                                       ChipData('Only Main Dish',
                                           Icons.attach_money_sharp)
                                     ],
-                                    onChanged: (val) => setState(() => _model
-                                        .choiceChipsValue = val?.firstOrNull),
+                                    onChanged: (val) async {
+                                      setState(() => _model.choiceChipsValue =
+                                          val?.firstOrNull);
+                                      setState(() {
+                                        _model.fullMeal = !_model.fullMeal;
+                                      });
+                                    },
                                     selectedChipStyle: ChipStyle(
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
@@ -174,6 +190,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                           .primaryText,
                                       iconSize: 18.0,
                                       elevation: 4.0,
+                                      borderColor: Colors.transparent,
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
                                     unselectedChipStyle: ChipStyle(
@@ -187,7 +204,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                       iconColor: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                          .secondaryBackground,
                                       iconSize: 18.0,
                                       elevation: 0.0,
                                       borderRadius: BorderRadius.circular(16.0),
@@ -195,11 +212,13 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                     chipSpacing: 12.0,
                                     rowSpacing: 12.0,
                                     multiselect: false,
+                                    initialized:
+                                        _model.choiceChipsValue != null,
                                     alignment: WrapAlignment.start,
                                     controller:
                                         _model.choiceChipsValueController ??=
                                             FormFieldController<List<String>>(
-                                      [],
+                                      ['Full Meal'],
                                     ),
                                     wrapped: true,
                                   ),
@@ -269,18 +288,24 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
                         fontSize: 30.0,
                         letterSpacing: 0.0,
                       ),
                 ),
               ),
               Text(
-                '2,75€',
+                (bool fullMeal) {
+                  return fullMeal ? '2,75' : '2,95';
+                }(_model.fullMeal),
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
-                      color: FlutterFlowTheme.of(context).warning,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
                       fontSize: 30.0,
                       letterSpacing: 0.0,
                     ),
@@ -292,13 +317,6 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Your total is:',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                      ),
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
@@ -306,7 +324,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           onPressed: () async {
                             final paymentResponse = await processStripePayment(
                               context,
-                              amount: 275,
+                              amount: (bool fullMeal) {
+                                return fullMeal ? 275 : 295;
+                              }(_model.fullMeal),
                               currency: 'EUR',
                               customerEmail: currentUserEmail,
                               description: 'Meal',
@@ -340,8 +360,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                 .titleSmall
                                 .override(
                                   fontFamily: 'Readex Pro',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                  color: Colors.white,
                                   letterSpacing: 0.0,
                                 ),
                             elevation: 2.0,
@@ -369,8 +388,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                    color: Colors.white,
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 2.0,

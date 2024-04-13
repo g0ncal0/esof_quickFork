@@ -22,21 +22,21 @@ void main() async {
 
   await initializeStripe();
 
-  runApp(const MyApp());
+  runApp(const QuickFork());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class QuickFork extends StatefulWidget {
+  const QuickFork({super.key});
 
   // This widget is the root of your application.
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<QuickFork> createState() => _MyAppState();
 
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<QuickFork> {
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
   late Stream<BaseAuthUser> userStream;
@@ -55,14 +55,14 @@ class _MyAppState extends State<MyApp> {
     jwtTokenStream.listen((_) {});
     Future.delayed(
       const Duration(milliseconds: 1000),
-      () => _appStateNotifier.stopShowingSplashImage(),
+          () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
-        _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
-      });
+    _themeMode = mode;
+    FlutterFlowTheme.saveThemeMode(mode);
+  });
 
   @override
   Widget build(BuildContext context) {

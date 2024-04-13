@@ -4,10 +4,7 @@
    <FileRef
       location = "group:Runner.xcodeproj">
    </FileRef>
-<<<<<<< HEAD
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
-=======
->>>>>>> 4ef6844 (Added a Login page to integrate Stripe)
 </Workspace>

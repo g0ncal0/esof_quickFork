@@ -1,11 +1,5 @@
 const axios = require("axios").default;
-<<<<<<< HEAD
 const qs = require('qs');
-
-
-=======
-const qs = require("qs");
->>>>>>> 4ef6844 (Added a Login page to integrate Stripe)
 
 /// Helper functions to route to the appropriate API Call.
 
@@ -13,13 +7,7 @@ async function makeApiCall(context, data) {
   var callName = data["callName"] || "";
   var variables = data["variables"] || {};
 
-<<<<<<< HEAD
-  const callMap = {
-
-  };
-=======
   const callMap = {};
->>>>>>> 4ef6844 (Added a Login page to integrate Stripe)
 
   if (!(callName in callMap)) {
     return {

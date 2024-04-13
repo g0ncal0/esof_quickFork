@@ -2,9 +2,6 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp();
 
-<<<<<<< HEAD
-
-=======
 const stripeModule = require("stripe");
 
 // Credentials
@@ -87,4 +84,3 @@ function userFacingMessage(error) {
     ? error.message
     : "An error occurred, developers have been alerted";
 }
->>>>>>> 4ef6844 (Added a Login page to integrate Stripe)

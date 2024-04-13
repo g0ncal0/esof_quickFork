@@ -2,10 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-<<<<<<< HEAD
       location = "self:">
-=======
-      location = "group:Runner.xcodeproj">
->>>>>>> 4ef6844 (Added a Login page to integrate Stripe)
    </FileRef>
 </Workspace>
