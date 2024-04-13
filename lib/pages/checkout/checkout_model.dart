@@ -1,17 +1,15 @@
-import '/flutter_flow/flutter_flow_choice_chips.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_radio_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'checkout_widget.dart' show CheckoutWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
+  ///  Local state fields for this page.
+
+  bool fullMeal = true;
+
+  int? price = 295;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -23,6 +21,8 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
       choiceChipsValueController?.value = val != null ? [val] : [];
   // State field(s) for RadioButton widget.
   FormFieldController<String>? radioButtonValueController;
+  // Stores action output result for [Stripe Payment] action in Button widget.
+  String? paymentId;
 
   @override
   void initState(BuildContext context) {}
