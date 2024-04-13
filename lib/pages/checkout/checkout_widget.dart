@@ -54,7 +54,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Color(0xFFf2cece)
+            : Color(0x0000001F),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -65,7 +67,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryBackground,
+              color: Colors.white,
               size: 30.0,
             ),
             onPressed: () async {
@@ -79,7 +81,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             ),
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Readex Pro',
-                  color: FlutterFlowTheme.of(context).warning,
+                  color: Colors.white,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
                 ),
@@ -127,8 +129,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                     0.0, 2.0, 0.0, 0.0),
                                 child: Icon(
                                   Icons.fastfood_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                  color: Colors.white,
                                   size: 24.0,
                                 ),
                               ),
@@ -141,8 +142,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
+                                          color: Colors.white,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
@@ -288,7 +288,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.black
+                      : Colors.white,
                         fontSize: 30.0,
                         letterSpacing: 0.0,
                       ),
@@ -301,7 +303,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Readex Pro',
-                      color: FlutterFlowTheme.of(context).warning,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
                       fontSize: 30.0,
                       letterSpacing: 0.0,
                     ),
@@ -313,13 +317,6 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Your total is:',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                      ),
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
@@ -363,8 +360,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                 .titleSmall
                                 .override(
                                   fontFamily: 'Readex Pro',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                  color: Colors.white,
                                   letterSpacing: 0.0,
                                 ),
                             elevation: 2.0,
@@ -392,8 +388,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           textStyle:
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                    color: Colors.white,
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 2.0,

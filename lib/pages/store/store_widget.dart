@@ -253,7 +253,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Lunch',
+                                              'Tuesday - Lunch',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -296,7 +296,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Dinner',
+                                              'Tuesday - Dinner',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -387,7 +387,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Lunch',
+                                              'Wednesday - Lunch',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -430,7 +430,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Dinner',
+                                              'Wednesday - Dinner',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -521,7 +521,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Lunch',
+                                              'Thursday - Lunch',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -564,7 +564,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Dinner',
+                                              'Thursday - Dinner',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -655,7 +655,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Lunch',
+                                              'Friday - Lunch',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -698,7 +698,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Dinner',
+                                              'Friday - Dinner',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -789,7 +789,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Lunch',
+                                              'Saturday - Lunch',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
@@ -832,7 +832,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           'Checkout',
                                           queryParameters: {
                                             'weekDay': serializeParam(
-                                              'Monday - Dinner',
+                                              'Saturday - Dinner',
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,
