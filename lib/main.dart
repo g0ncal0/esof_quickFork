@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -16,6 +17,9 @@ import 'backend/stripe/payment_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
+
+  await dotenv.load(fileName: "assets/.env");
+
   await initFirebase();
 
   await FlutterFlowTheme.initialize();

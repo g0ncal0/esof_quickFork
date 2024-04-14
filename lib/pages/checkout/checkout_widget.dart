@@ -1,3 +1,4 @@
+import '../../backend/mbWay/mbway_payments.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/stripe/payment_manager.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
@@ -373,8 +374,63 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         ),
                       ),
                       FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          var result = await payWithMbway("351#919999999", _model.fullMeal ? '2.75' : '2.95');
+                          String response = result.entries.first.value;
+
+                          if (result.keys.first){
+                            return showDialog<void>(
+                                context: context,
+                                barrierDismissible: false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('MbWay Response'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Text(response),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Ok!'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )]
+                                    );
+                                }
+                            );
+
+                          } else {
+                            return showDialog<void>(
+                                context: context,
+                                barrierDismissible: false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                      title: const Text('MbWay Response'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(response),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Dismiss'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        )]
+                                  );
+                                }
+                            );
+                          }
+
+
+
                         },
                         text: 'Pay with MBWay',
                         options: FFButtonOptions(
