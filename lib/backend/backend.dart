@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'schema/util/firestore_util.dart';
-
-import 'schema/user_bought_tickets_record.dart';
+import './schema/user_bought_tickets_record.dart';
+import './schema/util/firestore_util.dart';
 
 export 'dart:async' show StreamSubscription;
-export 'package:cloud_firestore/cloud_firestore.dart';
-export 'schema/index.dart';
-export 'schema/util/firestore_util.dart';
-export 'schema/util/schema_util.dart';
 
-export 'schema/user_bought_tickets_record.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
+
+export './schema/index.dart';
+export './schema/user_bought_tickets_record.dart';
+export './schema/util/firestore_util.dart';
+export './schema/util/schema_util.dart';
 
 /// Functions to query UserBoughtTicketsRecords (as a Stream and as a Future).
 Future<int> queryUserBoughtTicketsRecordCount({

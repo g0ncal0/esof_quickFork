@@ -25,8 +25,9 @@
  * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import 'form_field_controller.dart';
 import 'package:flutter/material.dart';
+
+import './form_field_controller.dart';
 
 class FlutterFlowRadioButton extends StatefulWidget {
   const FlutterFlowRadioButton({

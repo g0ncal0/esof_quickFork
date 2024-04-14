@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../../backend/backend.dart';
-
 import '../place.dart';
 import '../uploaded_file.dart';
 

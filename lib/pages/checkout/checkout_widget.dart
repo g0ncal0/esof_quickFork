@@ -1,15 +1,17 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/stripe/payment_manager.dart';
-import '/flutter_flow/flutter_flow_choice_chips.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_radio_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-import 'checkout_model.dart';
-export 'checkout_model.dart';
+
+import '../../auth/firebase_auth/auth_util.dart';
+import '../../backend/stripe/payment_manager.dart';
+import '../../flutter_flow/flutter_flow_choice_chips.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_radio_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../flutter_flow/form_field_controller.dart';
+import './checkout_model.dart';
+
+export './checkout_model.dart';
 
 class CheckoutWidget extends StatefulWidget {
   const CheckoutWidget({

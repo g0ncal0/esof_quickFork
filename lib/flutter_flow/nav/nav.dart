@@ -2,19 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import '../../auth/base_auth_user_provider.dart';
-import '../../auth1/auth1_widget.dart';
 
+import '../../auth/base_auth_user_provider.dart';
 import '../../index.dart';
 import '../../main.dart';
 import '../flutter_flow_theme.dart';
 import '../flutter_flow_util.dart';
-import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
+
 export 'serialization_util.dart';
 
 const kTransitionInfoKey = '__transition_info__';

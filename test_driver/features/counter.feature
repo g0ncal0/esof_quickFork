@@ -1,5 +1,6 @@
 Feature: Verify Application Launch
 
-  Scenario: Application Launches Successfully
-    #Given the application is launched
-    #Then the main screen is displayed
+  Scenario: 1 + 0
+    Given I start with 1
+    When I add 0
+    Then I end up with 1

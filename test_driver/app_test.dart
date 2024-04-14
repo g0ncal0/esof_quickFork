@@ -14,7 +14,7 @@ Future<void> main() {
     ..stepDefinitions = []
     ..customStepParameterDefinitions = []
     ..restartAppBetweenScenarios = true
-    ..targetAppPath = "test_driver/app.dart";
-  // ..tagExpression = "@smoke" // uncomment to see an example of running scenarios based on tag expressions
+    ..targetAppPath = "test_driver/app.dart"
+    ..tagExpression = "@smoke"; // uncomment to see an example of running scenarios based on tag expressions
   return GherkinRunner().execute(config);
 }
