@@ -46,6 +46,26 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
     super.dispose();
   }
 
+  void showPaymentStatus(BuildContext context, bool paymentSuccessful) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(paymentSuccessful ? 'Compra bem-sucedida' : 'Erro no pagamento'),
+          content: Text(paymentSuccessful ? 'O pagamento foi processado com sucesso!' : 'Ocorreu um erro durante o processamento do pagamento.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Fechar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -336,12 +356,17 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               buttonTextColor:
                                   FlutterFlowTheme.of(context).secondary,
                             );
+                            final paymentSuccessful = paymentResponse.paymentId != null && paymentResponse.paymentId!.isNotEmpty;
                             if (paymentResponse.paymentId == null &&
                                 paymentResponse.errorMessage != null) {
+
                               showSnackbar(
                                 context,
                                 'Error: ${paymentResponse.errorMessage}',
                               );
+                            }
+                            else {
+                              showPaymentStatus(context, paymentSuccessful);
                             }
                             _model.paymentId = paymentResponse.paymentId ?? '';
 
