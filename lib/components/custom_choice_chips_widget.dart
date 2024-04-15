@@ -1,10 +1,12 @@
-import '/flutter_flow/flutter_flow_choice_chips.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-import 'custom_choice_chips_model.dart';
-export 'custom_choice_chips_model.dart';
+
+import '../flutter_flow/flutter_flow_choice_chips.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/form_field_controller.dart';
+import './custom_choice_chips_model.dart';
+
+export './custom_choice_chips_model.dart';
 
 class CustomChoiceChipsWidget extends StatefulWidget {
   const CustomChoiceChipsWidget({super.key});

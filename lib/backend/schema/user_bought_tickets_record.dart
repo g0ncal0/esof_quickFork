@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 
-import '/backend/schema/util/firestore_util.dart';
-import '/backend/schema/util/schema_util.dart';
-
-import 'index.dart';
+import '../../backend/schema/util/firestore_util.dart';
+import '../../backend/schema/util/schema_util.dart';
 
 class UserBoughtTicketsRecord extends FirestoreRecord {
   UserBoughtTicketsRecord._(
