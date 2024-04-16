@@ -378,6 +378,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       ),
                       FFButtonWidget(
                         onPressed: () async {
+                          var clickedStatus = ValueNotifier<bool>(false);
                           String phoneNum = "";
                           return showDialog<void>(
                               context: context,
@@ -401,9 +402,15 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                       ),
                                     ),
                                     actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Ok!'),
-                                        onPressed: () async {
+                                      ValueListenableBuilder(
+                                      valueListenable: clickedStatus,
+                                      builder: (context, bool isClicked, _) {
+                                        return TextButton(
+                                            child: const Text('Ok!'),
+                                        onPressed: isClicked
+                                            ? () {}
+                                            :() async {
+                                          clickedStatus.value = true;
                                           if (regex.hasMatch(inputController.text)){
                                             phoneNum = "351#${inputController.text}";
 
@@ -481,7 +488,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                             );
                                           }
                                         },
-                                      )]
+                                      );
+                                  })]
                                 );
                               }
                           );
