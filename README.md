@@ -101,15 +101,15 @@ Payment Gateway is the method that allows the transaction to occur between the b
 
 The physical architecture diagram shows five nodes that represent the physical components of our app and how they are connected.
 
-The first node is the "Students SmartPhone", represented by the APP_FLUTTER component, which is used to access the app using the BUYER_UI.
+The first node is the "Students SmartPhone", represented by the 'Application (Flutter)' component, which is used to access the app using the 'App UI'.
 
-The second one is the "Workers SmartPhone", represented by the APP_FLUTTER component, which is used to access the app using the CHECKER_UI.
+The second one is the "Workers SmartPhone", represented by the 'Application (Flutter)' component, which is used to access the app using the 'App UI' and 'Ticket Checker UI'.
 
 The third is the "Application Server" that makes the connection between the UIs and logical and checking services, which then connects to the Database, while also accessing the required external entities.
 
-The fourth node is the "Bank Server", represented by the BANK_API, which is used to access external information related to the user's bank account.
+The fourth node is the "Bank Server", represented by the 'Bank (API)', which is used to access external information related to the user's bank account.
 
-The fifth one is the "Sigarra Server", represented by the SIGARRA_API, which is used to access external information related to the user's Sigarra account.
+The fifth one is the "Sigarra Server", represented by the 'Sigarra (API)', which is used to access external information related to the user's Sigarra account.
 
 ### Vertical prototype
 <p align="center" justify="center">
