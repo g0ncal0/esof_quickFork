@@ -37,10 +37,10 @@ Thank you!
 
 ### Product Vision
 
-Skip the line, save time. A revolutionary app designed to transform the canteen experience at FEUP by simplifying the queuing process. Our vision is to create an organized and efficient platform that’s not only user-friendly but also allows students to maximize their time.
+Skip the line, save time. An app designed to transform the canteen experience at FEUP by simplifying the queuing process. Our vision is to create an organized and efficient app that’s not only user-friendly but also allows students to optimize their time.
 
 ### Features and Assumptions
-- Buy canteen tickets - Purchase canteen tickets effortlessly without needing physical copies and wainting in the line.
+- Buy canteen tickets - Purchase canteen tickets effortlessly without needing physical copies and waiting in the line.
 - Consult canteen menus - Easily view menus for specific days to decide on purchasing tickets.
 - Payment with card and MB Way - Pay for tickets using either card or MB Way, ensuring a smooth transaction process.
 - Save payment methods - Store your preferred payment methods for future purchases, to improve the buying process.
