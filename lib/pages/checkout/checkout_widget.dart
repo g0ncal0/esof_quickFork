@@ -188,11 +188,21 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                           Icons.attach_money_sharp)
                                     ],
                                     onChanged: (val) async {
-                                      setState(() => _model.choiceChipsValue =
+                                      if (val?.firstOrNull == 'Full Meal') {
+                                        setState(() =>
+                                        _model.choiceChipsValue =
+                                            val?.firstOrNull);
+                                        setState(() {
+                                          _model.fullMeal = true;
+                                        });
+                                      }
+                                      else {
+                                        setState(() => _model.choiceChipsValue =
                                           val?.firstOrNull);
-                                      setState(() {
-                                        _model.fullMeal = !_model.fullMeal;
-                                      });
+                                        setState(() {
+                                          _model.fullMeal = false;
+                                        });
+                                      }
                                     },
                                     selectedChipStyle: ChipStyle(
                                       backgroundColor:
@@ -318,7 +328,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
               ),
               Text(
                 (bool fullMeal) {
-                  return fullMeal ? '2,75' : '2,95';
+                  return fullMeal ? '2,95' : '2,75';
                 }(_model.fullMeal),
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -345,7 +355,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             final paymentResponse = await processStripePayment(
                               context,
                               amount: (bool fullMeal) {
-                                return fullMeal ? 275 : 295;
+                                return fullMeal ? 295 : 275;
                               }(_model.fullMeal),
                               currency: 'EUR',
                               customerEmail: currentUserEmail,
