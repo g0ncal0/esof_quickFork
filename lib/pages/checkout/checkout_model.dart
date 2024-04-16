@@ -1,8 +1,7 @@
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
+import 'checkout_widget.dart' show CheckoutWidget;
 import 'package:flutter/material.dart';
-
-import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/form_field_controller.dart';
-import './checkout_widget.dart' show CheckoutWidget;
 
 class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
   ///  Local state fields for this page.
