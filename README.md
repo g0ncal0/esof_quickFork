@@ -63,17 +63,18 @@ That's it, if you are a user of FEUP's canteen you'll surely love our app.
 ### Domain model
 
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b3850ba15a4176be8e03639a0955b117643e0ebf/images/DomainModel.png?raw=true"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/2eb6f1bea2a86e18a017122e3141f1a873e62d38/images/classDiagram.png?raw=true"/>
 </p>
-
-For every ticket there is an ID, Date, a boolean to check if it is a lunch or dinner, the kind of meal and another boolean to check if it has already been used. The ticket can only exist if it has been paid.
-
-One user can buy many tickets, related to the user by their UpNumber, name and email address.
 
 The user can be either a student or an employee. From the student it is relevant to know the year and the degree they are on. As for the employee, their function must be known.
 
-The ticket can be bought by the user using MbWay or a credit card, and it needs to be validated by the employee.
+A user can buy a ticket for a specific meal, which has a type (meat, fish, or vegetarian), a description, a boolean to check if it is a lunch or dinner, a boolean to check if it is a full dish or only the main dish and a date for when the dish is being served.
 
+For every ticket there is an ID, a price that depends on the user (student or employee) and the fullDish boolean, and a boolean to check if it has already been used. The ticket can only exist if it has been paid for.
+
+One user can buy many tickets, related to the user by their UpNumber, name and email address.
+
+The ticket can be bought by the user using MbWay or a credit card, and it needs to be validated by the employee.
 
 ## Architecture and Design
 
