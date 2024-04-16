@@ -1,19 +1,29 @@
 Feature: Easy Payment
 
-  Scenario: Successful Purchase
-  Given I am on payment methods page during a purchase
-  And I do not have saved payment methods
-  When I try to add a payment method
-  And  I write a valid card or phone number
-  And I wait 1 second
-  Then I expect the successful purchase pop-up
-  And the ticket to be available in the ticket menu
+  Scenario: Successful Purchase With Card
+    Given I am on checkout page during a purchase
+    When I tap "Pay with card" button
+    And  I write a valid credit card
+    And I wait 1 second
+    Then I expect the successful purchase pop-up
 
-  Scenario: Unsuccessful Purchase
-  Given I am on payment methods page during a purchase
-  And I do not have saved payment methods
-  When I try to add a payment method
-  And  I write a not valid  card or phone number
-  And I wait 1 second
-  Then I expect the failed purchase pop-up
-  And the ticket not to be available in the ticket menu
+  Scenario: Unsuccessful Purchase With Card
+    Given I am on checkout page during a purchase
+    When I tap "Pay with card" button
+    And  I write an invalid credit card
+    And I wait 1 second
+    Then I expect the unsuccessful purchase pop-up
+
+  Scenario: Successful Purchase With MBWay
+    Given I am on checkout page during a purchase
+    When I tap "Pay with MBWay" button
+    And  I write a valid phone number
+    And I wait 1 second
+    Then I expect the successful purchase pop-up
+
+  Scenario: Unsuccessful Purchase With MBWay
+    Given I am on checkout page during a purchase
+    When I tap "Pay with MBWay" button
+    And  I write an invalid phone number
+    And I wait 1 second
+    Then I expect the unsuccessful purchase pop-up
