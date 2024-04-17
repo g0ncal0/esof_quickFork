@@ -138,3 +138,35 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >   ### Retrospectives
 >
 >   This sprint does not add any valuable functions to the app. The current state of the app is a simple menu with simple buttons. We also planned ahead the project, by establishing the workflow.
+
+### Sprint 1
+
+>   ### Github Projects Board
+>
+>   #### Beginning
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="100%"/>
+>   </p>
+>
+>   #### End
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="100%"/>
+>   </p>
+>
+>   ### Retrospectives
+>
+>   In this sprint we did:
+>   - An interactive menu
+>   - The possibility to buy tickets and pay them with a card or MBWay
+> 
+>   What went well:
+>   - We managed to do everything we had planned
+>   - Integration between FlutterFlow and Flutter
+>
+>   What we will do differently:
+>   - More meetings during the sprint
+>   - Better division of work
+>
+>   What still puzzles me is:
+>   - Working with Flutter
+>   - Automation tests
