@@ -1,17 +1,18 @@
+import 'package:flutter/services.dart';
+
+import '../../backend/mbWay/mbway_payments.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/stripe/payment_manager.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_radio_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-
-import '../../auth/firebase_auth/auth_util.dart';
-import '../../backend/stripe/payment_manager.dart';
-import '../../flutter_flow/flutter_flow_choice_chips.dart';
-import '../../flutter_flow/flutter_flow_icon_button.dart';
-import '../../flutter_flow/flutter_flow_radio_button.dart';
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
-import '../../flutter_flow/form_field_controller.dart';
-import './checkout_model.dart';
-
-export './checkout_model.dart';
+import 'checkout_model.dart';
+export 'checkout_model.dart';
 
 class CheckoutWidget extends StatefulWidget {
   const CheckoutWidget({
@@ -48,6 +49,26 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
     super.dispose();
   }
 
+  void showPaymentStatus(BuildContext context, bool paymentSuccessful) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(paymentSuccessful ? 'Compra bem-sucedida' : 'Erro no pagamento'),
+          content: Text(paymentSuccessful ? 'O pagamento foi processado com sucesso!' : 'Ocorreu um erro durante o processamento do pagamento.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Fechar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -55,6 +76,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
         backgroundColor: Theme.of(context).brightness == Brightness.light
             ? Color(0xFFf2cece)
@@ -170,11 +192,21 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                           Icons.attach_money_sharp)
                                     ],
                                     onChanged: (val) async {
-                                      setState(() => _model.choiceChipsValue =
+                                      if (val?.firstOrNull == 'Full Meal') {
+                                        setState(() =>
+                                        _model.choiceChipsValue =
+                                            val?.firstOrNull);
+                                        setState(() {
+                                          _model.fullMeal = true;
+                                        });
+                                      }
+                                      else {
+                                        setState(() => _model.choiceChipsValue =
                                           val?.firstOrNull);
-                                      setState(() {
-                                        _model.fullMeal = !_model.fullMeal;
-                                      });
+                                        setState(() {
+                                          _model.fullMeal = false;
+                                        });
+                                      }
                                     },
                                     selectedChipStyle: ChipStyle(
                                       backgroundColor:
@@ -300,7 +332,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
               ),
               Text(
                 (bool fullMeal) {
-                  return fullMeal ? '2,75' : '2,95';
+                  return fullMeal ? '2,95' : '2,75';
                 }(_model.fullMeal),
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -327,7 +359,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             final paymentResponse = await processStripePayment(
                               context,
                               amount: (bool fullMeal) {
-                                return fullMeal ? 275 : 295;
+                                return fullMeal ? 295 : 275;
                               }(_model.fullMeal),
                               currency: 'EUR',
                               customerEmail: currentUserEmail,
@@ -338,12 +370,17 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               buttonTextColor:
                                   FlutterFlowTheme.of(context).secondary,
                             );
+                            final paymentSuccessful = paymentResponse.paymentId != null && paymentResponse.paymentId!.isNotEmpty;
                             if (paymentResponse.paymentId == null &&
                                 paymentResponse.errorMessage != null) {
+
                               showSnackbar(
                                 context,
                                 'Error: ${paymentResponse.errorMessage}',
                               );
+                            }
+                            else {
+                              showPaymentStatus(context, paymentSuccessful);
                             }
                             _model.paymentId = paymentResponse.paymentId ?? '';
 
@@ -375,8 +412,122 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         ),
                       ),
                       FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          var clickedStatus = ValueNotifier<bool>(false);
+                          String phoneNum = "";
+                          return showDialog<void>(
+                              context: context,
+                              barrierDismissible: true, // user must tap button!
+                              builder: (BuildContext context) {
+                                RegExp regex = RegExp(r'^[0-9]{9,}$');
+                                var inputController = TextEditingController();
+                                return AlertDialog(
+                                    clipBehavior: Clip.none,
+                                    title: const Text('MbWay Response'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          TextField(
+                                            keyboardType: TextInputType.phone,
+                                            maxLength: 9,
+                                            autofocus: true,
+                                            controller: inputController,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      ValueListenableBuilder(
+                                      valueListenable: clickedStatus,
+                                      builder: (context, bool isClicked, _) {
+                                        return TextButton(
+                                            child: const Text('Ok!'),
+                                        onPressed: isClicked
+                                            ? () {}
+                                            :() async {
+                                          clickedStatus.value = true;
+                                          if (regex.hasMatch(inputController.text)){
+                                            phoneNum = "351#${inputController.text}";
+
+                                            var result = await payWithMbway(phoneNum, _model.fullMeal ? '2.75' : '2.95');
+                                            String response = result.entries.first.value;
+
+                                            if (result.keys.first){
+                                              return showDialog<void>(
+                                                  context: context,
+                                                  barrierDismissible: false, // user must tap button!
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                        title: const Text('MbWay Response'),
+                                                        content: SingleChildScrollView(
+                                                          child: ListBody(
+                                                            children: <Widget>[
+                                                              Text(response),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: const Text('Ok!'),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          )]
+                                                    );
+                                                  }
+                                              );
+                                            } else {
+                                              return showDialog<void>(
+                                                  context: context,
+                                                  barrierDismissible: false, // user must tap button!
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                        title: const Text('MbWay Response'),
+                                                        content: SingleChildScrollView(
+                                                          child: ListBody(
+                                                            children: <Widget>[
+                                                              Text(response),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: const Text('Dismiss'),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          )]
+                                                    );
+                                                  }
+                                              );
+                                            }
+                                          } else {
+                                            return showDialog<void>(
+                                                context: context,
+                                                barrierDismissible: false, // user must tap button!
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                      title: const Text('Unknown error, missing Phone Number.'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: const Text('Dismiss'),
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                        )]
+                                                  );
+                                                }
+                                            );
+                                          }
+                                        },
+                                      );
+                                  })]
+                                );
+                              }
+                          );
                         },
                         text: 'Pay with MBWay',
                         options: FFButtonOptions(

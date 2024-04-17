@@ -37,10 +37,10 @@ Thank you!
 
 ### Product Vision
 
-Skip the line, save time. A revolutionary app designed to transform the canteen experience at FEUP by simplifying the queuing process. Our vision is to create an organized and efficient platform that’s not only user-friendly but also allows students to maximize their time.
+Skip the line, save time. An app designed to transform the canteen experience at FEUP by simplifying the queuing process. Our vision is to create an organized and efficient app that’s not only user-friendly but also allows students to optimize their time.
 
 ### Features and Assumptions
-- Buy canteen tickets - Purchase canteen tickets effortlessly without needing physical copies and wainting in the line.
+- Buy canteen tickets - Purchase canteen tickets effortlessly without needing physical copies and waiting in the line.
 - Consult canteen menus - Easily view menus for specific days to decide on purchasing tickets.
 - Payment with card and MB Way - Pay for tickets using either card or MB Way, ensuring a smooth transaction process.
 - Save payment methods - Store your preferred payment methods for future purchases, to improve the buying process.
@@ -63,17 +63,18 @@ That's it, if you are a user of FEUP's canteen you'll surely love our app.
 ### Domain model
 
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/b3850ba15a4176be8e03639a0955b117643e0ebf/images/DomainModel.png?raw=true"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/2eb6f1bea2a86e18a017122e3141f1a873e62d38/images/classDiagram.png?raw=true"/>
 </p>
-
-For every ticket there is an ID, Date, a boolean to check if it is a lunch or dinner, the kind of meal and another boolean to check if it has already been used. The ticket can only exist if it has been paid.
-
-One user can buy many tickets, related to the user by their UpNumber, name and email address.
 
 The user can be either a student or an employee. From the student it is relevant to know the year and the degree they are on. As for the employee, their function must be known.
 
-The ticket can be bought by the user using MbWay or a credit card, and it needs to be validated by the employee.
+A user can buy a ticket for a specific meal, which has a type (meat, fish, or vegetarian), a description, a boolean to check if it is a lunch or dinner, a boolean to check if it is a full dish or only the main dish and a date for when the dish is being served.
 
+For every ticket there is an ID, a price that depends on the user (student or employee) and the fullDish boolean, and a boolean to check if it has already been used. The ticket can only exist if it has been paid for.
+
+One user can buy many tickets, related to the user by their UpNumber, name and email address.
+
+The ticket can be bought by the user using MbWay or a credit card, and it needs to be validated by the employee.
 
 ## Architecture and Design
 
@@ -101,15 +102,15 @@ Payment Gateway is the method that allows the transaction to occur between the b
 
 The physical architecture diagram shows five nodes that represent the physical components of our app and how they are connected.
 
-The first node is the "Students SmartPhone", represented by the APP_FLUTTER component, which is used to access the app using the BUYER_UI.
+The first node is the "Students SmartPhone", represented by the 'Application (Flutter)' component, which is used to access the app using the 'App UI'.
 
-The second one is the "Workers SmartPhone", represented by the APP_FLUTTER component, which is used to access the app using the CHECKER_UI.
+The second one is the "Workers SmartPhone", represented by the 'Application (Flutter)' component, which is used to access the app using the 'App UI' and 'Ticket Checker UI'.
 
 The third is the "Application Server" that makes the connection between the UIs and logical and checking services, which then connects to the Database, while also accessing the required external entities.
 
-The fourth node is the "Bank Server", represented by the BANK_API, which is used to access external information related to the user's bank account.
+The fourth node is the "Bank Server", represented by the 'Bank (API)', which is used to access external information related to the user's bank account.
 
-The fifth one is the "Sigarra Server", represented by the SIGARRA_API, which is used to access external information related to the user's Sigarra account.
+The fifth one is the "Sigarra Server", represented by the 'Sigarra (API)', which is used to access external information related to the user's Sigarra account.
 
 ### Vertical prototype
 <p align="center" justify="center">
