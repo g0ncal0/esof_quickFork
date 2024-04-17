@@ -124,7 +124,7 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 * Backlog management: [Github Projects Board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/16)
 * Release management:
   * [v0.0.2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/apk_release_sprint_0)
-  * [v.1.0.0](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/apk_release_sprint_1)
+  * [v1.0.0](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/apk_release_sprint_1)
 * Sprint planning and retrospectives:
 
 ### Sprint 0
