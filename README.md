@@ -145,12 +145,12 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >
 >   #### Beginning
 >   <p align="center" justify="center">
->  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="100%"/>
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/0c7c2824ceb12357423daca9438fc6c4cf733223/images/sprint1_beginning.png" width="100%"/>
 >   </p>
 >
 >   #### End
 >   <p align="center" justify="center">
->  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/74f14b856d2c1c0fc31c95db8e8eca2a86d407c7/images/product_backlog_s0b.png" width="100%"/>
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/0c7c2824ceb12357423daca9438fc6c4cf733223/images/sprint1_end.png" width="100%"/>
 >   </p>
 >
 >   ### Retrospectives
