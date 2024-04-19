@@ -7,9 +7,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'package:esof/models/admin_state.dart';
-import 'package:provider/provider.dart';
-
 import 'auth/firebase_auth/auth_util.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'backend/firebase/firebase_config.dart';
@@ -35,12 +32,7 @@ void main() async {
 
   await initializeStripe();
 
-  runApp(
-      ChangeNotifierProvider(
-        create: (context) => AdminState(),
-        child: const QuickFork(),
-      ),
-  );
+  runApp(const QuickFork());
 }
 
 class QuickFork extends StatefulWidget {
