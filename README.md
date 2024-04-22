@@ -123,7 +123,8 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 
 * Backlog management: [Github Projects Board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/16)
 * Release management:
-  * [v0.0.2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/Sprint_0)
+  * [v0.0.2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/apk_release_sprint_0)
+  * [v1.0.0](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/releases/tag/apk_release_sprint_1)
 * Sprint planning and retrospectives:
 
 ### Sprint 0
@@ -138,3 +139,35 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >   ### Retrospectives
 >
 >   This sprint does not add any valuable functions to the app. The current state of the app is a simple menu with simple buttons. We also planned ahead the project, by establishing the workflow.
+
+### Sprint 1
+
+>   ### Github Projects Board
+>
+>   #### Beginning
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/0c7c2824ceb12357423daca9438fc6c4cf733223/images/sprint1_beginning.png" width="100%"/>
+>   </p>
+>
+>   #### End
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/0c7c2824ceb12357423daca9438fc6c4cf733223/images/sprint1_end.png" width="100%"/>
+>   </p>
+>
+>   ### Retrospectives
+>
+>   In this sprint we did:
+>   - An interactive menu
+>   - The possibility to buy tickets and pay them with a card or MBWay
+> 
+>   What went well:
+>   - We managed to do everything we had planned
+>   - Integration between FlutterFlow and Flutter
+>
+>   What we will do differently:
+>   - More meetings during the sprint
+>   - Better division of work
+>
+>   What still puzzles me is:
+>   - Working with Flutter
+>   - Automation tests
