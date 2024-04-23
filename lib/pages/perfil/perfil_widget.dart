@@ -4,6 +4,7 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../backend/firebase/firebase_config.dart';
 import './perfil_model.dart';
 
 export './perfil_model.dart';
@@ -17,6 +18,7 @@ class PerfilWidget extends StatefulWidget {
 
 class _PerfilWidgetState extends State<PerfilWidget> {
   late PerfilModel _model;
+  late AppStateNotifier _appStateNotifier;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -24,6 +26,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PerfilModel());
+    _appStateNotifier = AppStateNotifier.instance;
   }
 
   @override
@@ -31,6 +34,49 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  void _showAdminLoginPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final TextEditingController passwordController = TextEditingController();
+
+        return AlertDialog(
+          title: Text('Admin Login'),
+          content: TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (passwordController.text == '1234') {
+                  print('Admin access granted!');
+                  _appStateNotifier.setAdmin(true);
+                  Navigator.pop(context);
+                } else {
+                  // Show error message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Invalid password'),
+                    ),
+                  );
+                }
+              },
+              child: Text('Login'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -200,6 +246,35 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                           color: Color(0xFFD2AD94),
                           fontSize: 25.0,
                         ),
+                    elevation: 3.0,
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.01, 0.65),
+                child: FFButtonWidget(
+                  onPressed: () {
+                    _showAdminLoginPopup();
+                  },
+                  text: 'Admin Login',
+                  options: FFButtonOptions(
+                    width: 200.0,
+                    height: 66.0,
+                    padding:
+                    EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                    iconPadding:
+                    EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: Color(0xFF252322),
+                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                      fontFamily: 'Readex Pro',
+                      color: Color(0xFFD2AD94),
+                      fontSize: 25.0,
+                    ),
                     elevation: 3.0,
                     borderSide: BorderSide(
                       color: Colors.transparent,
