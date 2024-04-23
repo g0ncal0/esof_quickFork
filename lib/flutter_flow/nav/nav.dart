@@ -144,6 +144,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/auth1',
           builder: (context, params) => const Auth1Widget(),
         ),
+        FFRoute(
+          name: 'Validation',
+          path: '/validation',
+          builder: (context, params) => ValidationWidget(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
