@@ -120,6 +120,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Monday - Lunch',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'monday-lunch',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -163,6 +167,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Monday - Dinner',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'monday-dinner',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -254,6 +262,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Tuesday - Lunch',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'tuesday-lunch',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -297,6 +309,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Tuesday - Dinner',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'tuesday-dinner',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -388,6 +404,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Wednesday - Lunch',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'wednesday-lunch',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -431,6 +451,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Wednesday - Dinner',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'wednesday-dinner',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -522,6 +546,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Thursday - Lunch',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'thursday-lunch',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -565,6 +593,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Thursday - Dinner',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'thursday-dinner',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -656,6 +688,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Friday - Lunch',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'friday-lunch',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -699,6 +735,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Friday - Dinner',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'friday-dinner',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -790,6 +830,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Saturday - Lunch',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'saturday-lunch',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },
@@ -833,6 +877,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                               'Saturday - Dinner',
                                               ParamType.String,
                                             ),
+                                            'mealID': serializeParam(
+                                              'saturday-dinner',
+                                              ParamType.String,
+                                            )
                                           }.withoutNulls,
                                         );
                                       },

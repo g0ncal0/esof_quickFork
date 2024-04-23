@@ -1,5 +1,5 @@
 const axios = require("axios").default;
-const qs = require('qs');
+const qs = require("qs");
 
 /// Helper functions to route to the appropriate API Call.
 

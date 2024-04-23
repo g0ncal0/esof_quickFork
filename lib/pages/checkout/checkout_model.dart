@@ -1,6 +1,8 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'checkout_widget.dart' show CheckoutWidget;
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
@@ -13,6 +15,10 @@ class CheckoutModel extends FlutterFlowModel<CheckoutWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // Stores action output result for [Firestore Query - Query a collection] action in Checkout widget.
+  WeekelyMealsRecord? mealInfo;
+  // Stores action output result for [Custom Action - concatDescriptions] action in Checkout widget.
+  List<String>? descriptions;
   // State field(s) for ChoiceChips widget.
   FormFieldController<List<String>>? choiceChipsValueController;
   String? get choiceChipsValue =>
