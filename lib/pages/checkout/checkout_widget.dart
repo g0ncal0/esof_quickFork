@@ -277,7 +277,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             ],
                           ),
                         ),
-                    if (_model.descriptions != null &&(_model.descriptions)!.isNotEmpty)
+                    if (_model.descriptions != null &&(_model.descriptions)!.isNotEmpty && _model.choiceChipsValue != null && (_model.choiceChipsValue)!.isNotEmpty)
                       Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                       8.0, 4.0, 8.0, 4.0),
@@ -285,7 +285,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             if (_model.descriptions != null &&
-                                (_model.descriptions)!.isNotEmpty)
+                                (_model.descriptions)!.isNotEmpty && _model.choiceChipsValue != null && (_model.choiceChipsValue)!.isNotEmpty)
                               Expanded(
                                 child: Align(
                                   alignment:
