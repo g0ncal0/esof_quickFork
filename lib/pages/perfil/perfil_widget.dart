@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../backend/mbWay/mbway_payments.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -155,7 +156,122 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 alignment: AlignmentDirectional(0.04, 0.34),
                 child: FFButtonWidget(
                   onPressed: () {
-                    print('Button pressed ...');
+
+                    var clickedStatus = ValueNotifier<bool>(false);
+                    String phoneNum = "";
+                    return showDialog<void>(
+                        context: context,
+                        barrierDismissible: true, // user must tap button!
+                        builder: (BuildContext context) {
+                          RegExp regex = RegExp(r'^[0-9]{9,}$');
+                          var inputController = TextEditingController();
+                          return AlertDialog(
+                              clipBehavior: Clip.none,
+                              title: const Text('Add your number'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    TextField(
+                                      keyboardType: TextInputType.phone,
+                                      maxLength: 9,
+                                      autofocus: true,
+                                      controller: inputController,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                ValueListenableBuilder(
+                                    valueListenable: clickedStatus,
+                                    builder: (context, bool isClicked, _) {
+                                      return TextButton(
+                                        child: const Text('Ok!'),
+                                        onPressed: isClicked
+                                            ? () {}
+                                            :() async {
+                                          clickedStatus.value = true;
+                                          if (regex.hasMatch(inputController.text)){
+                                            phoneNum = "351#${inputController.text}";
+                                            //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
+                                            var result = await payWithMbway(phoneNum, '2.95');
+                                            String response = result.entries.first.value;
+
+                                            if (result.keys.first){
+                                              return showDialog<void>(
+                                                  context: context,
+                                                  barrierDismissible: false, // user must tap button!
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                        title: const Text('Add your number'),
+                                                        content: SingleChildScrollView(
+                                                          child: ListBody(
+                                                            children: <Widget>[
+                                                              Text("Sucessufully added number"),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: const Text('Ok!'),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          )]
+                                                    );
+                                                  }
+                                              );
+                                            } else {
+                                              return showDialog<void>(
+                                                  context: context,
+                                                  barrierDismissible: false, // user must tap button!
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                        title: const Text('Add your number'),
+                                                        content: SingleChildScrollView(
+                                                          child: ListBody(
+                                                            children: <Widget>[
+                                                              Text("Error adding number"),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: const Text('Dismiss'),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          )]
+                                                    );
+                                                  }
+                                              );
+                                            }
+                                          } else {
+                                            return showDialog<void>(
+                                                context: context,
+                                                barrierDismissible: false, // user must tap button!
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                      title: const Text('Unknown error, missing Phone Number.'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: const Text('Dismiss'),
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                        )]
+                                                  );
+                                                }
+                                            );
+                                          }
+                                        },
+                                      );
+                                    })]
+                          );
+                        }
+                    );
                   },
                   text: 'Associate MBWay',
                   options: FFButtonOptions(
