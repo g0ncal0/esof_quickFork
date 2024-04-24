@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../../backend/mbWay/mbway_payments.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -412,6 +414,30 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                 showPaymentStatus(context, paymentSuccessful);
                               }
                               _model.paymentId = paymentResponse.paymentId ?? '';
+
+                              ///////////////////////
+                              if (paymentSuccessful){
+                                String generateRandomId(int length) {
+                                  const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                                  Random random = Random();
+                                  return String.fromCharCodes(Iterable.generate(
+                                      length, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
+                                }
+
+                                DateTime currentTime = DateTime.now();
+                                String qrcode = generateRandomId(10); // Generate a random string of length 10
+                                CollectionReference<Map<String, dynamic>> ticketRef = FirebaseFirestore.instance.collection("bought_ticket");
+                                QuerySnapshot<Map<String, dynamic>> querySnapshot = await ticketRef.get();
+                                await FirebaseFirestore.instance.collection("bought_ticket").doc(qrcode).set({
+                                  "date" : currentTime, // Incrementing the value
+                                  "qrcodeinfo" : qrcode,
+                                  "uid" : (currentUser)!.email ?? '',
+                                  "fullDish" : _model.widget.fullMeal,
+                                  "type" : _model.radioButtonValue
+                                });
+
+                              }
+                              ///////////////////////
 
                               setState(() {});
                             },
