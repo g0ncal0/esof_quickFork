@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -133,6 +134,38 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                       elevation: 2.0,
                     ),
                   ),
+                ),
+                Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    child: FFButtonWidget(
+                    onPressed: () async {
+                      _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
+                        '#C62828', // scanning line color
+                        'Cancel', // cancel button text
+                        true, // whether to show the flash icon
+                        ScanMode.QR,
+                      );
+                      setState(() {});
+                    },
+                    text: 'Button',
+                    options: FFButtonOptions(
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                        letterSpacing: 0,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  )
                 ),
               ],
             ),
