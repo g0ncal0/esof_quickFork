@@ -424,7 +424,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                       length, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
                                 }
 
-                                DateTime currentTime = DateTime.now();
+                                String currentTime = DateTime.now().secondsSinceEpoch.toString();
                                 String qrcode = generateRandomId(10); // Generate a random string of length 10
                                 CollectionReference<Map<String, dynamic>> ticketRef = FirebaseFirestore.instance.collection("bought_ticket");
                                 QuerySnapshot<Map<String, dynamic>> querySnapshot = await ticketRef.get();
@@ -433,7 +433,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   "qrcodeinfo" : qrcode,
                                   "uid" : (currentUser)!.email ?? '',
                                   "fullDish" : _model.widget.fullMeal,
-                                  "type" : _model.radioButtonValue
+                                  "type" : _model.radioButtonValue,
+                                  "meal_id" : _model.widget.mealID
                                 });
 
                               }
