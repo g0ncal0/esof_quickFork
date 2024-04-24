@@ -259,35 +259,71 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(-0.01, 0.65),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    _showWorkerLoginPopup();
-                  },
-                  text: 'Worker Login',
-                  options: FFButtonOptions(
-                    width: 200.0,
-                    height: 66.0,
-                    padding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                    EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: Color(0xFF252322),
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      fontFamily: 'Readex Pro',
-                      color: Color(0xFFD2AD94),
-                      fontSize: 25.0,
+              if (!_appStateNotifier.isAdmin)
+                Align(
+                  alignment: AlignmentDirectional(-0.01, 0.65),
+                  child: FFButtonWidget(
+                    onPressed: () {
+                      _showWorkerLoginPopup();
+                    },
+                    text: 'Worker Login',
+                    options: FFButtonOptions(
+                      width: 200.0,
+                      height: 66.0,
+                      padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: Color(0xFF252322),
+                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Readex Pro',
+                        color: Color(0xFFD2AD94),
+                        fontSize: 25.0,
+                      ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-              ),
+              if (_appStateNotifier.isAdmin)
+                Align(
+                  alignment: AlignmentDirectional(-0.01, 0.65),
+                  child: FFButtonWidget(
+                      onPressed: () {
+                      _appStateNotifier.setAdmin(false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Worker Sign Out done successfully!'),
+                        ),
+                      );
+                    },
+                    text: 'Worker Sign Out',
+                    options: FFButtonOptions(
+                      width: 200.0,
+                      height: 66.0,
+                      padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: Color(0xFF252322),
+                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Readex Pro',
+                        color: Color(0xFFD2AD94),
+                        fontSize: 25.0,
+                      ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
