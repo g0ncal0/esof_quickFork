@@ -9,6 +9,8 @@ import './perfil_model.dart';
 
 export './perfil_model.dart';
 
+String phoneNum = "";
+
 class PerfilWidget extends StatefulWidget {
   const PerfilWidget({super.key});
 
@@ -152,150 +154,229 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(0.04, 0.34),
-                child: FFButtonWidget(
-                  onPressed: () {
+              if(phoneNum.isEmpty)
+                Align(
+                  alignment: AlignmentDirectional(0.04, 0.34),
+                  child: FFButtonWidget(
+                    onPressed: () {
+                      var clickedStatus = ValueNotifier<bool>(false);
+                        return showDialog<void>(
 
-                    var clickedStatus = ValueNotifier<bool>(false);
-                    String phoneNum = "";
-                    return showDialog<void>(
-                        context: context,
-                        barrierDismissible: true, // user must tap button!
-                        builder: (BuildContext context) {
-                          RegExp regex = RegExp(r'^[0-9]{9,}$');
-                          var inputController = TextEditingController();
-                          return AlertDialog(
-                              clipBehavior: Clip.none,
-                              title: const Text('Add your number'),
-                              content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: <Widget>[
-                                    TextField(
-                                      keyboardType: TextInputType.phone,
-                                      maxLength: 9,
-                                      autofocus: true,
-                                      controller: inputController,
+                            context: context,
+                            barrierDismissible: true, // user must tap button!
+                            builder: (BuildContext context) {
+                              RegExp regex = RegExp(r'^[0-9]{9,}$');
+                              var inputController = TextEditingController();
+                              return AlertDialog(
+                                  clipBehavior: Clip.none,
+                                  title: const Text('Add your number'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: <Widget>[
+                                        TextField(
+                                          keyboardType: TextInputType.phone,
+                                          maxLength: 9,
+                                          autofocus: true,
+                                          controller: inputController,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                ValueListenableBuilder(
-                                    valueListenable: clickedStatus,
-                                    builder: (context, bool isClicked, _) {
-                                      return TextButton(
-                                        child: const Text('Ok!'),
-                                        onPressed: isClicked
-                                            ? () {}
-                                            :() async {
-                                          clickedStatus.value = true;
-                                          if (regex.hasMatch(inputController.text)){
-                                            phoneNum = "351#${inputController.text}";
-                                            //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
-                                            var result = await payWithMbway(phoneNum, '2.95');
-                                            String response = result.entries.first.value;
+                                  ),
+                                  actions: <Widget>[
+                                    ValueListenableBuilder(
+                                        valueListenable: clickedStatus,
+                                        builder: (context, bool isClicked, _) {
+                                          return TextButton(
+                                            child: const Text('Ok!'),
+                                            onPressed: isClicked
+                                                ? () {}
+                                                : () async {
+                                              clickedStatus.value = true;
+                                              if (regex.hasMatch(
+                                                  inputController.text)) {
+                                                phoneNum = "351#${inputController.text}";
+                                                //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
 
-                                            if (result.keys.first){
-                                              return showDialog<void>(
-                                                  context: context,
-                                                  barrierDismissible: false, // user must tap button!
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                        title: const Text('Add your number'),
-                                                        content: SingleChildScrollView(
-                                                          child: ListBody(
-                                                            children: <Widget>[
-                                                              Text("Sucessufully added number"),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Ok!'),
-                                                            onPressed: () {
-                                                              Navigator.of(context).pop();
-                                                              Navigator.of(context).pop();
-                                                            },
-                                                          )]
-                                                    );
-                                                  }
-                                              );
-                                            } else {
-                                              return showDialog<void>(
-                                                  context: context,
-                                                  barrierDismissible: false, // user must tap button!
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                        title: const Text('Add your number'),
-                                                        content: SingleChildScrollView(
-                                                          child: ListBody(
-                                                            children: <Widget>[
-                                                              Text("Error adding number"),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text('Dismiss'),
-                                                            onPressed: () {
-                                                              Navigator.of(context).pop();
-                                                              Navigator.of(context).pop();
-                                                            },
-                                                          )]
-                                                    );
-                                                  }
-                                              );
-                                            }
-                                          } else {
-                                            return showDialog<void>(
-                                                context: context,
-                                                barrierDismissible: false, // user must tap button!
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                      title: const Text('Unknown error, missing Phone Number.'),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          child: const Text('Dismiss'),
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop();
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                        )]
+
+                                                if (phoneNum.length == 13) {
+                                                  return showDialog<void>(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      // user must tap button!
+                                                      builder: (
+                                                          BuildContext context) {
+                                                        return AlertDialog(
+                                                            title: const Text(
+                                                                'Add your number'),
+                                                            content: SingleChildScrollView(
+                                                              child: ListBody(
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                      "Sucessufully added number"),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: const Text(
+                                                                    'Ok!'),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                      context)
+                                                                      .pop();
+                                                                  Navigator.of(
+                                                                      context)
+                                                                      .pop();
+                                                                },
+                                                              )
+                                                            ]
+                                                        );
+                                                      }
                                                   );
                                                 }
-                                            );
-                                          }
-                                        },
-                                      );
-                                    })]
-                          );
-                        }
-                    );
-                  },
-                  text: 'Associate MBWay',
-                  options: FFButtonOptions(
-                    width: 300.0,
-                    height: 68.0,
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 25.0,
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                                              } else {
+                                                return showDialog<void>(
+                                                    context: context,
+                                                    barrierDismissible: false,
+                                                    // user must tap button!
+                                                    builder: (
+                                                        BuildContext context) {
+                                                      return AlertDialog(
+                                                          title: const Text(
+                                                              'Missing Phone Number.'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  'Dismiss'),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                    context)
+                                                                    .pop();
+                                                                Navigator.of(
+                                                                    context)
+                                                                    .pop();
+                                                              },
+                                                            )
+                                                          ]
+                                                      );
+                                                    }
+                                                );
+                                              }
+                                            },
+                                          );
+                                        })
+                                  ]
+                              );
+                            }
+                        );
+                      
+
+                    },
+                    text: 'Associate MBWay',
+                    options: FFButtonOptions(
+                      width: 300.0,
+                      height: 68.0,
+                      padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme
+                          .of(context)
+                          .primaryBackground,
+                      textStyle: FlutterFlowTheme
+                          .of(context)
+                          .titleSmall
+                          .override(
+                        fontFamily: 'Readex Pro',
+                        color: FlutterFlowTheme
+                            .of(context)
+                            .primaryText,
+                        fontSize: 25.0,
+                      ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-              ),
+
+
+              if(phoneNum.isNotEmpty)
+                Align(
+                alignment: AlignmentDirectional(0.04, 0.34),
+                  child: FFButtonWidget(
+                    onPressed: () {
+                      var clickedStatus = ValueNotifier<bool>(false);
+                        return showDialog<void>(
+
+                            context: context,
+                            barrierDismissible: true, // user must tap button!
+                            builder: (BuildContext context) {
+                              var inputController = TextEditingController();
+                              return AlertDialog(
+                                  clipBehavior: Clip.none,
+                                  title: const Text('Removing number'),
+                                  content:Text('Do you wish to proceed?'),
+                                  actions: [
+                                    TextButton(onPressed: () {
+                                      phoneNum = "";
+                                      Navigator.of(context).pop(true);
+                                    },
+
+                                        child: Text('Yes'),
+                                    ),
+                                    TextButton(onPressed: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+
+                                      child: Text('No'),
+                                    )
+                                  ]
+                              );
+                            }
+                        );
+
+
+                    },
+                    text: phoneNum,
+                    options: FFButtonOptions(
+                      width: 300.0,
+                      height: 68.0,
+                      padding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme
+                          .of(context)
+                          .primaryBackground,
+                      textStyle: FlutterFlowTheme
+                          .of(context)
+                          .titleSmall
+                          .override(
+                        fontFamily: 'Readex Pro',
+                        color: FlutterFlowTheme
+                            .of(context)
+                            .primaryText,
+                        fontSize: 25.0,
+                      ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+
+
+
+
+
               Align(
                 alignment: AlignmentDirectional(-0.01, 0.92),
                 child: FFButtonWidget(
