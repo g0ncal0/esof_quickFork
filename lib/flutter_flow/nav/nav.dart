@@ -10,6 +10,7 @@ import '../../index.dart';
 import '../../main.dart';
 import '../flutter_flow_theme.dart';
 import '../flutter_flow_util.dart';
+import '../../pages/validation/validation_widget.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -27,6 +28,7 @@ class AppStateNotifier extends ChangeNotifier {
   BaseAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
+  bool isAdmin = false;
 
   /// Determines whether the app will refresh and build again when a sign
   /// in or sign out happens. This is useful when the app is launched or
@@ -39,6 +41,7 @@ class AppStateNotifier extends ChangeNotifier {
   bool get loggedIn => user?.loggedIn ?? false;
   bool get initiallyLoggedIn => initialUser?.loggedIn ?? false;
   bool get shouldRedirect => loggedIn && _redirectLocation != null;
+  bool get adminAccess => loggedIn && isAdmin;
 
   String getRedirectLocation() => _redirectLocation!;
   bool hasRedirect() => _redirectLocation != null;
@@ -66,6 +69,11 @@ class AppStateNotifier extends ChangeNotifier {
 
   void stopShowingSplashImage() {
     showSplashImage = false;
+    notifyListeners();
+  }
+
+  void setAdmin(bool newState) {
+    isAdmin = newState;
     notifyListeners();
   }
 }
@@ -99,7 +107,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Store',
           path: '/store',
           builder: (context, params) =>
-              params.isEmpty ? NavBarPage(initialPage: 'Store') : StoreWidget(),
+            params.isEmpty ? NavBarPage(initialPage: 'Store') : StoreWidget(),
         ),
         FFRoute(
           name: 'Meal',
@@ -135,7 +143,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Auth1',
           path: '/auth1',
           builder: (context, params) => const Auth1Widget(),
-        )
+        ),
+        FFRoute(
+          name: 'Validation',
+          path: '/validation',
+          builder: (context, params) => ValidationWidget(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
