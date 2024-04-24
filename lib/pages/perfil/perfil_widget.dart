@@ -297,11 +297,11 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                       _appStateNotifier.setAdmin(false);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Worker Sign Out done successfully!'),
+                          content: Text('Worker Logout done successfully!'),
                         ),
                       );
                     },
-                    text: 'Worker Sign Out',
+                    text: 'Worker Logout',
                     options: FFButtonOptions(
                       width: 200.0,
                       height: 66.0,
