@@ -145,6 +145,20 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                         true, // whether to show the flash icon
                         ScanMode.QR,
                       );
+
+                      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(_model.scannedValue);
+
+                      if (documentRef != null){
+                        // Check if the document exists
+                        DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+                        if (documentSnapshot.exists && !documentSnapshot.data()!["scanned"]) {
+                          // Document exists and is not scanned
+                          await documentRef.set({
+                            "scanned": true // Ticket can only be used once
+                          }, SetOptions(merge: true));
+                        }
+                      }
+
                       setState(() {});
                     },
                     text: 'Button',
