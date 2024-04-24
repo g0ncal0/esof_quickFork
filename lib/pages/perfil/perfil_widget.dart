@@ -36,14 +36,14 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     super.dispose();
   }
 
-  void _showAdminLoginPopup() {
+  void _showWorkerLoginPopup() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         final TextEditingController passwordController = TextEditingController();
 
         return AlertDialog(
-          title: Text('Admin Login'),
+          title: Text('Worker Login'),
           content: TextField(
             controller: passwordController,
             obscureText: true,
@@ -59,8 +59,12 @@ class _PerfilWidgetState extends State<PerfilWidget> {
             TextButton(
               onPressed: () {
                 if (passwordController.text == '1234') {
-                  print('Admin access granted!');
                   _appStateNotifier.setAdmin(true);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Worker access granted!'),
+                    ),
+                  );
                   Navigator.pop(context);
                 } else {
                   // Show error message
@@ -259,9 +263,9 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 alignment: AlignmentDirectional(-0.01, 0.65),
                 child: FFButtonWidget(
                   onPressed: () {
-                    _showAdminLoginPopup();
+                    _showWorkerLoginPopup();
                   },
-                  text: 'Admin Login',
+                  text: 'Worker Login',
                   options: FFButtonOptions(
                     width: 200.0,
                     height: 66.0,
