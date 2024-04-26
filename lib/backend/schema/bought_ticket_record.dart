@@ -15,25 +15,44 @@ class BoughtTicketRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
-
   // "date" field.
   String? _date;
   String get date => _date ?? '';
   bool hasDate() => _date != null;
+
+  // "fullDish" field.
+  bool? _fullDish;
+  bool get fullDish => _fullDish ?? false;
+  bool hasFulldish() => _fullDish != null;
+
+  // "meal_id" field.
+  String? _meal_id;
+  String get meal_id => _meal_id ?? '';
+  bool hasMeal_id() => _meal_id != null;
 
   // "qrcodeinfo" field.
   String? _qrcodeinfo;
   String get qrcodeinfo => _qrcodeinfo ?? '';
   bool hasQrcodeinfo() => _qrcodeinfo != null;
 
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  bool hasType() => _type != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
+
   void _initializeFields() {
-    _uid = snapshotData['uid'] as String?;
     _date = snapshotData['date'] as String?;
+    _fullDish = snapshotData['fullDish'] as bool?;
+    _meal_id = snapshotData['meal_id'] as String?;
     _qrcodeinfo = snapshotData['qrcodeinfo'] as String?;
+    _type = snapshotData['type'] as String?;
+    _uid = snapshotData['uid'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -71,15 +90,21 @@ class BoughtTicketRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createBoughtTicketRecordData({
-  String? uid,
   String? date,
+  bool? fullDish,
+  String? meal_id,
   String? qrcodeinfo,
+  String? type,
+  String? uid
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'uid': uid,
-      'date': date,
-      'qrcodeinfo': qrcodeinfo,
+      'date' : date,
+      'fullDish' : fullDish,
+      'meal_id' : meal_id,
+      'qrcodeinfo' : qrcodeinfo,
+      'type' : type,
+      'uid' : uid
     }.withoutNulls,
   );
 
@@ -92,14 +117,19 @@ class BoughtTicketRecordDocumentEquality
 
   @override
   bool equals(BoughtTicketRecord? e1, BoughtTicketRecord? e2) {
-    return e1?.uid == e2?.uid &&
-        e1?.date == e2?.date &&
-        e1?.qrcodeinfo == e2?.qrcodeinfo;
+    return e1?.date == e2?.date &&
+        e1?.fullDish == e2?.fullDish &&
+        e1?.meal_id == e2?.meal_id &&
+        e1?.qrcodeinfo == e2?.qrcodeinfo &&
+        e1?.type == e2?.type &&
+        e1?.uid == e2?.uid;
   }
 
   @override
   int hash(BoughtTicketRecord? e) =>
-      const ListEquality().hash([e?.uid, e?.date, e?.qrcodeinfo]);
+      const ListEquality().hash([
+e?.date,e?.fullDish,e?.meal_id,e?.qrcodeinfo,e?.type,e?.uid,
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is BoughtTicketRecord;

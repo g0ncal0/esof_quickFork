@@ -1,7 +1,15 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'place_holder_widget.dart' show PlaceHolderWidget;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import '../../flutter_flow/flutter_flow_util.dart';
-import './place_holder_widget.dart' show PlaceHolderWidget;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class PlaceHolderModel extends FlutterFlowModel<PlaceHolderWidget> {
   ///  State fields for stateful widgets in this page.
@@ -10,7 +18,12 @@ class PlaceHolderModel extends FlutterFlowModel<PlaceHolderWidget> {
   var scannedValue = '';
   var scan = '';
 
-  /// Initialization and disposal methods.
+  List<BoughtTicketRecord>? userTickets;
+
+  List<bool> boughtTickets = [false,false,false,
+                              false,false,false,
+                              false,false,false,
+                              false,false,false];
 
   @override
   void initState(BuildContext context) {}
@@ -19,8 +32,4 @@ class PlaceHolderModel extends FlutterFlowModel<PlaceHolderWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }
