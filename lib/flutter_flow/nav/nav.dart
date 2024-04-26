@@ -137,6 +137,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'fullMeal',
               ParamType.bool,
             ),
+            mealID: params.getParam(
+              'mealID',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -144,6 +148,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/auth1',
           builder: (context, params) => const Auth1Widget(),
         ),
+        /*
+        FFRoute(
+          name: 'QrCode',
+          path: '/qrCode',
+          builder: (context, params) => QrCodeWidget(
+            qrCodeValue: params.getParam(
+              'qrCodeValue',
+              ParamType.String,
+            ),
+          ),
+        )*/
         FFRoute(
           name: 'Validation',
           path: '/validation',

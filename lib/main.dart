@@ -140,8 +140,7 @@ class _NavBarPageState extends State<NavBarPage> {
       };
     }
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent,));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(

@@ -1,16 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import './schema/user_bought_tickets_record.dart';
-import './schema/util/firestore_util.dart';
+import 'schema/util/firestore_util.dart';
+
+import 'schema/user_bought_tickets_record.dart';
+import 'schema/bought_ticket_record.dart';
+import 'schema/users_record.dart';
+import 'schema/weekely_meals_record.dart';
 
 export 'dart:async' show StreamSubscription;
-
 export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:firebase_core/firebase_core.dart';
+export 'schema/index.dart';
+export 'schema/util/firestore_util.dart';
+export 'schema/util/schema_util.dart';
 
-export './schema/index.dart';
-export './schema/user_bought_tickets_record.dart';
-export './schema/util/firestore_util.dart';
-export './schema/util/schema_util.dart';
+export 'schema/user_bought_tickets_record.dart';
+export 'schema/bought_ticket_record.dart';
+export 'schema/users_record.dart';
+export 'schema/weekely_meals_record.dart';
 
 /// Functions to query UserBoughtTicketsRecords (as a Stream and as a Future).
 Future<int> queryUserBoughtTicketsRecordCount({
@@ -44,6 +51,117 @@ Future<List<UserBoughtTicketsRecord>> queryUserBoughtTicketsRecordOnce({
     queryCollectionOnce(
       UserBoughtTicketsRecord.collection,
       UserBoughtTicketsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query BoughtTicketRecords (as a Stream and as a Future).
+Future<int> queryBoughtTicketRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      BoughtTicketRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<BoughtTicketRecord>> queryBoughtTicketRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      BoughtTicketRecord.collection,
+      BoughtTicketRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<BoughtTicketRecord>> queryBoughtTicketRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      BoughtTicketRecord.collection,
+      BoughtTicketRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query UsersRecords (as a Stream and as a Future).
+Future<int> queryUsersRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      UsersRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<UsersRecord>> queryUsersRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      UsersRecord.collection,
+      UsersRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<UsersRecord>> queryUsersRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      UsersRecord.collection,
+      UsersRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query WeekelyMealsRecords (as a Stream and as a Future).
+Future<int> queryWeekelyMealsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      WeekelyMealsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<WeekelyMealsRecord>> queryWeekelyMealsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      WeekelyMealsRecord.collection,
+      WeekelyMealsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<WeekelyMealsRecord>> queryWeekelyMealsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      WeekelyMealsRecord.collection,
+      WeekelyMealsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
@@ -115,20 +233,14 @@ Future<List<T>> queryCollectionOnce<T>(
       .toList());
 }
 
-extension FilterExtension on Filter {
-  Filter filterIn(String field, List? list) => (list?.isEmpty ?? true)
-      ? Filter(field, whereIn: null)
-      : Filter(field, whereIn: list);
+Filter filterIn(String field, List? list) => (list?.isEmpty ?? true)
+    ? Filter(field, whereIn: null)
+    : Filter(field, whereIn: list);
 
-  Filter filterNotIn(String field, List? list) => (list?.isEmpty ?? true)
-      ? Filter(field, whereNotIn: null)
-      : Filter(field, whereNotIn: list);
-
-  Filter filterArrayContainsAny(String field, List? list) =>
-      (list?.isEmpty ?? true)
-          ? Filter(field, arrayContainsAny: null)
-          : Filter(field, arrayContainsAny: list);
-}
+Filter filterArrayContainsAny(String field, List? list) =>
+    (list?.isEmpty ?? true)
+        ? Filter(field, arrayContainsAny: null)
+        : Filter(field, arrayContainsAny: list);
 
 extension QueryExtension on Query {
   Query whereIn(String field, List? list) => (list?.isEmpty ?? true)
