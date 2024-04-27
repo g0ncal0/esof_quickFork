@@ -434,7 +434,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   "uid" : (currentUser)!.email ?? '',
                                   "fullDish" : _model.widget.fullMeal,
                                   "type" : _model.radioButtonValue,
-                                  "meal_id" : _model.widget.mealID
+                                  "meal_id" : _model.widget.mealID,
+                                  "scanned" : false
                                 });
 
                               }

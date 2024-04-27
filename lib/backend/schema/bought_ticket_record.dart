@@ -45,6 +45,12 @@ class BoughtTicketRecord extends FirestoreRecord {
   String get uid => _uid ?? '';
   bool hasUid() => _uid != null;
 
+  // "scanned" field
+  bool? _scanned;
+  bool get scanned => _scanned ?? false;
+  bool hasScanned() => _scanned != null;
+
+
 
   void _initializeFields() {
     _date = snapshotData['date'] as String?;
@@ -53,6 +59,7 @@ class BoughtTicketRecord extends FirestoreRecord {
     _qrcodeinfo = snapshotData['qrcodeinfo'] as String?;
     _type = snapshotData['type'] as String?;
     _uid = snapshotData['uid'] as String?;
+    _scanned = snapshotData['scanned'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -95,7 +102,8 @@ Map<String, dynamic> createBoughtTicketRecordData({
   String? meal_id,
   String? qrcodeinfo,
   String? type,
-  String? uid
+  String? uid,
+  bool? scanned
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -104,7 +112,8 @@ Map<String, dynamic> createBoughtTicketRecordData({
       'meal_id' : meal_id,
       'qrcodeinfo' : qrcodeinfo,
       'type' : type,
-      'uid' : uid
+      'uid' : uid,
+      'scanned' : scanned
     }.withoutNulls,
   );
 
@@ -122,13 +131,14 @@ class BoughtTicketRecordDocumentEquality
         e1?.meal_id == e2?.meal_id &&
         e1?.qrcodeinfo == e2?.qrcodeinfo &&
         e1?.type == e2?.type &&
-        e1?.uid == e2?.uid;
+        e1?.uid == e2?.uid &&
+        e1?.scanned == e2?.scanned;
   }
 
   @override
   int hash(BoughtTicketRecord? e) =>
       const ListEquality().hash([
-e?.date,e?.fullDish,e?.meal_id,e?.qrcodeinfo,e?.type,e?.uid,
+e?.date,e?.fullDish,e?.meal_id,e?.qrcodeinfo,e?.type,e?.uid,e?.scanned
       ]);
 
   @override

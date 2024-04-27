@@ -11,14 +11,12 @@ import 'qr_code_model.dart';
 export 'qr_code_model.dart';
 
 class QrCodeWidget extends StatefulWidget {
-  const QrCodeWidget({
+  QrCodeWidget({
     super.key,
     required this.qrCodeValue,
-    required this.fullMeal,
   });
 
   final String? qrCodeValue;
-  final bool? fullMeal;
 
   @override
   State<QrCodeWidget> createState() => _QrCodeWidgetState();
@@ -29,6 +27,26 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void queryFirebase() async {
+
+    DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(widget.qrCodeValue);
+
+    if (documentRef != null){
+      // Check if the document exists
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+      if (documentSnapshot.exists) {
+        _model.email = documentSnapshot.data()!["uid"];
+        _model.type = documentSnapshot.data()!["type"];
+        _model.fullDish = documentSnapshot.data()!["fullDish"];
+
+        setState(() {
+
+        });
+
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +54,7 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      queryFirebase();
       await queryUserBoughtTicketsRecordOnce(
         queryBuilder: (userBoughtTicketsRecord) =>
             userBoughtTicketsRecord.where(
@@ -105,16 +124,62 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
                                 ),
                           ),
                           Text(
-                            widget.fullMeal! ? 'FullMeal' : 'Only main dish',
+                            _model.fullDish ? 'Full meal' : 'Only main dish',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Food type: ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                          Text(
+                            _model.type,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'User email: ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                          Text(
+                            _model.email,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

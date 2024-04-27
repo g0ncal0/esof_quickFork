@@ -7,6 +7,10 @@ class QrCodeModel extends FlutterFlowModel<QrCodeWidget> {
 
   final unfocusNode = FocusNode();
 
+  bool fullDish = false;
+  String type = '';
+  String email = '';
+
   @override
   void initState(BuildContext context) {}
 

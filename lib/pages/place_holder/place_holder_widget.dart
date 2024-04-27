@@ -48,40 +48,52 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
     _model.userTickets!.forEach((element) {
       switch (element.meal_id) {
         case 'monday-lunch':
-          _model.boughtTickets[0] = true;
+          _model.alreadyScanned[0] = element.scanned;
+          _model.ticketsInfo[0] = element.qrcodeinfo;
           break;
         case 'monday-dinner':
-          _model.boughtTickets[1] = true;
+          _model.alreadyScanned[1] = element.scanned;
+          _model.ticketsInfo[1] = element.qrcodeinfo;
           break;
         case 'tuesday-lunch':
-          _model.boughtTickets[2] = true;
+          _model.alreadyScanned[2] = element.scanned;
+          _model.ticketsInfo[2] = element.qrcodeinfo;
           break;
         case 'tuesday-dinner':
-          _model.boughtTickets[3] = true;
+          _model.alreadyScanned[3] = element.scanned;
+          _model.ticketsInfo[3] = element.qrcodeinfo;
           break;
         case 'wednesday-lunch':
-          _model.boughtTickets[4] = true;
+          _model.alreadyScanned[4] = element.scanned;
+          _model.ticketsInfo[4] = element.qrcodeinfo;
           break;
         case 'wednesday-dinner':
-          _model.boughtTickets[5] = true;
+          _model.alreadyScanned[5] = element.scanned;
+          _model.ticketsInfo[5] = element.qrcodeinfo;
           break;
         case 'thursday-lunch':
-          _model.boughtTickets[6] = true;
+          _model.alreadyScanned[6] = element.scanned;
+          _model.ticketsInfo[6] = element.qrcodeinfo;
           break;
         case 'thursday-dinner':
-          _model.boughtTickets[7] = true;
+          _model.alreadyScanned[7] = element.scanned;
+          _model.ticketsInfo[7] = element.qrcodeinfo;
           break;
         case 'friday-lunch':
-          _model.boughtTickets[8] = true;
+          _model.alreadyScanned[8] = element.scanned;
+          _model.ticketsInfo[8] = element.qrcodeinfo;
           break;
         case 'friday-dinner':
-          _model.boughtTickets[9] = true;
+          _model.alreadyScanned[9] = element.scanned;
+          _model.ticketsInfo[9] = element.qrcodeinfo;
           break;
         case 'saturday-lunch':
-          _model.boughtTickets[10] = true;
+          _model.alreadyScanned[10] = element.scanned;
+          _model.ticketsInfo[10] = element.qrcodeinfo;
           break;
         case 'saturday-dinner':
-          _model.boughtTickets[11] = true;
+          _model.alreadyScanned[11] = element.scanned;
+          _model.ticketsInfo[11] = element.qrcodeinfo;
           break;
         default:
           throw ArgumentError('ERROR.');
@@ -143,17 +155,17 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (_model.boughtTickets[0]) Padding(
+                if (!_model.alreadyScanned[0] && _model.ticketsInfo[0] != '') Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         // Substituida por função de cima.
-                        /*
+
                         context.pushNamed(
                           'QrCode',
                           queryParameters: {
                             'qrCodeValue': serializeParam(
-                              'aqaaaaswdwfwgweg',
+                              _model.ticketsInfo[0],
                               ParamType.String,
                             ),
                             'fullMeal': serializeParam(
@@ -161,7 +173,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                               ParamType.bool,
                             ),
                           }.withoutNulls,
-                        );*/
+                        );
                       },
                       text: 'Print Hello World',
                       options: FFButtonOptions(
@@ -182,60 +194,59 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                       ),
                     ),
                   ),
-                
-                
-                ),
+
                 Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: FFButtonWidget(
-                    onPressed: () async {
-                      _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
-                        '#C62828', // scanning line color
-                        'Cancel', // cancel button text
-                        true, // whether to show the flash icon
-                        ScanMode.QR,
-                      );
+                      onPressed: () async {
+                        _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
+                          '#C62828', // scanning line color
+                          'Cancel', // cancel button text
+                          true, // whether to show the flash icon
+                          ScanMode.QR,
+                        );
 
-                      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(_model.scannedValue);
+                        DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(_model.scannedValue);
 
-                      if (documentRef != null){
-                        // Check if the document exists
-                        DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
-                        if (documentSnapshot.exists && !documentSnapshot.data()!["scanned"]) {
-                          // Document exists and is not scanned
-                          await documentRef.set({
-                            "scanned": true // Ticket can only be used once
-                          }, SetOptions(merge: true));
+                        if (documentRef != null){
+                          // Check if the document exists
+                          DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+                          if (documentSnapshot.exists && !documentSnapshot.data()!["scanned"]) {
+                            // Document exists and is not scanned
+                            await documentRef.set({
+                              "scanned": true // Ticket can only be used once
+                            }, SetOptions(merge: true));
+                          }
                         }
-                      }
 
-                      setState(() {});
-                    },
-                    text: 'Button',
-                    options: FFButtonOptions(
-                      height: 40,
-                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      color: FlutterFlowTheme.of(context).primary,
-                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Readex Pro',
-                        color: Colors.white,
-                        letterSpacing: 0,
+                        setState(() {});
+                      },
+                      text: 'Button',
+                      options: FFButtonOptions(
+                        height: 40,
+                        padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Readex Pro',
+                          color: Colors.white,
+                          letterSpacing: 0,
+                        ),
+                        elevation: 3,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      elevation: 3,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  )
-                ),
+                    )
+                )
 
-                
+
               ],
             ),
           ),
+
         ),
       ),
     );

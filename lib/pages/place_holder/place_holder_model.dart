@@ -20,10 +20,15 @@ class PlaceHolderModel extends FlutterFlowModel<PlaceHolderWidget> {
 
   List<BoughtTicketRecord>? userTickets;
 
-  List<bool> boughtTickets = [false,false,false,
+  List<bool> alreadyScanned = [false,false,false,
                               false,false,false,
                               false,false,false,
                               false,false,false];
+
+  List<String> ticketsInfo = ['','','',
+                              '','','',
+                              '','','',
+                              '','',''];
 
   @override
   void initState(BuildContext context) {}
