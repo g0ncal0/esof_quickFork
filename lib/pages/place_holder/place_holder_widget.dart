@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -181,6 +182,57 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                       ),
                     ),
                   ),
+                
+                
+                ),
+                Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    child: FFButtonWidget(
+                    onPressed: () async {
+                      _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
+                        '#C62828', // scanning line color
+                        'Cancel', // cancel button text
+                        true, // whether to show the flash icon
+                        ScanMode.QR,
+                      );
+
+                      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(_model.scannedValue);
+
+                      if (documentRef != null){
+                        // Check if the document exists
+                        DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+                        if (documentSnapshot.exists && !documentSnapshot.data()!["scanned"]) {
+                          // Document exists and is not scanned
+                          await documentRef.set({
+                            "scanned": true // Ticket can only be used once
+                          }, SetOptions(merge: true));
+                        }
+                      }
+
+                      setState(() {});
+                    },
+                    text: 'Button',
+                    options: FFButtonOptions(
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                        letterSpacing: 0,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  )
+                ),
+
+                
               ],
             ),
           ),

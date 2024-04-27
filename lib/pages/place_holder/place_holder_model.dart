@@ -15,6 +15,8 @@ class PlaceHolderModel extends FlutterFlowModel<PlaceHolderWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  var scannedValue = '';
+  var scan = '';
 
   List<BoughtTicketRecord>? userTickets;
 
