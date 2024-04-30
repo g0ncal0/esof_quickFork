@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
+import '../../backend/backend.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
+
 import './home_page_model.dart';
 
 export './home_page_model.dart';
@@ -22,6 +26,55 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
+
+    try {
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        try {
+          _model.mealInfoLunch = await queryWeekelyMealsRecordOnce(
+            queryBuilder: (weekelyMealsRecord) =>
+                weekelyMealsRecord.where(
+                  'weekdayMeal',
+                  isEqualTo: '${DateFormat('EEEE')
+                      .format(DateTime.now())
+                      .toLowerCase()}-lunch',
+                ),
+            singleRecord: true,
+          ).then((s) => s.firstOrNull);
+          _model.descriptionsLunch = actions.concatDescriptions(
+            context,
+            _model.mealInfoLunch!.descriptionMeat,
+            _model.mealInfoLunch!.descriptionFish,
+            _model.mealInfoLunch!.descriptionVegetarian,
+          );
+
+          _model.mealInfoDinner = await queryWeekelyMealsRecordOnce(
+            queryBuilder: (weekelyMealsRecord) =>
+                weekelyMealsRecord.where(
+                  'weekdayMeal',
+                  isEqualTo: '${DateFormat('EEEE')
+                      .format(DateTime.now())
+                      .toLowerCase()}-dinner',
+                ),
+            singleRecord: true,
+          ).then((s) => s.firstOrNull);
+          _model.descriptionsDinner = actions.concatDescriptions(
+            context,
+            _model.mealInfoDinner!.descriptionMeat,
+            _model.mealInfoDinner!.descriptionFish,
+            _model.mealInfoDinner!.descriptionVegetarian,
+          );
+        } catch (e) {
+          _model.descriptionsLunch = ['No meals available at this time.'];
+          _model.descriptionsDinner = ['No meals available at this time.'];
+        }
+        setState(() {});
+      });
+    } catch (e) {
+      setState(() {});
+      _model.descriptionsLunch = ['No meals available at this time.'];
+      _model.descriptionsDinner = ['No meals available at this time.'];
+    }
+
   }
 
   @override
@@ -33,6 +86,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String tempLunch = '';
+    String tempDinner = '';
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -190,7 +245,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 20.0, 10.0, 0.0),
                             child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque congue diam ut efficitur aliquet. Sed at metus sed lectus feugiat lobortis vel non nulla. Ut quis elit at nunc lacinia elementum.',
+                              () {
+                                _model.descriptionsLunch?.forEach((name) => tempLunch += "$name\n");
+                                return tempLunch;
+                              }(),
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -285,7 +343,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 20.0, 10.0, 0.0),
                             child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque congue diam ut efficitur aliquet. Sed at metus sed lectus feugiat lobortis vel non nulla. Ut quis elit at nunc lacinia elementum.',
+                                () {
+                                _model.descriptionsDinner?.forEach((name) => tempDinner += "$name\n");
+                                return tempDinner;
+                              }(),
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
