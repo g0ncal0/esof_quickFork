@@ -10,8 +10,6 @@ import './perfil_model.dart';
 
 export './perfil_model.dart';
 
-String phoneNum = "";
-
 class PerfilWidget extends StatefulWidget {
   const PerfilWidget({super.key});
 
@@ -204,7 +202,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   ),
                 ),
               ),
-              if(phoneNum.isEmpty)
+              if(_appStateNotifier.phoneNum.isEmpty)
                 Align(
                   alignment: AlignmentDirectional(0.04, 0.34),
                   child: FFButtonWidget(
@@ -244,11 +242,11 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                               clickedStatus.value = true;
                                               if (regex.hasMatch(
                                                   inputController.text)) {
-                                                phoneNum = "351#${inputController.text}";
+                                                _appStateNotifier.setPhoneNum("351#${inputController.text}");
                                                 //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
 
 
-                                                if (phoneNum.length == 13) {
+                                                if (_appStateNotifier.phoneNum.length == 13) {
                                                   return showDialog<void>(
                                                       context: context,
                                                       barrierDismissible: false,
@@ -360,7 +358,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 ),
 
 
-              if(phoneNum.isNotEmpty)
+              if(_appStateNotifier.phoneNum.isNotEmpty)
                 Align(
                 alignment: AlignmentDirectional(0.04, 0.34),
                   child: FFButtonWidget(
@@ -379,7 +377,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                   content:Text('Do you wish to proceed?'),
                                   actions: [
                                     TextButton(onPressed: () {
-                                      phoneNum = "";
+                                      _appStateNotifier.setPhoneNum("");
                                       Navigator.of(context).pop(true);
                                     },
 
@@ -398,7 +396,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
 
                     },
-                    text: phoneNum.split('#')[1],
+                    text: _appStateNotifier.phoneNum.split('#')[1],
                     options: FFButtonOptions(
                       width: 300.0,
                       height: 68.0,
