@@ -217,25 +217,28 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                                                 ],
                                                               ),
                                                             ),
+
                                                             actions: <Widget>[
                                                               TextButton(
-                                                                child: const Text(
-                                                                    'Ok!'),
                                                                 onPressed: () {
+
                                                                   Navigator.of(
                                                                       context)
                                                                       .pop();
                                                                   Navigator.of(
                                                                       context)
                                                                       .pop();
+
                                                                 },
+                                                                child: Text('Ok'),
                                                               )
                                                             ]
                                                         );
                                                       }
                                                   );
                                                 }
-                                              } else {
+                                              }
+                                              else {
                                                 return showDialog<void>(
                                                     context: context,
                                                     barrierDismissible: false,
@@ -256,6 +259,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                                                 Navigator.of(
                                                                     context)
                                                                     .pop();
+
                                                               },
                                                             )
                                                           ]
@@ -273,6 +277,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                       
 
                     },
+
                     text: 'Associate MBWay',
                     options: FFButtonOptions(
                       width: 300.0,
@@ -310,6 +315,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 alignment: AlignmentDirectional(0.04, 0.34),
                   child: FFButtonWidget(
                     onPressed: () {
+
                       var clickedStatus = ValueNotifier<bool>(false);
                         return showDialog<void>(
 
@@ -342,7 +348,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
 
                     },
-                    text: phoneNum,
+                    text: phoneNum.split('#')[1],
                     options: FFButtonOptions(
                       width: 300.0,
                       height: 68.0,
