@@ -35,6 +35,25 @@ class CheckoutWidget extends StatefulWidget {
 
   @override
   State<CheckoutWidget> createState() => _CheckoutWidgetState();
+
+  String createQrCode() {
+    String generateRandomId(int length) {
+      const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      Random random = Random();
+      return String.fromCharCodes(Iterable.generate(
+          length, (_) =>
+          characters.codeUnitAt(random.nextInt(characters.length))));
+    }
+    String qrcode = generateRandomId(10); // Generate a random string of length 10
+    DateTime now = DateTime.now();
+    String timeStamp = now.microsecondsSinceEpoch.toString(); // Unique timestamp
+
+    // Concatenate the timestamp with a random string
+    String qrCode = qrcode + timeStamp + generateRandomId(6); // 6 additional random characters
+
+    return qrCode;
+  }
+
 }
 
 class _CheckoutWidgetState extends State<CheckoutWidget> {
@@ -91,6 +110,24 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
         );
       },
     );
+  }
+
+
+  
+  void addTicketToFirebase() async{
+      String qrcode = _model.widget.createQrCode();
+      String currentTime = DateTime.now().secondsSinceEpoch.toString();
+      CollectionReference<Map<String, dynamic>> ticketRef = FirebaseFirestore.instance.collection("bought_ticket");
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await ticketRef.get();
+      await FirebaseFirestore.instance.collection("bought_ticket").doc(qrcode).set({
+        "date" : currentTime, // Incrementing the value
+        "qrcodeinfo" : qrcode,
+        "uid" : (currentUser)!.email ?? '',
+        "fullDish" : _model.widget.fullMeal,
+        "type" : _model.radioButtonValue,
+        "meal_id" : _model.widget.mealID,
+        "scanned" : false
+      });
   }
 
   @override
@@ -416,7 +453,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               _model.paymentId = paymentResponse.paymentId ?? '';
 
                               ///////////////////////
-                              if (paymentSuccessful){
+                              if (paymentSuccessful) {
+                                addTicketToFirebase();
+                              }
+                              /*if (paymentSuccessful){
                                 String generateRandomId(int length) {
                                   const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                                   Random random = Random();
@@ -438,7 +478,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   "scanned" : false
                                 });
 
-                              }
+                              }*/
                               ///////////////////////
 
                               setState(() {});
