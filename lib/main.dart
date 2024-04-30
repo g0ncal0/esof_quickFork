@@ -1,3 +1,4 @@
+import 'package:esof/pages/validation/validation_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -115,21 +116,33 @@ class NavBarPage extends StatefulWidget {
 class _NavBarPageState extends State<NavBarPage> {
   String _currentPageName = 'HomePage';
   late Widget? _currentPage;
+  late AppStateNotifier _appStateNotifier;
 
   @override
   void initState() {
     super.initState();
+    _appStateNotifier = AppStateNotifier.instance;
     _currentPageName = widget.initialPage ?? _currentPageName;
     _currentPage = widget.page;
+
   }
 
   @override
   Widget build(BuildContext context) {
-    final tabs = {
-      'Store': const StoreWidget(),
-      'HomePage': const HomePageWidget(),
-      'PlaceHolder': const PlaceHolderWidget(),
-    };
+    Map<String, Widget> tabs;
+    if (_appStateNotifier.isAdmin) {
+      tabs = {
+        'Store': ValidationWidget(),
+        'HomePage': const HomePageWidget(),
+        'PlaceHolder': const PlaceHolderWidget(),
+      };
+    } else {
+      tabs = {
+        'Store': const StoreWidget(),
+        'HomePage': const HomePageWidget(),
+        'PlaceHolder': const PlaceHolderWidget(),
+      };
+    }
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent,));
