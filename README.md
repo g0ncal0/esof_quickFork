@@ -171,3 +171,43 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >   What still puzzles me is:
 >   - Working with Flutter
 >   - Automation tests
+>
+>   Team Wishes:
+>   - Better time management
+>   - Better team work
+
+### Sprint 2
+
+>   ### Github Projects Board
+>
+>   #### Beginning
+>   <p align="center" justify="center">
+>  <img src="" width="100%"/>
+>   </p>
+>
+>   #### End
+>   <p align="center" justify="center">
+>  <img src="" width="100%"/>
+>   </p>
+>
+>   ### Retrospectives
+>
+>   In this sprint we did:
+>   - All tickets have a unique QR Code
+>   - We added a worker login
+>   - We added a page where workers can validate the tickets
+>   - The possibility of saving payment methods (MBWay and card)
+>
+>   What went well:
+>   - We managed to do everything we had planned
+>   - Division of work
+>   - The use of pair programming, improved the efficiency of the group
+>
+>   What we will do differently:
+>   - Manage the time better
+>
+>   What still puzzles me is:
+>   - Unit Tests
+>
+>   Team Wishes:
+>   - Better team communication
