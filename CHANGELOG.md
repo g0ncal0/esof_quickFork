@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.0.0] - 2024-05-1
+
+### Added
+- All tickets now have a unique QR Code.
+- Worker login is now available.
+- Ticket validation functionality added.
+- Saving payment methods is now an option.
+
+### Changed
+- Small changes in app layout and design.
+
 ## [v1.0.0] - 2024-04-17
    
 ### Added
