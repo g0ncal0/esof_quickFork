@@ -545,6 +545,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                             child: const Text(
                                                 'Ok!'),
                                             onPressed: () {
+                                              addTicketToFirebase();
                                               Navigator
                                                   .of(
                                                   context)
@@ -650,6 +651,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                                   TextButton(
                                                                     child: const Text('Ok!'),
                                                                     onPressed: () {
+                                                                      addTicketToFirebase();
                                                                       Navigator.of(context).pop();
                                                                       Navigator.of(context).pop();
                                                                     },
