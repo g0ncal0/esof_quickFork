@@ -14,17 +14,31 @@ Feature: Easy Payment
     And I wait 1 second
     Then I expect the unsuccessful added card pop-up
 
-  Scenario: Successful Purchase With Card
+  Scenario: Successful Purchase With Saved Card
     Given I am on checkout page during a purchase
     When I tap "Pay with card" button
-    And  I verify my card
+    And  I have a card saved
     And I wait 1 second
     Then I expect the successful purchase pop-up
 
-  Scenario: Unsuccessful Purchase With Card
+  Scenario: Unsuccessful Purchase With Saved Card
     Given I am on checkout page during a purchase
     When I tap "Pay with card" button
-    And  I do not verify my card
+    And  I do not have a card saved
+    And I wait 1 second
+    Then I expect the unsuccessful purchase pop-up
+
+Scenario: Successful Purchase With Unsaved Card
+    Given I am on checkout page during a purchase
+    When I tap "Pay with card" button
+    And  I write a valid card number
+    And I wait 1 second
+    Then I expect the successful purchase pop-up
+
+  Scenario: Unsuccessful Purchase With Unsaved Card
+    Given I am on checkout page during a purchase
+    When I tap "Pay with card" button
+    And  I write an invalid card number
     And I wait 1 second
     Then I expect the unsuccessful purchase pop-up
 
@@ -38,20 +52,34 @@ Feature: Easy Payment
   Scenario: Unsuccessful Added Number
     Given I am on the profile page
     When I tap "Add MbWay"
-    And I write an invalid number
+    And I do not have a MbWay number saved
     And I wait 1 second
     Then I expect the unsuccessful added number pop-up
 
-  Scenario: Successful Purchase With MBWay
+  Scenario: Successful Purchase With Saved MBWay
     Given I am on checkout page during a purchase
     When I tap "Pay with MBWay" button
-    And  I verify my number
+    And  I have a MbWay number saved
     And I wait 1 second
     Then I expect the successful purchase pop-up
 
-  Scenario: Unsuccessful Purchase With MBWay
+  Scenario: Unsuccessful Purchase With Saved MBWay
     Given I am on checkout page during a purchase
     When I tap "Pay with MBWay" button
-    And  I do not verify my number
+    And  I do not Have a MbWay number saved
+    And I wait 1 second
+    Then I expect the unsuccessful purchase pop-up
+
+  Scenario: Successful Purchase With Unsaved MBWay
+    Given I am on checkout page during a purchase
+    When I tap "Pay with MBWay" button
+    And  I write a valid number
+    And I wait 1 second
+    Then I expect the successful purchase pop-up
+
+  Scenario: Unsuccessful Purchase With Unsaved MBWay
+    Given I am on checkout page during a purchase
+    When I tap "Pay with MBWay" button
+    And  I write an invalid number
     And I wait 1 second
     Then I expect the unsuccessful purchase pop-up
