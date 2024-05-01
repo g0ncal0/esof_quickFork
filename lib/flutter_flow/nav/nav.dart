@@ -28,6 +28,10 @@ class AppStateNotifier extends ChangeNotifier {
   BaseAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
+  bool isAdmin = false;
+  String phoneNum = "";
+  String cardNum = "";
+  String cvv = "";
 
   /// Determines whether the app will refresh and build again when a sign
   /// in or sign out happens. This is useful when the app is launched or
@@ -45,6 +49,8 @@ class AppStateNotifier extends ChangeNotifier {
   bool hasRedirect() => _redirectLocation != null;
   void setRedirectLocationIfUnset(String loc) => _redirectLocation ??= loc;
   void clearRedirectLocation() => _redirectLocation = null;
+
+  String getPhoneNum() => phoneNum;
 
   /// Mark as not needing to notify on a sign in / out when we intend
   /// to perform subsequent actions (such as navigation) afterwards.
@@ -68,6 +74,25 @@ class AppStateNotifier extends ChangeNotifier {
   void stopShowingSplashImage() {
     showSplashImage = false;
     notifyListeners();
+  }
+
+  void setAdmin(bool newState) {
+    isAdmin = newState;
+    notifyListeners();
+  }
+
+  void setPhoneNum(String newPhoneNum) {
+    phoneNum = newPhoneNum;
+    notifyListeners();
+  }
+
+  void setCardNum(String newCardNum) {
+    cardNum = newCardNum;
+    notifyListeners();
+  }
+
+  void setCVV(String newCVV) {
+    cvv = newCVV;
   }
 }
 

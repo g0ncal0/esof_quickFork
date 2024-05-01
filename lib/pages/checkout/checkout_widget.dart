@@ -58,6 +58,7 @@ class CheckoutWidget extends StatefulWidget {
 
 class _CheckoutWidgetState extends State<CheckoutWidget> {
   late CheckoutModel _model;
+  late AppStateNotifier _appStateNotifier;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -65,6 +66,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CheckoutModel());
+    _appStateNotifier = AppStateNotifier.instance;
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -649,8 +651,287 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      FFButtonWidget(
+                        onPressed: () async {
+                          var clickedStatus = ValueNotifier<bool>(false);
+                          String phoneNum = _appStateNotifier.phoneNum;
+
+                          if (phoneNum.isNotEmpty) {
+                            var result = await payWithMbway(phoneNum, _model.fullMeal ? '2.75' : '2.95');
+                            String response = result.entries.first.value;
+
+                            if (result.keys.first) {
+                              return showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  // user must tap button!
+                                  builder: (
+                                      BuildContext context) {
+                                    return AlertDialog(
+                                        title: const Text(
+                                            'MbWay Response'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: <
+                                                Widget>[
+                                              Text(
+                                                  response),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <
+                                            Widget>[
+                                          TextButton(
+                                            child: const Text(
+                                                'Ok!'),
+                                            onPressed: () {
+                                              Navigator
+                                                  .of(
+                                                  context)
+                                                  .pop();
+                                              Navigator
+                                                  .of(
+                                                  context)
+                                                  .pop();
+                                            },
+                                          )
+                                        ]
+                                    );
+                                  }
+                              );
+                            } else {
+                              return showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  // user must tap button!
+                                  builder: (
+                                      BuildContext context) {
+                                    return AlertDialog(
+                                        title: const Text(
+                                            'MbWay Response'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: <
+                                                Widget>[
+                                              Text(
+                                                  response),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <
+                                            Widget>[
+                                          TextButton(
+                                            child: const Text(
+                                                'Dismiss'),
+                                            onPressed: () {
+                                              Navigator
+                                                  .of(
+                                                  context)
+                                                  .pop();
+                                              Navigator
+                                                  .of(
+                                                  context)
+                                                  .pop();
+                                            },
+                                          )
+                                        ]
+                                    );
+                                  }
+                              );
+                            }
+                          }
+
+                          else {
+                            return showDialog<void>(
+                                context: context,
+                                barrierDismissible: true,
+                                // user must tap button!
+                                builder: (BuildContext context) {
+                                  RegExp regex = RegExp(r'^[0-9]{9,}$');
+                                  var inputController = TextEditingController();
+                                  return AlertDialog(
+                                      clipBehavior: Clip.none,
+                                      title: const Text('MbWay Response'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            TextField(
+                                              keyboardType: TextInputType.phone,
+                                              maxLength: 9,
+                                              autofocus: true,
+                                              controller: inputController,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        ValueListenableBuilder(
+                                            valueListenable: clickedStatus,
+                                            builder: (context, bool isClicked,
+                                                _) {
+                                              return TextButton(
+                                                child: const Text('Ok!'),
+                                                onPressed: isClicked
+                                                    ? () {}
+                                                    : () async {
+                                                  clickedStatus.value = true;
+                                                  if (regex.hasMatch(
+                                                      inputController.text)) {
+                                                    phoneNum =
+                                                    "351#${inputController
+                                                        .text}";
+
+                                                    var result = await payWithMbway(
+                                                        phoneNum,
+                                                        _model.fullMeal
+                                                            ? '2.75'
+                                                            : '2.95');
+                                                    String response = result
+                                                        .entries.first.value;
+
+                                                    if (result.keys.first) {
+                                                      return showDialog<void>(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          // user must tap button!
+                                                          builder: (
+                                                              BuildContext context) {
+                                                            return AlertDialog(
+                                                                title: const Text(
+                                                                    'MbWay Response'),
+                                                                content: SingleChildScrollView(
+                                                                  child: ListBody(
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Text(
+                                                                          response),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                actions: <
+                                                                    Widget>[
+                                                                  TextButton(
+                                                                    child: const Text(
+                                                                        'Ok!'),
+                                                                    onPressed: () {
+                                                                      Navigator
+                                                                          .of(
+                                                                          context)
+                                                                          .pop();
+                                                                      Navigator
+                                                                          .of(
+                                                                          context)
+                                                                          .pop();
+                                                                    },
+                                                                  )
+                                                                ]
+                                                            );
+                                                          }
+                                                      );
+                                                    } else {
+                                                      return showDialog<void>(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          // user must tap button!
+                                                          builder: (
+                                                              BuildContext context) {
+                                                            return AlertDialog(
+                                                                title: const Text(
+                                                                    'MbWay Response'),
+                                                                content: SingleChildScrollView(
+                                                                  child: ListBody(
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Text(
+                                                                          response),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                actions: <
+                                                                    Widget>[
+                                                                  TextButton(
+                                                                    child: const Text(
+                                                                        'Dismiss'),
+                                                                    onPressed: () {
+                                                                      Navigator
+                                                                          .of(
+                                                                          context)
+                                                                          .pop();
+                                                                      Navigator
+                                                                          .of(
+                                                                          context)
+                                                                          .pop();
+                                                                    },
+                                                                  )
+                                                                ]
+                                                            );
+                                                          }
+                                                      );
+                                                    }
+                                                  } else {
+                                                    return showDialog<void>(
+                                                        context: context,
+                                                        barrierDismissible: false,
+                                                        // user must tap button!
+                                                        builder: (
+                                                            BuildContext context) {
+                                                          return AlertDialog(
+                                                              title: const Text(
+                                                                  'Unknown error, missing Phone Number.'),
+                                                              actions: <Widget>[
+                                                                TextButton(
+                                                                  child: const Text(
+                                                                      'Dismiss'),
+                                                                  onPressed: () {
+                                                                    Navigator
+                                                                        .of(
+                                                                        context)
+                                                                        .pop();
+                                                                    Navigator
+                                                                        .of(
+                                                                        context)
+                                                                        .pop();
+                                                                  },
+                                                                )
+                                                              ]
+                                                          );
+                                                        }
+                                                    );
+                                                  }
+                                                },
+                                              );
+                                            })
+                                      ]
+                                  );
+                                }
+                            );
+                          }
+                        },
+                        text: 'Pay with MBWay',
+                        options: FFButtonOptions(
+                          width: 270.0,
+                          height: 50.0,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: const Color(0xFF2E1F1F),
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                          elevation: 2.0,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
             ],
