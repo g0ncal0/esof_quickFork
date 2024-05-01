@@ -10,7 +10,6 @@ import './perfil_model.dart';
 
 export './perfil_model.dart';
 
-String credit_card = '';
 
 class PerfilWidget extends StatefulWidget {
   const PerfilWidget({super.key});
@@ -156,7 +155,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
 
 
-            if(credit_card.isEmpty)
+            if(_appStateNotifier.cardNum.isEmpty)
               Align(
                 alignment: AlignmentDirectional(0, -0.20),
                 child: FFButtonWidget(
@@ -169,6 +168,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                         builder: (BuildContext context) {
                           RegExp regex = RegExp(r'^[0-9]{9,}$');
                           var inputController = TextEditingController();
+                          var cvvController = TextEditingController();
                           return AlertDialog(
                               clipBehavior: Clip.none,
                               title: const Text('Add credit card number'),
@@ -180,6 +180,12 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                       maxLength: 16,
                                       autofocus: true,
                                       controller: inputController,
+                                    ),
+                                    TextField(
+                                      keyboardType: TextInputType.text,
+                                      maxLength: 3,
+                                      controller: cvvController,
+                                      decoration: InputDecoration(labelText: 'CVV'),
                                     ),
                                   ],
                                 ),
@@ -196,11 +202,12 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                           clickedStatus.value = true;
                                           if (regex.hasMatch(
                                               inputController.text)) {
-                                              credit_card = inputController.text;
+                                              _appStateNotifier.setCardNum(inputController.text);
+                                              _appStateNotifier.setCVV(cvvController.text);
                                             //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
 
 
-                                            if (credit_card.length == 16) {
+                                            if ((_appStateNotifier.cardNum.length == 16) && (_appStateNotifier.cvv.length == 3)) {
                                               return showDialog<void>(
                                                   context: context,
                                                   barrierDismissible: false,
@@ -241,7 +248,8 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                             }
                                           }
                                           else {
-                                            credit_card = '';
+                                            _appStateNotifier.setCardNum("");
+                                            _appStateNotifier.setCVV("");
                                             return showDialog<void>(
                                                 context: context,
                                                 barrierDismissible: false,
@@ -313,7 +321,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
 
 
-              if(credit_card.isNotEmpty)
+              if(_appStateNotifier.cardNum.isNotEmpty)
                 Align(
                   alignment: AlignmentDirectional(0, -0.20),
                   child: FFButtonWidget(
@@ -332,7 +340,8 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                 content:Text('Do you wish to proceed?'),
                                 actions: [
                                   TextButton(onPressed: () {
-                                    credit_card = '';
+                                    _appStateNotifier.setCardNum("");
+                                    _appStateNotifier.setCVV("");
                                     Navigator.of(context).pop(true);
                                   },
 
@@ -351,7 +360,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
 
                     },
-                    text: 'xxxx xxxx xxxx xxxx ${credit_card.substring(12)}',
+                    text: 'xxxx xxxx xxxx xxxx ${_appStateNotifier.cardNum.substring(12)}',
                     options: FFButtonOptions(
                       width: 325.0,
                       height: 100.0,

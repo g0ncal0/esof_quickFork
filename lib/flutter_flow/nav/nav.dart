@@ -30,6 +30,8 @@ class AppStateNotifier extends ChangeNotifier {
   String? _redirectLocation;
   bool isAdmin = false;
   String phoneNum = "";
+  String cardNum = "";
+  String cvv = "";
 
   /// Determines whether the app will refresh and build again when a sign
   /// in or sign out happens. This is useful when the app is launched or
@@ -83,6 +85,15 @@ class AppStateNotifier extends ChangeNotifier {
   void setPhoneNum(String newPhoneNum) {
     phoneNum = newPhoneNum;
     notifyListeners();
+  }
+
+  void setCardNum(String newCardNum) {
+    cardNum = newCardNum;
+    notifyListeners();
+  }
+
+  void setCVV(String newCVV) {
+    cvv = newCVV;
   }
 }
 
