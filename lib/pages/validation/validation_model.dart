@@ -45,18 +45,6 @@ class ValidationModel extends FlutterFlowModel<ValidationWidget> {
     }
   }
 
-  List<BoughtTicketRecord>? userTickets;
-
-  List<bool> alreadyScanned = [false,false,false,
-    false,false,false,
-    false,false,false,
-    false,false,false];
-
-  List<String> ticketsInfo = ['','','',
-    '','','',
-    '','','',
-    '','',''];
-
   @override
   void initState(BuildContext context) {}
 

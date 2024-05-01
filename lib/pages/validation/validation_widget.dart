@@ -31,85 +31,11 @@ class _ValidationWidgetState extends State<ValidationWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void updateBoughtTickets() async{
-    _model.userTickets = await queryBoughtTicketRecordOnce(
-      queryBuilder: (boughtTicketRecord) =>
-          boughtTicketRecord.where(
-            'uid',
-            isEqualTo: currentUserEmail,
-          ),
-      limit: 12,
-    );
-
-    if (_model.userTickets!.isEmpty && _model.userTickets == null) {
-      _model.userTickets = [];
-    }
-
-    _model.userTickets!.forEach((element) {
-      switch (element.meal_id) {
-        case 'monday-lunch':
-          _model.alreadyScanned[0] = element.scanned;
-          _model.ticketsInfo[0] = element.qrcodeinfo;
-          break;
-        case 'monday-dinner':
-          _model.alreadyScanned[1] = element.scanned;
-          _model.ticketsInfo[1] = element.qrcodeinfo;
-          break;
-        case 'tuesday-lunch':
-          _model.alreadyScanned[2] = element.scanned;
-          _model.ticketsInfo[2] = element.qrcodeinfo;
-          break;
-        case 'tuesday-dinner':
-          _model.alreadyScanned[3] = element.scanned;
-          _model.ticketsInfo[3] = element.qrcodeinfo;
-          break;
-        case 'wednesday-lunch':
-          _model.alreadyScanned[4] = element.scanned;
-          _model.ticketsInfo[4] = element.qrcodeinfo;
-          break;
-        case 'wednesday-dinner':
-          _model.alreadyScanned[5] = element.scanned;
-          _model.ticketsInfo[5] = element.qrcodeinfo;
-          break;
-        case 'thursday-lunch':
-          _model.alreadyScanned[6] = element.scanned;
-          _model.ticketsInfo[6] = element.qrcodeinfo;
-          break;
-        case 'thursday-dinner':
-          _model.alreadyScanned[7] = element.scanned;
-          _model.ticketsInfo[7] = element.qrcodeinfo;
-          break;
-        case 'friday-lunch':
-          _model.alreadyScanned[8] = element.scanned;
-          _model.ticketsInfo[8] = element.qrcodeinfo;
-          break;
-        case 'friday-dinner':
-          _model.alreadyScanned[9] = element.scanned;
-          _model.ticketsInfo[9] = element.qrcodeinfo;
-          break;
-        case 'saturday-lunch':
-          _model.alreadyScanned[10] = element.scanned;
-          _model.ticketsInfo[10] = element.qrcodeinfo;
-          break;
-        case 'saturday-dinner':
-          _model.alreadyScanned[11] = element.scanned;
-          _model.ticketsInfo[11] = element.qrcodeinfo;
-          break;
-        default:
-          throw ArgumentError('ERROR.');
-      }
-
-      setState(() {
-
-      });
-    });
-  }
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ValidationModel());
-    updateBoughtTickets();
   }
 
   @override
@@ -154,49 +80,9 @@ class _ValidationWidgetState extends State<ValidationWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (!_model.alreadyScanned[0] && _model.ticketsInfo[0] != '') Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      // Substituida por função de cima.
-
-                      context.pushNamed(
-                        'QrCode',
-                        queryParameters: {
-                          'qrCodeValue': serializeParam(
-                            _model.ticketsInfo[0],
-                            ParamType.String,
-                          ),
-                          'fullMeal': serializeParam(
-                            false,
-                            ParamType.bool,
-                          ),
-                        }.withoutNulls,
-                      );
-                    },
-                    text: 'Print Hello World',
-                    options: FFButtonOptions(
-                      width: double.infinity,
-                      height: 55,
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      color: FlutterFlowTheme.of(context).primary,
-                      textStyle:
-                      FlutterFlowTheme.of(context).titleMedium.override(
-                        fontFamily: 'Readex Pro',
-                        color: Colors.white,
-                        fontSize: 20,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      elevation: 2,
-                    ),
-                  ),
-                ),
-
                 Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    child: FFButtonWidget(
+                     child: FFButtonWidget(
                       onPressed: () async {
                         _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
                           '#C62828', // scanning line color
@@ -209,9 +95,10 @@ class _ValidationWidgetState extends State<ValidationWidget> {
 
                         setState(() {});
                       },
-                      text: 'Button',
+                      text: 'Scan Ticket',
                       options: FFButtonOptions(
-                        height: 40,
+                        width: double.infinity,
+                        height: 60,
                         padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                         iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         color: FlutterFlowTheme.of(context).primary,
@@ -228,13 +115,10 @@ class _ValidationWidgetState extends State<ValidationWidget> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     )
-                )
-
-
+                ),
               ],
             ),
           ),
-
         ),
       ),
     );

@@ -109,7 +109,6 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PlaceHolderModel());
-    print("AMERICA YAAAAAAAA"); // ToDo remove
     updateBoughtTickets();
   }
 
@@ -175,7 +174,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                           }.withoutNulls,
                         );
                       },
-                      text: 'Print Hello World',
+                      text: 'Show Monday Lunch QR Code',
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 55,
@@ -194,44 +193,6 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
                       ),
                     ),
                   ),
-
-                Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
-                          '#C62828', // scanning line color
-                          'Cancel', // cancel button text
-                          true, // whether to show the flash icon
-                          ScanMode.QR,
-                        );
-
-                        _model.scanQrCode();
-
-                        setState(() {});
-                      },
-                      text: 'Button',
-                      options: FFButtonOptions(
-                        height: 40,
-                        padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          letterSpacing: 0,
-                        ),
-                        elevation: 3,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    )
-                )
-
-
               ],
             ),
           ),
