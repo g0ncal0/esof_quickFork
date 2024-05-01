@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 import '../../auth/base_auth_user_provider.dart';
 import '../../index.dart';
 import '../../main.dart';
+import '../../pages/qr_code/qr_code_widget.dart';
 import '../flutter_flow_theme.dart';
 import '../flutter_flow_util.dart';
-import '../../pages/validation/validation_widget.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -44,7 +44,6 @@ class AppStateNotifier extends ChangeNotifier {
   bool get loggedIn => user?.loggedIn ?? false;
   bool get initiallyLoggedIn => initialUser?.loggedIn ?? false;
   bool get shouldRedirect => loggedIn && _redirectLocation != null;
-  bool get adminAccess => loggedIn && isAdmin;
 
   String getRedirectLocation() => _redirectLocation!;
   bool hasRedirect() => _redirectLocation != null;
@@ -126,7 +125,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Store',
           path: '/store',
           builder: (context, params) =>
-            params.isEmpty ? NavBarPage(initialPage: 'Store') : StoreWidget(),
+              params.isEmpty ? NavBarPage(initialPage: 'Store') : StoreWidget(),
         ),
         FFRoute(
           name: 'Meal',
@@ -156,6 +155,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'fullMeal',
               ParamType.bool,
             ),
+            mealID: params.getParam(
+              'mealID',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -164,10 +167,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const Auth1Widget(),
         ),
         FFRoute(
-          name: 'Validation',
-          path: '/validation',
-          builder: (context, params) => ValidationWidget(),
-        ),
+          name: 'QrCode',
+          path: '/qrCode',
+          builder: (context, params) => QrCodeWidget(
+            qrCodeValue: params.getParam(
+              'qrCodeValue',
+              ParamType.String,
+            ),
+            )
+          )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
