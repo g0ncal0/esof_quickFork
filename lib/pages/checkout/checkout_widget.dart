@@ -651,7 +651,16 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
-                      ),
+
+
+
+
+
+
+
+
+
+
                       FFButtonWidget(
                         onPressed: () async {
                           var clickedStatus = ValueNotifier<bool>(false);
@@ -705,34 +714,23 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   context: context,
                                   barrierDismissible: false,
                                   // user must tap button!
-                                  builder: (
-                                      BuildContext context) {
+                                  builder: (BuildContext context) {
                                     return AlertDialog(
-                                        title: const Text(
-                                            'MbWay Response'),
+                                        title: const Text('MbWay Response'),
                                         content: SingleChildScrollView(
                                           child: ListBody(
-                                            children: <
-                                                Widget>[
-                                              Text(
-                                                  response),
+                                            children: <Widget>[
+                                              Text(response),
                                             ],
                                           ),
                                         ),
-                                        actions: <
-                                            Widget>[
+                                        actions: <Widget>[
                                           TextButton(
                                             child: const Text(
                                                 'Dismiss'),
                                             onPressed: () {
-                                              Navigator
-                                                  .of(
-                                                  context)
-                                                  .pop();
-                                              Navigator
-                                                  .of(
-                                                  context)
-                                                  .pop();
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
                                             },
                                           )
                                         ]
@@ -740,9 +738,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   }
                               );
                             }
-                          }
-
-                          else {
+                          } else {
                             return showDialog<void>(
                                 context: context,
                                 barrierDismissible: true,
@@ -768,20 +764,15 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                       actions: <Widget>[
                                         ValueListenableBuilder(
                                             valueListenable: clickedStatus,
-                                            builder: (context, bool isClicked,
-                                                _) {
+                                            builder: (context, bool isClicked, _) {
                                               return TextButton(
                                                 child: const Text('Ok!'),
                                                 onPressed: isClicked
                                                     ? () {}
                                                     : () async {
                                                   clickedStatus.value = true;
-                                                  if (regex.hasMatch(
-                                                      inputController.text)) {
-                                                    phoneNum =
-                                                    "351#${inputController
-                                                        .text}";
-
+                                                  if (regex.hasMatch(inputController.text)) {
+                                                    phoneNum = "351#${inputController.text}";
                                                     var result = await payWithMbway(
                                                         phoneNum,
                                                         _model.fullMeal
@@ -795,34 +786,22 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                           context: context,
                                                           barrierDismissible: false,
                                                           // user must tap button!
-                                                          builder: (
-                                                              BuildContext context) {
+                                                          builder: (BuildContext context) {
                                                             return AlertDialog(
-                                                                title: const Text(
-                                                                    'MbWay Response'),
+                                                                title: const Text('MbWay Response'),
                                                                 content: SingleChildScrollView(
                                                                   child: ListBody(
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Text(
-                                                                          response),
+                                                                    children: <Widget>[
+                                                                      Text(response),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                actions: <
-                                                                    Widget>[
+                                                                actions: <Widget>[
                                                                   TextButton(
-                                                                    child: const Text(
-                                                                        'Ok!'),
+                                                                    child: const Text('Ok!'),
                                                                     onPressed: () {
-                                                                      Navigator
-                                                                          .of(
-                                                                          context)
-                                                                          .pop();
-                                                                      Navigator
-                                                                          .of(
-                                                                          context)
-                                                                          .pop();
+                                                                      Navigator.of(context).pop();
+                                                                      Navigator.of(context).pop();
                                                                     },
                                                                   )
                                                                 ]
@@ -837,31 +816,20 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                           builder: (
                                                               BuildContext context) {
                                                             return AlertDialog(
-                                                                title: const Text(
-                                                                    'MbWay Response'),
+                                                                title: const Text('MbWay Response'),
                                                                 content: SingleChildScrollView(
                                                                   child: ListBody(
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Text(
-                                                                          response),
+                                                                    children: <Widget>[
+                                                                      Text(response),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                actions: <
-                                                                    Widget>[
+                                                                actions: <Widget>[
                                                                   TextButton(
-                                                                    child: const Text(
-                                                                        'Dismiss'),
+                                                                    child: const Text('Dismiss'),
                                                                     onPressed: () {
-                                                                      Navigator
-                                                                          .of(
-                                                                          context)
-                                                                          .pop();
-                                                                      Navigator
-                                                                          .of(
-                                                                          context)
-                                                                          .pop();
+                                                                      Navigator.of(context).pop();
+                                                                      Navigator.of(context).pop();
                                                                     },
                                                                   )
                                                                 ]
@@ -881,17 +849,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                                   'Unknown error, missing Phone Number.'),
                                                               actions: <Widget>[
                                                                 TextButton(
-                                                                  child: const Text(
-                                                                      'Dismiss'),
+                                                                  child: const Text('Dismiss'),
                                                                   onPressed: () {
-                                                                    Navigator
-                                                                        .of(
-                                                                        context)
-                                                                        .pop();
-                                                                    Navigator
-                                                                        .of(
-                                                                        context)
-                                                                        .pop();
+                                                                    Navigator.of(context).pop();
+                                                                    Navigator.of(context).pop();
                                                                   },
                                                                 )
                                                               ]
@@ -931,9 +892,25 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     ],
                   ),
                 ),
+              ),
             ],
           ),
         ),

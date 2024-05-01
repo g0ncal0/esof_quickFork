@@ -116,11 +116,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ? NavBarPage(initialPage: 'HomePage')
               : HomePageWidget(),
         ),
+        /*
         FFRoute(
           name: 'Perfil',
           path: '/perfil',
           builder: (context, params) => PerfilWidget(),
         ),
+
+         */
         FFRoute(
           name: 'Store',
           path: '/store',
