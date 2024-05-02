@@ -187,7 +187,7 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >
 >   #### End
 >   <p align="center" justify="center">
->  <img src="" width="100%"/>
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/9d4548e1a00298cac6b065506f7e000c0788c2ab/images/sprint2_end.png" width="100%"/>
 >   </p>
 >
 >   ### Retrospectives
