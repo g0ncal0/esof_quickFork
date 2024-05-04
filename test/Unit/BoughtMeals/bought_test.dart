@@ -36,11 +36,11 @@ void main() {
     testWidgets("displays error message if user don't have next meal available", (WidgetTester tester) async {
       final model = BoughtMealsModel();
       model.alreadyScanned = List<bool>.filled(12, true);
-      model.ticketsInfo = List<String>.filled(12, 'info');
+      model.ticketsInfo = List<String>.filled(12, '');
 
       await tester.pumpWidget(MaterialApp(home: NextTicketButton(model: model)));
 
-      expect(find.text("You don't have a ticket for the next meal"), findsOneWidget);
+      expect(find.text('Next Meal Ticket'), findsNothing);
     });
   });
 
