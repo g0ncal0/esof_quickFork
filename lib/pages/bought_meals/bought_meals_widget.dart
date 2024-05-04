@@ -224,6 +224,7 @@ class BoughtMealsWidget extends StatefulWidget {
 
 class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
   late BoughtMealsModel _model;
+  bool showMore = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -352,11 +353,43 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   NextTicketButton(model: _model),
-                  for (int i = 0; i < 12; i++)
-                    if (!_model.alreadyScanned[i] && _model.ticketsInfo[i] != '')
-                      TicketButton(
-                          idx: i,
-                          model: _model),
+
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showMore = !showMore;
+                      });
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          showMore ? 'See Less' : 'See More',
+                          style: FlutterFlowTheme.of(context).headlineMedium.override(
+                            fontFamily: 'Outfit',
+                            color: Colors.white,
+                            fontSize: 40,
+                            letterSpacing: 0,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Icon(
+                            showMore ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                            size: 40,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  if (showMore)
+                    for (int i = 0; i < 12; i++)
+                      if (!_model.alreadyScanned[i] && _model.ticketsInfo[i] != '')
+                        TicketButton(
+                            idx: i,
+                            model: _model),
                 ],
               ),
             ),
