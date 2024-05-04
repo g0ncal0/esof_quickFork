@@ -16,20 +16,65 @@ export 'place_holder_model.dart';
 
 class TicketButton extends StatelessWidget {
   final PlaceHolderModel model;
-  final String mealName;
   final int idx;
 
   const TicketButton({
     Key? key,
     required this.model,
-    required this.mealName,
     required this.idx,
   }) : super(key: key);
 
+  String getMealName(int idx) {
+    String mealName = "";
+
+    switch (idx) {
+      case 0:
+        mealName = "Monday Lunch";
+        break;
+      case 1:
+        mealName = "Monday Dinner";
+        break;
+      case 2:
+        mealName = "Tuesday Lunch";
+        break;
+      case 3:
+        mealName = "Tuesday Dinner";
+        break;
+      case 4:
+        mealName = "Wednesday Lunch";
+        break;
+      case 5:
+        mealName = "Wednesday Dinner";
+        break;
+      case 6:
+        mealName = "Thursday Lunch";
+        break;
+      case 7:
+        mealName = "Thursday Dinner";
+        break;
+      case 8:
+        mealName = "Friday Lunch";
+        break;
+      case 9:
+        mealName = "Friday Dinner";
+        break;
+      case 10:
+        mealName = "Saturday Lunch";
+        break;
+      case 11:
+        mealName = "Saturday Dinner";
+        break;
+    }
+
+    return mealName;
+  }
+
   @override
   Widget build(BuildContext context) {
+    String mealName = getMealName(idx);
+
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: FFButtonWidget(
         onPressed: () async {
           context.pushNamed(
@@ -46,20 +91,19 @@ class TicketButton extends StatelessWidget {
             }.withoutNulls,
           );
         },
-        text: 'Show $mealName QR Code',
+        text: '$mealName',
         options: FFButtonOptions(
           width: double.infinity,
           height: 55,
           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
           iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-          color: FlutterFlowTheme.of(context).primary,
-          textStyle:
-          FlutterFlowTheme.of(context).titleMedium.override(
+          color: Color(0xFF2E1F1F),
+          textStyle: FlutterFlowTheme.of(context)
+              .titleSmall
+              .override(
             fontFamily: 'Readex Pro',
             color: Colors.white,
-            fontSize: 20,
             letterSpacing: 0,
-            fontWeight: FontWeight.w500,
           ),
           elevation: 2,
         ),
@@ -188,7 +232,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
           backgroundColor: Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
           title: Text(
-            'Credits',
+            'Bought Meals',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
               fontFamily: 'Outfit',
               color: Colors.white,
@@ -202,17 +246,20 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (!_model.alreadyScanned[0] && _model.ticketsInfo[0] != '') TicketButton(
-                                                                                mealName: 'Monday Lunch',
-                                                                                idx: 0,
-                                                                                model: _model)
-              ],
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  for (int i = 0; i < 12; i++)
+                    if (!_model.alreadyScanned[i] && _model.ticketsInfo[i] != '')
+                      TicketButton(
+                          idx: i,
+                          model: _model),
+                ],
+              ),
             ),
           ),
 
