@@ -14,6 +14,149 @@ import 'package:provider/provider.dart';
 import 'bought_meals_model.dart';
 export 'bought_meals_model.dart';
 
+String getMealName(int idx) {
+  String mealName = "";
+
+  switch (idx) {
+    case 0:
+      mealName = "Monday Lunch";
+      break;
+    case 1:
+      mealName = "Monday Dinner";
+      break;
+    case 2:
+      mealName = "Tuesday Lunch";
+      break;
+    case 3:
+      mealName = "Tuesday Dinner";
+      break;
+    case 4:
+      mealName = "Wednesday Lunch";
+      break;
+    case 5:
+      mealName = "Wednesday Dinner";
+      break;
+    case 6:
+      mealName = "Thursday Lunch";
+      break;
+    case 7:
+      mealName = "Thursday Dinner";
+      break;
+    case 8:
+      mealName = "Friday Lunch";
+      break;
+    case 9:
+      mealName = "Friday Dinner";
+      break;
+    case 10:
+      mealName = "Saturday Lunch";
+      break;
+    case 11:
+      mealName = "Saturday Dinner";
+      break;
+  }
+
+  return mealName;
+}
+
+class NextTicketButton extends StatelessWidget {
+  final BoughtMealsModel model;
+
+  const NextTicketButton({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+
+  int getNextMealIdx() {
+    DateTime now = DateTime.now();
+
+    int weekday = now.weekday;
+    int hour = now.hour;
+
+    switch (weekday) {
+      case 1:
+        return ((hour < 15) ? 0 : 1);
+      case 2:
+        return ((hour < 15) ? 2 : 3);
+      case 3:
+        return ((hour < 15) ? 4 : 5);
+      case 4:
+        return ((hour < 15) ? 6 : 7);
+      case 5:
+        return ((hour < 15) ? 8 : 9);
+      case 6:
+        return ((hour < 15) ? 10 : 11);
+    }
+
+    return 0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int idx = getNextMealIdx();
+    String mealName = getMealName(idx);
+
+    if (!model.alreadyScanned[idx] && model.ticketsInfo[idx] != '') {
+      return Padding(
+        padding: const EdgeInsets.only(top: 250, bottom: 250),
+        child: FFButtonWidget(
+          onPressed: () async {
+            context.pushNamed(
+              'QrCode',
+              queryParameters: {
+                'qrCodeValue': serializeParam(
+                  model.ticketsInfo[idx],
+                  ParamType.String,
+                ),
+                'fullMeal': serializeParam(
+                  false,
+                  ParamType.bool,
+                ),
+              }.withoutNulls,
+            );
+          },
+          text: 'Next Meal Ticket',
+          options: FFButtonOptions(
+            width: double.infinity,
+            height: 100,
+            color: Color(0xFF2E1F1F),
+            textStyle: FlutterFlowTheme.of(context)
+                .titleLarge
+                .override(
+              fontFamily: 'Readex Pro',
+              color: Colors.white,
+              letterSpacing: 0,
+            ),
+            elevation: 2,
+          ),
+        ),
+      );
+    }
+
+    else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 235, horizontal: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.redAccent,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: EdgeInsets.all(20),
+          child: Text(
+            "You don't have a ticket for the next meal \n ($mealName)",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+  }
+}
+
 class TicketButton extends StatelessWidget {
   final BoughtMealsModel model;
   final int idx;
@@ -23,51 +166,6 @@ class TicketButton extends StatelessWidget {
     required this.model,
     required this.idx,
   }) : super(key: key);
-
-  String getMealName(int idx) {
-    String mealName = "";
-
-    switch (idx) {
-      case 0:
-        mealName = "Monday Lunch";
-        break;
-      case 1:
-        mealName = "Monday Dinner";
-        break;
-      case 2:
-        mealName = "Tuesday Lunch";
-        break;
-      case 3:
-        mealName = "Tuesday Dinner";
-        break;
-      case 4:
-        mealName = "Wednesday Lunch";
-        break;
-      case 5:
-        mealName = "Wednesday Dinner";
-        break;
-      case 6:
-        mealName = "Thursday Lunch";
-        break;
-      case 7:
-        mealName = "Thursday Dinner";
-        break;
-      case 8:
-        mealName = "Friday Lunch";
-        break;
-      case 9:
-        mealName = "Friday Dinner";
-        break;
-      case 10:
-        mealName = "Saturday Lunch";
-        break;
-      case 11:
-        mealName = "Saturday Dinner";
-        break;
-    }
-
-    return mealName;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -253,6 +351,7 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  NextTicketButton(model: _model),
                   for (int i = 0; i < 12; i++)
                     if (!_model.alreadyScanned[i] && _model.ticketsInfo[i] != '')
                       TicketButton(
