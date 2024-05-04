@@ -14,6 +14,60 @@ import 'package:provider/provider.dart';
 import 'place_holder_model.dart';
 export 'place_holder_model.dart';
 
+class TicketButton extends StatelessWidget {
+  final PlaceHolderModel model;
+  final String mealName;
+  final int idx;
+
+  const TicketButton({
+    Key? key,
+    required this.model,
+    required this.mealName,
+    required this.idx,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+      child: FFButtonWidget(
+        onPressed: () async {
+          context.pushNamed(
+            'QrCode',
+            queryParameters: {
+              'qrCodeValue': serializeParam(
+                model.ticketsInfo[idx],
+                ParamType.String,
+              ),
+              'fullMeal': serializeParam(
+                false,
+                ParamType.bool,
+              ),
+            }.withoutNulls,
+          );
+        },
+        text: 'Show $mealName QR Code',
+        options: FFButtonOptions(
+          width: double.infinity,
+          height: 55,
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+          color: FlutterFlowTheme.of(context).primary,
+          textStyle:
+          FlutterFlowTheme.of(context).titleMedium.override(
+            fontFamily: 'Readex Pro',
+            color: Colors.white,
+            fontSize: 20,
+            letterSpacing: 0,
+            fontWeight: FontWeight.w500,
+          ),
+          elevation: 2,
+        ),
+      ),
+    );
+  }
+}
+
 class PlaceHolderWidget extends StatefulWidget {
   const PlaceHolderWidget({
     super.key,
@@ -154,45 +208,10 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (!_model.alreadyScanned[0] && _model.ticketsInfo[0] != '') Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        // Substituida por função de cima.
-
-                        context.pushNamed(
-                          'QrCode',
-                          queryParameters: {
-                            'qrCodeValue': serializeParam(
-                              _model.ticketsInfo[0],
-                              ParamType.String,
-                            ),
-                            'fullMeal': serializeParam(
-                              false,
-                              ParamType.bool,
-                            ),
-                          }.withoutNulls,
-                        );
-                      },
-                      text: 'Show Monday Lunch QR Code',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 55,
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                        FlutterFlowTheme.of(context).titleMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          fontSize: 20,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        elevation: 2,
-                      ),
-                    ),
-                  ),
+                if (!_model.alreadyScanned[0] && _model.ticketsInfo[0] != '') TicketButton(
+                                                                                mealName: 'Monday Lunch',
+                                                                                idx: 0,
+                                                                                model: _model)
               ],
             ),
           ),
