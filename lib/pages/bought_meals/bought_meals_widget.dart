@@ -11,11 +11,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'place_holder_model.dart';
-export 'place_holder_model.dart';
+import 'bought_meals_model.dart';
+export 'bought_meals_model.dart';
 
 class TicketButton extends StatelessWidget {
-  final PlaceHolderModel model;
+  final BoughtMealsModel model;
   final int idx;
 
   const TicketButton({
@@ -112,8 +112,8 @@ class TicketButton extends StatelessWidget {
   }
 }
 
-class PlaceHolderWidget extends StatefulWidget {
-  const PlaceHolderWidget({
+class BoughtMealsWidget extends StatefulWidget {
+  const BoughtMealsWidget({
     super.key,
     String? outputTest,
   }) : this.outputTest = outputTest ?? '0';
@@ -121,11 +121,11 @@ class PlaceHolderWidget extends StatefulWidget {
   final String outputTest;
 
   @override
-  State<PlaceHolderWidget> createState() => _PlaceHolderWidgetState();
+  State<BoughtMealsWidget> createState() => _BoughtMealsWidgetState();
 }
 
-class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
-  late PlaceHolderModel _model;
+class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
+  late BoughtMealsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -206,7 +206,7 @@ class _PlaceHolderWidgetState extends State<PlaceHolderWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => PlaceHolderModel());
+    _model = createModel(context, () => BoughtMealsModel());
     updateBoughtTickets();
   }
 

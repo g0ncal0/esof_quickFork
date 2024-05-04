@@ -1,3 +1,4 @@
+import 'package:esof/pages/bought_meals/bought_meals_widget.dart';
 import 'package:esof/pages/validation/validation_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -130,13 +131,13 @@ class _NavBarPageState extends State<NavBarPage> {
       tabs = {
         'Store': ValidationWidget(),
         'HomePage': const HomePageWidget(),
-        'PlaceHolder': const PlaceHolderWidget(),
+        'PlaceHolder': const BoughtMealsWidget(),
       };
     } else {
       tabs = {
         'Store': const StoreWidget(),
         'HomePage': const HomePageWidget(),
-        'PlaceHolder': const PlaceHolderWidget(),
+        'PlaceHolder': const BoughtMealsWidget(),
       };
     }
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);

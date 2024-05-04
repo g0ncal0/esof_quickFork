@@ -137,7 +137,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/placeHolder',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'PlaceHolder')
-              : PlaceHolderWidget(),
+              : BoughtMealsWidget(),
         ),
         FFRoute(
           name: 'Checkout',

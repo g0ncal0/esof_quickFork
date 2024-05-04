@@ -1,7 +1,7 @@
 import 'package:esof/backend/backend.dart';
 import 'package:esof/index.dart';
 import 'package:esof/pages/checkout/checkout_model.dart';
-import 'package:esof/pages/place_holder/place_holder_model.dart';
+import 'package:esof/pages/place_holder/bought_meals_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
