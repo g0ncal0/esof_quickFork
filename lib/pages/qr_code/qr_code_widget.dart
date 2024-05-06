@@ -1,3 +1,4 @@
+import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -85,6 +86,20 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
         appBar: AppBar(
           backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.safePop();
+            },
+          ),
           title: Text(
             'QRCode - Meal',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
