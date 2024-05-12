@@ -1,3 +1,7 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../sigarraApi/session.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -18,10 +22,10 @@ class SigarraLoginWidget extends StatefulWidget {
   const SigarraLoginWidget({super.key});
 
   @override
-  State<SigarraLoginWidget> createState() => _AuthMockupWidgetState();
+  State<SigarraLoginWidget> createState() => _SigarraLoginWidgetState();
 }
 
-class _AuthMockupWidgetState extends State<SigarraLoginWidget>
+class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
     with TickerProviderStateMixin {
   late SigarraLoginModel _model;
 
@@ -46,7 +50,7 @@ class _AuthMockupWidgetState extends State<SigarraLoginWidget>
     _model.passwordFocusNode ??= FocusNode();
 
     animationsMap.addAll({
-    'columnOnPageLoadAnimation1': AnimationInfo(
+    'columnOnPageLoadAnimation': AnimationInfo(
     trigger: AnimationTrigger.onPageLoad,
     effects: [
     FadeEffect(
@@ -84,6 +88,7 @@ class _AuthMockupWidgetState extends State<SigarraLoginWidget>
 
   @override
   Widget build(BuildContext context) {
+    var clickedStatus = ValueNotifier<bool>(false);
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -496,72 +501,75 @@ class _AuthMockupWidgetState extends State<SigarraLoginWidget>
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 0, 16),
-                                                  child: FFButtonWidget(
-                                                    onPressed: () async {
-                                                      GoRouter.of(context)
-                                                          .prepareAuthEvent();
+                                                  child: ValueListenableBuilder(
+                                                    valueListenable: clickedStatus,
+                                                    builder: (context, bool isClicked, _) {
+                                                      return FFButtonWidget(
+                                                        onPressed: isClicked
+                                                            ? () {}
+                                                            : () async {
 
-                                                      final user =
-                                                      await authManager
-                                                          .signInWithEmail(
-                                                        context,
-                                                        _model
-                                                            .emailAddressTextController
-                                                            .text,
-                                                        _model
-                                                            .passwordTextController
-                                                            .text,
+                                                          // FIXME NEW MODIFICATIONS BEGIN
+
+                                                          clickedStatus.value = true;
+                                                          print("SIGN IN BUTTON PRESSED\n");
+                                                          Session? session = await sigarraLogin(_model.emailAddressTextController.text, _model.passwordTextController.text);
+
+                                                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                          setState(() {
+                                                            prefs.setString('user_up_code', _model.emailAddressTextController.text);
+                                                            prefs.setString('user_password', _model.passwordTextController.text);
+                                                            prefs.setString('user_faculty', 'feup');
+                                                            prefs.setBool('persistent_session', true);
+                                                          });
+
+                                                          if (session != null) {
+                                                            context.go('/');
+                                                          }
+
+                                                          // FIXME NEW MODIFICATIONS END
+                                                        },
+                                                        text: 'Sign In',
+                                                        options: FFButtonOptions(
+                                                          width: 230,
+                                                          height: 52,
+                                                          padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 0),
+                                                          iconPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 0),
+                                                          color:
+                                                          FlutterFlowTheme
+                                                              .of(
+                                                              context)
+                                                              .accent3,
+                                                          textStyle:
+                                                          FlutterFlowTheme
+                                                              .of(
+                                                              context)
+                                                              .titleSmall
+                                                              .override(
+                                                            fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                            color: Colors
+                                                                .white,
+                                                            fontSize: 16,
+                                                            letterSpacing:
+                                                            0,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w500,
+                                                          ),
+                                                          elevation: 3,
+                                                          borderSide: BorderSide(color: Colors.transparent, width: 1,),
+                                                          borderRadius:
+                                                            BorderRadius.circular(40),
+                                                        ),
                                                       );
-                                                      if (user == null) {
-                                                        return;
-                                                      }
-
-                                                      context.goNamedAuth(
-                                                          'HomePage',
-                                                          context.mounted);
-                                                    },
-                                                    text: 'Sign In',
-                                                    options: FFButtonOptions(
-                                                      width: 230,
-                                                      height: 52,
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 0, 0),
-                                                      iconPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0, 0, 0, 0),
-                                                      color:
-                                                      FlutterFlowTheme.of(
-                                                          context)
-                                                          .accent3,
-                                                      textStyle:
-                                                      FlutterFlowTheme.of(
-                                                          context)
-                                                          .titleSmall
-                                                          .override(
-                                                        fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                        color: Colors
-                                                            .white,
-                                                        fontSize: 16,
-                                                        letterSpacing:
-                                                        0,
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .w500,
-                                                      ),
-                                                      elevation: 3,
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                        Colors.transparent,
-                                                        width: 1,
-                                                      ),
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          40),
-                                                    ),
+                                                    }
                                                   ),
                                                 ),
                                               ),

@@ -1,14 +1,17 @@
 import 'dart:async';
 
+import 'package:esof/pages/sigarraLogin/sigarraLogin_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 import '../../index.dart';
 import '../../main.dart';
 import '../../pages/qr_code/qr_code_widget.dart';
+import '../../sigarraApi/session.dart';
 import '../flutter_flow_theme.dart';
 import '../flutter_flow_util.dart';
 
@@ -32,6 +35,11 @@ class AppStateNotifier extends ChangeNotifier {
   String phoneNum = "";
   String cardNum = "";
   String cvv = "";
+
+  String username = "";
+  String password = ""; // ToDo fix ?
+  String faculty = "";
+  bool persistentSession = true; // ToDo fix ?
 
   /// Determines whether the app will refresh and build again when a sign
   /// in or sign out happens. This is useful when the app is launched or
@@ -175,7 +183,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
             )
-          )
+          ),
+
+        FFRoute( // ToDo remooooove;
+            name: 'SigarraLogin',
+            path: '/sigarraLogin',
+            builder: (context, params) => const SigarraLoginWidget(),
+        )
+
+
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
