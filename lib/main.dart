@@ -1,12 +1,12 @@
 import 'package:esof/pages/bought_meals/bought_meals_widget.dart';
 import 'package:esof/pages/validation/validation_widget.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/firebase_auth/auth_util.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
@@ -22,8 +22,11 @@ void main() async {
   usePathUrlStrategy();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent,));
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.top]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
 
   await dotenv.load(fileName: "assets/.env");
 
@@ -55,25 +58,44 @@ class _MyAppState extends State<QuickFork> {
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
+  void _loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
+      _appStateNotifier.password = prefs.getString('user_password') ?? "";
+      _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
+      _appStateNotifier.persistentSession =
+          prefs.getBool('persistent_session') ?? true;
+    });
+
+    if (_appStateNotifier.username == "" ||
+        _appStateNotifier.password == "" ||
+        _appStateNotifier.faculty == "") {
+      _router.goNamed('SigarraLogin');
+    }
+
+    userStream = esofFirebaseUserStream()
+      ..listen((user) => _appStateNotifier.update(user));
+    jwtTokenStream.listen((_) {});
+    Future.delayed(
+      const Duration(milliseconds: 1000),
+      () => _appStateNotifier.stopShowingSplashImage(),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = esofFirebaseUserStream()
-      ..listen((user) => _appStateNotifier.update(user));
-    jwtTokenStream.listen((_) {});
-    Future.delayed(
-      const Duration(milliseconds: 1000),
-          () => _appStateNotifier.stopShowingSplashImage(),
-    );
+    _loadData();
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
-    _themeMode = mode;
-    FlutterFlowTheme.saveThemeMode(mode);
-  });
+        _themeMode = mode;
+        FlutterFlowTheme.saveThemeMode(mode);
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +143,6 @@ class _NavBarPageState extends State<NavBarPage> {
     _appStateNotifier = AppStateNotifier.instance;
     _currentPageName = widget.initialPage ?? _currentPageName;
     _currentPage = widget.page;
-
   }
 
   @override
@@ -141,8 +162,11 @@ class _NavBarPageState extends State<NavBarPage> {
       };
     }
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent,));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
