@@ -64,8 +64,6 @@ class _MyAppState extends State<QuickFork> {
       _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
       _appStateNotifier.password = prefs.getString('user_password') ?? "";
       _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
-      _appStateNotifier.persistentSession =
-          prefs.getBool('persistent_session') ?? true;
     });
 
     if (_appStateNotifier.username == "" ||

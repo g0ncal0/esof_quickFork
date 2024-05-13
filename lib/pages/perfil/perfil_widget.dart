@@ -1,5 +1,8 @@
+import 'package:esof/auth/base_auth_user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../auth/firebase_auth/firebase_auth_manager.dart';
 import '../../backend/mbWay/mbway_payments.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -20,6 +23,24 @@ class PerfilWidget extends StatefulWidget {
 class _PerfilWidgetState extends State<PerfilWidget> {
   late PerfilModel _model;
   late AppStateNotifier _appStateNotifier;
+
+  void _clearLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+
+      prefs.setString('user_up_code', '');
+      prefs.setString('user_password', '');
+      prefs.setString('user_faculty', '');
+
+      _appStateNotifier.username = '';
+      _appStateNotifier.password = '';
+      _appStateNotifier.faculty = '';
+
+      final authManager = FirebaseAuthManager();
+      authManager.signOut();
+    });
+
+  }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -619,16 +640,13 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                     ),
                   ),
                 ),
-
-
-
-
-
               Align(
                 alignment: AlignmentDirectional(-0.01, 0.92),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    _appStateNotifier.setAdmin(false);
+                    _clearLogin();
+                    context.go('/sigarraLogin');
                   },
                   text: 'Sign Out',
                   options: FFButtonOptions(
