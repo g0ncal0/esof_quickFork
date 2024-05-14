@@ -130,6 +130,48 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
         "meal_id" : _model.widget.mealID,
         "scanned" : false
       });
+
+
+
+      QuerySnapshot mealQuery = await FirebaseFirestore.instance
+          .collection("WeekelyMeals")
+          .where("weekdayMeal", isEqualTo: _model.widget.mealID)
+          .get();
+
+      // Check if the document exists
+      if (mealQuery.docs.isNotEmpty) {
+        // Get the document reference
+        DocumentReference docRef = mealQuery.docs.first.reference;
+
+
+       // print(_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-")));
+        //print("\n");print("\n");print("\n");print("\n");print("\n");
+        //print("Meat");
+        //print("Meat "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-")));
+
+
+        if("Meat "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-"))){
+            docRef.update({
+              "boughtMeat": FieldValue.increment(1),
+            });
+        }
+        else if("Fish "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-"))) {
+          docRef.update({
+            "boughtFish": FieldValue.increment(1),
+          });
+        }
+        else
+          {
+            docRef.update({
+              "boughtVegetarian": FieldValue.increment(1),
+            });
+          }
+
+      }
+
+
+
+
   }
 
   @override
