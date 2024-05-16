@@ -170,7 +170,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'brand.ai',
+                                      'Stripe',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineMedium
                                           .override(
@@ -1173,8 +1173,10 @@ class _Auth1WidgetState extends State<Auth1Widget>
                     width: 100.0,
                     height: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: const DecorationImage(
+                      //color: Colors.white,
+                      color: Theme.of(context).brightness.name == "dark" ? Colors.black12 : Color(0xFFf2cece),
+
+                    image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: CachedNetworkImageProvider(
                           'https://images.unsplash.com/photo-1508385082359-f38ae991e8f2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80',

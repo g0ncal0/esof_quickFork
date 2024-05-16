@@ -1,5 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:esof/auth/base_auth_user_provider.dart';
+import 'package:esof/sigarraApi/session.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/firebase_auth/firebase_auth_manager.dart';
@@ -8,6 +15,7 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import './perfil_model.dart';
 
 export './perfil_model.dart';
@@ -22,6 +30,9 @@ class PerfilWidget extends StatefulWidget {
 
 class _PerfilWidgetState extends State<PerfilWidget> {
   late PerfilModel _model;
+
+  Uint8List? image;
+
   late AppStateNotifier _appStateNotifier;
 
   void _clearLogin() async {
@@ -42,6 +53,10 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
   }
 
+  Future<Session?> _loadSession() async{
+    return sigarraLogin(_appStateNotifier.username, _appStateNotifier.password);
+  }
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -49,6 +64,19 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     super.initState();
     _model = createModel(context, () => PerfilModel());
     _appStateNotifier = AppStateNotifier.instance;
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      Session? session = await _loadSession();
+
+      if (session != null) {
+        image = (await getImage(session.cookies, session.username)).bodyBytes;
+      } else {
+        Logger().i(_appStateNotifier.username);
+        context.go('/sigarraLogin');
+      }
+
+      setState(() {});
+    });
   }
 
   @override
@@ -160,17 +188,20 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   ),
                 ),
               ),
+              if (image != null)
               Align(
                 alignment: AlignmentDirectional(0.82, -0.92),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(18.0),
-                  child: Image.network(
-                    'https://picsum.photos/seed/331/600',
-                    width: 150.0,
-                    height: 150.0,
-                    fit: BoxFit.cover,
+                  child: Image.memory(image!),
+
+                    /*FadeInImage(image: .image, placeholder: Image.network(
+                      'https://picsum.photos/seed/331/600',
+                      width: 150.0,
+                      height: 150.0,
+                      fit: BoxFit.cover,
+                    ).image)*/
                   ),
-                ),
               ),
 
 

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../backend/backend.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
+import '../../sigarraApi/session.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import '/custom_code/actions/index.dart' as actions;
 
 import './home_page_model.dart';
@@ -20,11 +24,31 @@ class HomePageWidget extends StatefulWidget {
 class _HomePageWidgetState extends State<HomePageWidget> {
   late HomePageModel _model;
 
+  late AppStateNotifier _appStateNotifier;
+
+  Uint8List? image;
+
+  String? name;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Future<Session?> _loadSession() async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
+      _appStateNotifier.password = prefs.getString('user_password') ?? "";
+      _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
+    });
+
+    return sigarraLogin(_appStateNotifier.username, _appStateNotifier.password);
+  }
 
   @override
   void initState() {
     super.initState();
+    _appStateNotifier = AppStateNotifier.instance;
     _model = createModel(context, () => HomePageModel());
 
     try {
@@ -75,6 +99,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       _model.descriptionsDinner = ['No meals available at this time.'];
     }
 
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      Session? session = await _loadSession();
+
+      if (session != null) {
+        image = (await getImage(session.cookies, session.username)).bodyBytes;
+        name = jsonDecode((await getName(session.cookies, session.username)).body)['nome'].toString().split(' ')[0];
+      } else {
+        context.go('/sigarraLogin');
+      }
+
+      setState(() {});
+    });
+
   }
 
   @override
@@ -107,6 +144,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
           ),
           actions: [
+            if (image != null)
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
               child: InkWell(
@@ -117,15 +155,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 onTap: () async {
                   context.pushNamed('Perfil');
                 },
-                child: Container(
-                  width: 49,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                child: ClipRRect(
+                    clipBehavior: Clip.antiAlias,
                     borderRadius: BorderRadius.circular(8),
-                    shape: BoxShape.rectangle,
-                  ),
-                ),
+                    child: Image.memory(image!, fit: BoxFit.cover), // Same radius value as above
+                  )
               ),
             )
 
@@ -152,12 +186,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ),
               ),
+              if (name != null)
               Align(
                 alignment: AlignmentDirectional(-1.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 0.0, 0.0),
                   child: Text(
-                    'John Doe',
+                    name!,
+                    //'John Doe',
                     style: FlutterFlowTheme.of(context).titleMedium.override(
                           fontFamily: 'Readex Pro',
                           fontSize: 26.0,
