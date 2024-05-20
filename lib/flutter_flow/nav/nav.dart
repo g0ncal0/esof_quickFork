@@ -4,7 +4,9 @@ import 'package:esof/pages/sigarraLogin/sigarraLogin_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/base_auth_user_provider.dart';
@@ -20,6 +22,50 @@ export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
 
 const kTransitionInfoKey = '__transition_info__';
+
+class SpinningFork extends StatefulWidget {
+  @override
+  _SpinningForkState createState() => _SpinningForkState();
+}
+
+class _SpinningForkState extends State<SpinningFork> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 100,
+        height: 5,
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.rotate(
+              angle: _controller.value * 2.0 * 3.141592653589793,
+              child: child,
+            );
+          },
+          child: FaIcon(FontAwesomeIcons.utensils, size: 30.0, color: Color(0xFF5D4444)),
+        ),
+      ),
+    );
+  }
+}
 
 class AppStateNotifier extends ChangeNotifier {
   AppStateNotifier._();
@@ -39,6 +85,8 @@ class AppStateNotifier extends ChangeNotifier {
   String username = "";
   String password = ""; // ToDo fix ?
   String faculty = "";
+  String image_small = "";
+  String image_big = "";
   bool persistentSession = true; // ToDo fix ?
 
   /// Determines whether the app will refresh and build again when a sign
@@ -374,12 +422,9 @@ class FFRoute {
       final child = appStateNotifier.loading
           ? Center(
         child: SizedBox(
-          width: 50.0,
-          height: 50.0,
-          child: SpinKitRotatingPlain(
-            color: FlutterFlowTheme.of(context).tertiary,
-            size: 50.0,
-          ),
+          width: double.infinity,
+          height: double.infinity,
+          child: SpinningFork(),
         ),
       )
           : page;

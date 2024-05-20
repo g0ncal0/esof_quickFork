@@ -1,11 +1,14 @@
 import 'package:esof/pages/bought_meals/bought_meals_widget.dart';
 import 'package:esof/pages/validation/validation_widget.dart';
+import 'package:esof/sigarraApi/session.dart';
+import 'package:esof/sigarraApi/sigarraApi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/firebase_auth/auth_util.dart';
@@ -64,12 +67,19 @@ class _MyAppState extends State<QuickFork> {
       _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
       _appStateNotifier.password = prefs.getString('user_password') ?? "";
       _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
+      _appStateNotifier.image_small = prefs.getString('user_image_small_small') ?? "";
+      _appStateNotifier.image_big = prefs.getString('user_image_small_small') ?? "";
     });
 
     if (_appStateNotifier.username == "" ||
         _appStateNotifier.password == "" ||
         _appStateNotifier.faculty == "") {
       _router.goNamed('SigarraLogin');
+    } else {
+      Session? session = await sigarraLogin(_appStateNotifier.username, _appStateNotifier.password).timeout(const Duration(seconds: 30));
+      if (session == null) {
+        _router.goNamed('SigarraLogin');
+      }
     }
 
     userStream = esofFirebaseUserStream()

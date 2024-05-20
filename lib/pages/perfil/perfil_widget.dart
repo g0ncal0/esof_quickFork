@@ -1,5 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:esof/auth/base_auth_user_provider.dart';
+import 'package:esof/flutter_flow/nav/nav.dart';
+import 'package:esof/sigarraApi/session.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/firebase_auth/firebase_auth_manager.dart';
@@ -8,6 +16,7 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import './perfil_model.dart';
 
 export './perfil_model.dart';
@@ -22,7 +31,12 @@ class PerfilWidget extends StatefulWidget {
 
 class _PerfilWidgetState extends State<PerfilWidget> {
   late PerfilModel _model;
+
+  Uint8List? image;
+
   late AppStateNotifier _appStateNotifier;
+
+  bool _isLoading = true;
 
   void _clearLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -31,15 +45,21 @@ class _PerfilWidgetState extends State<PerfilWidget> {
       prefs.setString('user_up_code', '');
       prefs.setString('user_password', '');
       prefs.setString('user_faculty', '');
+      prefs.setString('user_image_small','');
 
       _appStateNotifier.username = '';
       _appStateNotifier.password = '';
       _appStateNotifier.faculty = '';
+      _appStateNotifier.image_small = '';
 
       final authManager = FirebaseAuthManager();
       authManager.signOut();
     });
 
+  }
+
+  Future<Session?> _loadSession() async{
+    return sigarraLogin(_appStateNotifier.username, _appStateNotifier.password);
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -49,6 +69,25 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     super.initState();
     _model = createModel(context, () => PerfilModel());
     _appStateNotifier = AppStateNotifier.instance;
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+
+      Session? session = await _loadSession();
+
+      if (session != null) {
+        image = base64Decode(_appStateNotifier.image_big) as Uint8List;
+        if (image == null || image!.isEmpty) {
+          image = (await getImage(session.cookies, session.username)).bodyBytes;
+        }
+      } else {
+        Logger().i(_appStateNotifier.username);
+        context.go('/sigarraLogin');
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   @override
@@ -113,9 +152,10 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF1F1D1D),
+        backgroundColor: Theme.of(context).brightness.name == "dark" ? Color(
+            0xff2c2c2c) : Color(0xFFf2cece),
         appBar: AppBar(
-          backgroundColor: Color(0xFF2E1F1F),
+          backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -128,25 +168,27 @@ class _PerfilWidgetState extends State<PerfilWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.safePop();
+              final returnValue = {'success': false};
+              while (!Navigator.of(context).canPop()) {}
+              Navigator.of(context).pop(returnValue);
+              //context.pushNamed('Store');
             },
           ),
-          title: Align(
-            alignment: AlignmentDirectional(-1.29, -1.0),
-            child: Text(
-              'MainMenu',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                fontFamily: 'Outfit',
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+          title: Text(
+            '',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+              fontFamily: 'Readex Pro',
+              color: Colors.white,
+              fontSize: 22.0,
+              letterSpacing: 0.0,
             ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: true,
-          elevation: 2.0,
+          elevation: 0.0,
         ),
-        body: SafeArea(
+        body: _isLoading
+            ? Center(child: SpinningFork()) : SafeArea(
           top: true,
           child: Stack(
             children: [
@@ -160,17 +202,20 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   ),
                 ),
               ),
+              if (image != null)
               Align(
                 alignment: AlignmentDirectional(0.82, -0.92),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(18.0),
-                  child: Image.network(
-                    'https://picsum.photos/seed/331/600',
-                    width: 150.0,
-                    height: 150.0,
-                    fit: BoxFit.cover,
+                  child: Image.memory(image!),
+
+                    /*FadeInImage(image: .image, placeholder: Image.network(
+                      'https://picsum.photos/seed/331/600',
+                      width: 150.0,
+                      height: 150.0,
+                      fit: BoxFit.cover,
+                    ).image)*/
                   ),
-                ),
               ),
 
 

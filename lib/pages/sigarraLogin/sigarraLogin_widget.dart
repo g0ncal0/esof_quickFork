@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../sigarraApi/session.dart';
@@ -94,8 +97,10 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        //backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
         appBar: AppBar(
           backgroundColor: Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -106,7 +111,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Readex Pro',
-                color: FlutterFlowTheme.of(context).secondaryBackground,
+                color: Colors.white,
                 fontSize: 30,
                 letterSpacing: 0,
               ),
@@ -127,11 +132,13 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                   width: 100,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    //color: FlutterFlowTheme.of(context).primaryText,
+                      color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                   ),
                   alignment: AlignmentDirectional(0, -1),
-                  child: SingleChildScrollView(
+                  child: SafeArea(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -143,7 +150,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                               maxWidth: 602,
                             ),
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primaryText,
+                              color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(16),
                                 bottomRight: Radius.circular(16),
@@ -161,7 +168,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                             maxWidth: 602,
                           ),
                           decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                           ),
                           child: Padding(
                             padding:
@@ -171,10 +178,11 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                 Align(
                                   alignment: Alignment(0, 0),
                                   child: TabBar(
-                                    isScrollable: true,
-                                    labelColor: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    unselectedLabelColor: Color(0xFF57636C),
+                                    isScrollable: false,
+                                    splashFactory: NoSplash.splashFactory,
+                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                    labelColor: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
+                                    //unselectedLabelColor: Color(0xFF57636C),
                                     labelPadding: EdgeInsets.all(16),
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .displaySmall
@@ -185,30 +193,18 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                       letterSpacing: 0,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    unselectedLabelStyle:
-                                    FlutterFlowTheme.of(context)
-                                        .displaySmall
-                                        .override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      color: Color(0xFF101213),
-                                      fontSize: 36,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                    indicatorColor:
-                                    FlutterFlowTheme.of(context).accent3,
+                                    indicatorColor: FlutterFlowTheme.of(context).accent3,
                                     indicatorWeight: 4,
+                                    indicatorSize: TabBarIndicatorSize.label, // Adjusts indicator width to tab text
+
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 12, 0, 12),
+                                        0, 30, 0, 30),
                                     tabs: [
                                       Tab(
                                         text: 'QuickFork',
                                       ),
                                     ],
                                     controller: _model.tabBarController,
-                                    onTap: (i) async {
-                                      [() async {}][i]();
-                                    },
                                   ),
                                 ),
                                 Expanded(
@@ -237,9 +233,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                       .override(
                                                     fontFamily:
                                                     'Plus Jakarta Sans',
-                                                    color: FlutterFlowTheme
-                                                        .of(context)
-                                                        .secondaryBackground,
+                                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                                     fontSize: 14,
                                                     letterSpacing: 0,
                                                     fontWeight:
@@ -271,9 +265,9 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                           .override(
                                                         fontFamily:
                                                         'Plus Jakarta Sans',
-                                                        color: FlutterFlowTheme.of(
-                                                            context)
-                                                            .primaryText,
+                                                        //color: FlutterFlowTheme.of(context).primaryText,
+                                                        color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
+
                                                         fontSize: 14,
                                                         letterSpacing:
                                                         0,
@@ -290,18 +284,18 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         ),
                                                         borderRadius:
                                                         BorderRadius
-                                                            .circular(40),
+                                                            .circular(24),
                                                       ),
                                                       focusedBorder:
                                                       OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                           color:
-                                                          Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2,
                                                         ),
                                                         borderRadius:
                                                         BorderRadius
-                                                            .circular(40),
+                                                            .circular(24),
                                                       ),
                                                       errorBorder:
                                                       OutlineInputBorder(
@@ -312,7 +306,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         ),
                                                         borderRadius:
                                                         BorderRadius
-                                                            .circular(40),
+                                                            .circular(24),
                                                       ),
                                                       focusedErrorBorder:
                                                       OutlineInputBorder(
@@ -323,7 +317,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         ),
                                                         borderRadius:
                                                         BorderRadius
-                                                            .circular(40),
+                                                            .circular(24),
                                                       ),
                                                       filled: true,
                                                       fillColor:
@@ -340,7 +334,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                       fontFamily:
                                                       'Plus Jakarta Sans',
                                                       color:
-                                                      Color(0xFF101213),
+                                                      Color(0xFFFFFFFF),
                                                       fontSize: 14,
                                                       letterSpacing: 0,
                                                       fontWeight:
@@ -349,7 +343,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
-                                                    Color(0xFF4B39EF),
+                                                    Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .emailAddressTextControllerValidator
                                                         .asValidator(context),
@@ -410,8 +404,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         OutlineInputBorder(
                                                           borderSide:
                                                           BorderSide(
-                                                            color: Color(
-                                                                0xFF4B39EF),
+                                                            color: Color(0xFF4F3B3B),
                                                             width: 2,
                                                           ),
                                                           borderRadius:
@@ -487,7 +480,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         FontWeight.w500,
                                                       ),
                                                       cursorColor:
-                                                      Color(0xFF4B39EF),
+                                                      Color(0xFF4F3B3B),
                                                       validator: _model
                                                           .passwordTextControllerValidator
                                                           .asValidator(context),
@@ -508,26 +501,26 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         onPressed: isClicked
                                                             ? () {}
                                                             : () async {
-
-                                                          // FIXME NEW MODIFICATIONS BEGIN
-
                                                           clickedStatus.value = true;
-                                                          print("SIGN IN BUTTON PRESSED\n");
                                                           Session? session = await sigarraLogin(_model.emailAddressTextController.text, _model.passwordTextController.text);
 
-                                                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                          setState(() {
-                                                            prefs.setString('user_up_code', _model.emailAddressTextController.text);
-                                                            prefs.setString('user_password', _model.passwordTextController.text);
-                                                            prefs.setString('user_faculty', 'feup');
-                                                            prefs.setBool('persistent_session', true);
-                                                          });
-
-                                                          if (session != null) {
+                                                          if (session == null) {
+                                                            isClicked = false;
+                                                            clickedStatus.value = false;
+                                                            return;
+                                                          } else {
+                                                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                            Uint8List imageBytes = (await getImage(session.cookies, session.username)).bodyBytes;
+                                                            setState(() {
+                                                              prefs.setString('user_up_code', _model.emailAddressTextController.text);
+                                                              prefs.setString('user_password', _model.passwordTextController.text);
+                                                              prefs.setString('user_faculty', 'feup');
+                                                              prefs.setString('user_image_small', base64Encode(imageBytes as List<int>));
+                                                              prefs.setString('user_image_big', base64Encode(imageBytes as List<int>));
+                                                              prefs.setBool('persistent_session', true);
+                                                            });
                                                             context.go('/');
                                                           }
-
-                                                          // FIXME NEW MODIFICATIONS END
                                                         },
                                                         text: 'Sign In',
                                                         options: FFButtonOptions(
