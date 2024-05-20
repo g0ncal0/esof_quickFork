@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:esof/flutter_flow/nav/nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:logger/logger.dart';
@@ -26,7 +29,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   late AppStateNotifier _appStateNotifier;
 
-  Uint8List? image;
+  bool _isLoading = true;
+
+  Uint8List? image_small;
 
   String? name;
 
@@ -40,6 +45,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
       _appStateNotifier.password = prefs.getString('user_password') ?? "";
       _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
+      _appStateNotifier.image_small = prefs.getString('user_image_small') ?? "";
+      _appStateNotifier.image_big = prefs.getString('user_image_big') ?? "";
     });
 
     return sigarraLogin(_appStateNotifier.username, _appStateNotifier.password);
@@ -50,7 +57,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     super.initState();
     _appStateNotifier = AppStateNotifier.instance;
     _model = createModel(context, () => HomePageModel());
-
+    _isLoading = true;
     try {
       SchedulerBinding.instance.addPostFrameCallback((_) async {
         try {
@@ -100,16 +107,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     }
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _isLoading = true;
       Session? session = await _loadSession();
 
       if (session != null) {
-        image = (await getImage(session.cookies, session.username)).bodyBytes;
+        image_small = base64Decode(_appStateNotifier.image_small) as Uint8List;
+        if (image_small == null || image_small!.isEmpty) {
+          image_small = (await getImage(session.cookies, session.username)).bodyBytes;
+        }
         name = jsonDecode((await getName(session.cookies, session.username)).body)['nome'].toString().split(' ')[0];
       } else {
         context.go('/sigarraLogin');
       }
 
-      setState(() {});
+      setState(() {_isLoading = false;});
     });
 
   }
@@ -144,7 +155,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
           ),
           actions: [
-            if (image != null)
+            if (image_small != null)
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 10),
               child: InkWell(
@@ -158,16 +169,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 child: ClipRRect(
                     clipBehavior: Clip.antiAlias,
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.memory(image!, fit: BoxFit.cover), // Same radius value as above
+                    child: Image.memory(image_small!, fit: BoxFit.cover), // Same radius value as above
                   )
               ),
             )
-
           ],
           centerTitle: false,
           elevation: 2.0,
         ),
-        body: SafeArea(
+        body: _isLoading
+            ? Center(child: SpinningFork()) : SafeArea(
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,

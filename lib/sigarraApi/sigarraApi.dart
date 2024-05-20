@@ -46,6 +46,7 @@ String getCookies(Map<String, String> headers) {
 }
 
 Future<http.Response> getImage(String cookie, String upNumber) async {
+  Logger().i("Fetching user image");
   final url = "https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=" + upNumber;
   http.Client? httpClient;
 

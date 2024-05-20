@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -288,7 +290,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                       OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                           color:
-                                                          Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2,
                                                         ),
                                                         borderRadius:
@@ -341,7 +343,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
-                                                    Color(0xFF4B39EF),
+                                                    Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .emailAddressTextControllerValidator
                                                         .asValidator(context),
@@ -402,8 +404,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         OutlineInputBorder(
                                                           borderSide:
                                                           BorderSide(
-                                                            color: Color(
-                                                                0xFF4B39EF),
+                                                            color: Color(0xFF4F3B3B),
                                                             width: 2,
                                                           ),
                                                           borderRadius:
@@ -479,7 +480,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         FontWeight.w500,
                                                       ),
                                                       cursorColor:
-                                                      Color(0xFF4B39EF),
+                                                      Color(0xFF4F3B3B),
                                                       validator: _model
                                                           .passwordTextControllerValidator
                                                           .asValidator(context),
@@ -509,10 +510,13 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                             return;
                                                           } else {
                                                             SharedPreferences prefs = await SharedPreferences.getInstance();
+                                                            Uint8List imageBytes = (await getImage(session.cookies, session.username)).bodyBytes;
                                                             setState(() {
                                                               prefs.setString('user_up_code', _model.emailAddressTextController.text);
                                                               prefs.setString('user_password', _model.passwordTextController.text);
                                                               prefs.setString('user_faculty', 'feup');
+                                                              prefs.setString('user_image_small', base64Encode(imageBytes as List<int>));
+                                                              prefs.setString('user_image_big', base64Encode(imageBytes as List<int>));
                                                               prefs.setBool('persistent_session', true);
                                                             });
                                                             context.go('/');

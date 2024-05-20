@@ -1,3 +1,7 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../sigarraApi/session.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -229,11 +233,21 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void updateBoughtTickets() async{
+
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Session? session = await sigarraLogin(prefs.getString('user_up_code')!, prefs.getString('user_password')!);
+
+    if (session == null) {
+      context.go('/sigarraLogin');
+      return;
+    }
+
     _model.userTickets = await queryBoughtTicketRecordOnce(
       queryBuilder: (boughtTicketRecord) =>
           boughtTicketRecord.where(
-            'uid',
-            isEqualTo: currentUserEmail,
+            'upCode',
+            isEqualTo: session.username,
           ),
       limit: 12,
     );

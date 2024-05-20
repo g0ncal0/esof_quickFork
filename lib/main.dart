@@ -67,6 +67,8 @@ class _MyAppState extends State<QuickFork> {
       _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
       _appStateNotifier.password = prefs.getString('user_password') ?? "";
       _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
+      _appStateNotifier.image_small = prefs.getString('user_image_small_small') ?? "";
+      _appStateNotifier.image_big = prefs.getString('user_image_small_small') ?? "";
     });
 
     if (_appStateNotifier.username == "" ||

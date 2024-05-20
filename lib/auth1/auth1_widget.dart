@@ -121,9 +121,30 @@ class _Auth1WidgetState extends State<Auth1Widget>
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF101213),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF2E1F1F),
+          automaticallyImplyLeading: false,
+          title: Align(
+            alignment: AlignmentDirectional(0, 0),
+            child: Text(
+              'Stripe',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                fontFamily: 'Readex Pro',
+                color: Colors.white,
+                fontSize: 30,
+                letterSpacing: 0,
+              ),
+            ),
+          ),
+          actions: [],
+          centerTitle: false,
+          elevation: 2,
+        ),
         body: SafeArea(
           top: true,
+
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -132,8 +153,8 @@ class _Auth1WidgetState extends State<Auth1Widget>
                 child: Container(
                   width: 100.0,
                   height: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                   ),
                   alignment: const AlignmentDirectional(0.0, -1.0),
                   child: SingleChildScrollView(
@@ -149,8 +170,8 @@ class _Auth1WidgetState extends State<Auth1Widget>
                             constraints: const BoxConstraints(
                               maxWidth: 602.0,
                             ),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(16.0),
                                 bottomRight: Radius.circular(16.0),
@@ -170,12 +191,12 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'Stripe',
+                                      '',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineMedium
                                           .override(
                                             fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF101213),
+                                            color: Colors.white,
                                             fontSize: 24.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -193,8 +214,8 @@ class _Auth1WidgetState extends State<Auth1Widget>
                           constraints: const BoxConstraints(
                             maxWidth: 602.0,
                           ),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                           ),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -205,8 +226,8 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                   alignment: const Alignment(-1.0, 0),
                                   child: TabBar(
                                     isScrollable: true,
-                                    labelColor: const Color(0xFF101213),
-                                    unselectedLabelColor: const Color(0xFF57636C),
+                                    labelColor: Colors.white,
+                                    unselectedLabelColor: Colors.white,
                                     labelPadding: const EdgeInsets.all(16.0),
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .displaySmall
@@ -227,7 +248,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
-                                    indicatorColor: const Color(0xFF4B39EF),
+                                    indicatorColor: FlutterFlowTheme.of(context).accent3,
                                     indicatorWeight: 4.0,
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 12.0, 16.0, 12.0),
@@ -274,7 +295,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                         fontFamily:
                                                             'Plus Jakarta Sans',
                                                         color:
-                                                            const Color(0xFF57636C),
+                                                        Colors.white,
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -307,8 +328,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Plus Jakarta Sans',
-                                                                color: const Color(
-                                                                    0xFF57636C),
+                                                                color:  Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -320,7 +340,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFFE0E3E7),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -331,7 +351,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -361,7 +381,9 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                 .circular(40.0),
                                                       ),
                                                       filled: true,
-                                                      fillColor: Colors.white,
+                                                      fillColor: FlutterFlowTheme.of(
+                                                          context)
+                                                          .alternate,
                                                       contentPadding:
                                                           const EdgeInsets.all(24.0),
                                                     ),
@@ -372,7 +394,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF101213),
+                                                          Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -381,7 +403,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
-                                                        const Color(0xFF4B39EF),
+                                                    Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .emailAddressControllerValidator
                                                         .asValidator(context),
@@ -414,8 +436,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Plus Jakarta Sans',
-                                                                color: const Color(
-                                                                    0xFF57636C),
+                                                                color: Colors.white,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -427,7 +448,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFFE0E3E7),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -438,7 +459,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -468,7 +489,9 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                 .circular(40.0),
                                                       ),
                                                       filled: true,
-                                                      fillColor: Colors.white,
+                                                      fillColor: FlutterFlowTheme.of(
+                                                          context)
+                                                          .alternate,
                                                       contentPadding:
                                                           const EdgeInsets.all(24.0),
                                                       suffixIcon: InkWell(
@@ -488,7 +511,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               : Icons
                                                                   .visibility_off_outlined,
                                                           color:
-                                                              const Color(0xFF57636C),
+                                                              Colors.white,
                                                           size: 24.0,
                                                         ),
                                                       ),
@@ -500,14 +523,14 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF101213),
+                                                          Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
                                                     cursorColor:
-                                                        const Color(0xFF4B39EF),
+                                                    Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .passwordControllerValidator
                                                         .asValidator(context),
@@ -563,7 +586,10 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                   0.0,
                                                                   0.0,
                                                                   0.0),
-                                                      color: const Color(0xFF4B39EF),
+                                                      color: FlutterFlowTheme
+                                                          .of(
+                                                          context)
+                                                          .accent3,
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -608,7 +634,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                     text: 'Forgot Password',
                                                     options: FFButtonOptions(
                                                       width: 230.0,
-                                                      height: 44.0,
+                                                      height: 52.0,
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
@@ -623,7 +649,10 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                   0.0,
                                                                   0.0,
                                                                   0.0),
-                                                      color: Colors.white,
+                                                      color: FlutterFlowTheme
+                                                          .of(
+                                                          context)
+                                                          .accent3,
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -631,8 +660,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Plus Jakarta Sans',
-                                                                color: const Color(
-                                                                    0xFF101213),
+                                                                color: Colors.white,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -641,13 +669,13 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                         .w500,
                                                               ),
                                                       elevation: 0.0,
-                                                      borderSide: const BorderSide(
-                                                        color: Colors.white,
+                                                      borderSide: BorderSide(
+                                                        color: Colors.transparent,
                                                         width: 2.0,
                                                       ),
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
+                                                      BorderRadius.circular(
+                                                          40.0),
                                                     ),
                                                   ),
                                                 ),
@@ -682,7 +710,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                         fontFamily:
                                                             'Plus Jakarta Sans',
                                                         color:
-                                                            const Color(0xFF57636C),
+                                                            Colors.white,
                                                         fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -715,8 +743,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Plus Jakarta Sans',
-                                                                color: const Color(
-                                                                    0xFF57636C),
+                                                                color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -728,7 +755,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFFE0E3E7),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -739,7 +766,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -769,7 +796,9 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                 .circular(40.0),
                                                       ),
                                                       filled: true,
-                                                      fillColor: Colors.white,
+                                                      fillColor: FlutterFlowTheme.of(
+                                                          context)
+                                                          .alternate,
                                                       contentPadding:
                                                           const EdgeInsets.all(24.0),
                                                     ),
@@ -780,7 +809,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF101213),
+                                                              Colors.white,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -789,7 +818,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
-                                                        const Color(0xFF4B39EF),
+                                                    Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .emailAddressCreateControllerValidator
                                                         .asValidator(context),
@@ -822,8 +851,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Plus Jakarta Sans',
-                                                                color: const Color(
-                                                                    0xFF57636C),
+                                                                color: Colors.white,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -835,7 +863,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFFE0E3E7),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -846,7 +874,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -876,7 +904,9 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                 .circular(40.0),
                                                       ),
                                                       filled: true,
-                                                      fillColor: Colors.white,
+                                                      fillColor: FlutterFlowTheme.of(
+                                                          context)
+                                                          .alternate,
                                                       contentPadding:
                                                           const EdgeInsets.all(24.0),
                                                       suffixIcon: InkWell(
@@ -896,7 +926,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               : Icons
                                                                   .visibility_off_outlined,
                                                           color:
-                                                              const Color(0xFF57636C),
+                                                              Colors.white,
                                                           size: 24.0,
                                                         ),
                                                       ),
@@ -908,14 +938,14 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF101213),
+                                                              Colors.white,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
                                                     cursorColor:
-                                                        const Color(0xFF4B39EF),
+                                                    Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .passwordCreateControllerValidator
                                                         .asValidator(context),
@@ -949,8 +979,9 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Plus Jakarta Sans',
-                                                                color: const Color(
-                                                                    0xFF57636C),
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .primaryText,
                                                                 fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
@@ -962,7 +993,8 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFFE0E3E7),
+                                                          Color(
+                                                              0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -973,7 +1005,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           OutlineInputBorder(
                                                         borderSide: const BorderSide(
                                                           color:
-                                                              Color(0xFF4B39EF),
+                                                          Color(0xFF4F3B3B),
                                                           width: 2.0,
                                                         ),
                                                         borderRadius:
@@ -1003,7 +1035,9 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                 .circular(40.0),
                                                       ),
                                                       filled: true,
-                                                      fillColor: Colors.white,
+                                                      fillColor: FlutterFlowTheme.of(
+                                                          context)
+                                                          .alternate,
                                                       contentPadding:
                                                           const EdgeInsets.all(24.0),
                                                       suffixIcon: InkWell(
@@ -1023,7 +1057,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                               : Icons
                                                                   .visibility_off_outlined,
                                                           color:
-                                                              const Color(0xFF57636C),
+                                                              Colors.white,
                                                           size: 24.0,
                                                         ),
                                                       ),
@@ -1035,7 +1069,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
                                                           color:
-                                                              const Color(0xFF101213),
+                                                              Colors.white,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -1043,7 +1077,7 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                         ),
                                                     minLines: 1,
                                                     cursorColor:
-                                                        const Color(0xFF4B39EF),
+                                                        const Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .passwordConfirmControllerValidator
                                                         .asValidator(context),
@@ -1115,7 +1149,10 @@ class _Auth1WidgetState extends State<Auth1Widget>
                                                                   0.0,
                                                                   0.0,
                                                                   0.0),
-                                                      color: const Color(0xFF4B39EF),
+                                                      color: FlutterFlowTheme
+                                                          .of(
+                                                          context)
+                                                          .accent3,
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
