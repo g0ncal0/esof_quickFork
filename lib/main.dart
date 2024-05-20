@@ -1,5 +1,7 @@
 import 'package:esof/pages/bought_meals/bought_meals_widget.dart';
 import 'package:esof/pages/validation/validation_widget.dart';
+import 'package:esof/pages/stats/stats_widget.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -131,7 +133,7 @@ class _NavBarPageState extends State<NavBarPage> {
       tabs = {
         'Store': ValidationWidget(),
         'HomePage': const HomePageWidget(),
-        'PlaceHolder': const BoughtMealsWidget(),
+        'StatsPage': const StatsWidget(),
       };
     } else {
       tabs = {

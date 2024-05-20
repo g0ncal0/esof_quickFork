@@ -18,6 +18,8 @@ import 'package:flutter/scheduler.dart';
 import 'checkout_model.dart';
 export 'checkout_model.dart';
 
+
+
 class CheckoutWidget extends StatefulWidget {
   const CheckoutWidget({
     super.key,
@@ -151,20 +153,23 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
 
 
         if("Meat "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-"))){
-            docRef.update({
-              "boughtMeat": FieldValue.increment(1),
-            });
+          DocumentSnapshot docSnapshot = await docRef.get();
+          Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?; // Explicit cast
+          int boughtMeat = data != null ? data['boughtMeat'] ?? 0 : 0;
+          await docRef.update({"boughtMeat": boughtMeat + 1});
         }
         else if("Fish "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-"))) {
-          docRef.update({
-            "boughtFish": FieldValue.increment(1),
-          });
+          DocumentSnapshot docSnapshot = await docRef.get();
+          Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?; // Explicit cast
+          int boughtFish = data != null ? data['boughtFish'] ?? 0 : 0;
+          await docRef.update({"boughtFish": boughtFish + 1});
         }
         else
           {
-            docRef.update({
-              "boughtVegetarian": FieldValue.increment(1),
-            });
+            DocumentSnapshot docSnapshot = await docRef.get();
+            Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?; // Explicit cast
+            int boughtVegetarian = data != null ? data['boughtVegetarian'] ?? 0 : 0;
+            await docRef.update({"boughtVegetarian": boughtVegetarian + 1});
           }
 
       }

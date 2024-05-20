@@ -64,7 +64,6 @@ class WeekelyMealsRecord extends FirestoreRecord {
     _boughtFish = snapshotData['boughtFish'] as int?;
     _boughtMeat = snapshotData['boughtMeat'] as int?;
     _boughtVegetarian = snapshotData['boughtVegetarian'] as int?;
-
   }
 
   static CollectionReference get collection =>
@@ -107,9 +106,9 @@ Map<String, dynamic> createWeekelyMealsRecordData({
   String? descriptionFish,
   String? descriptionVegetarian,
   String? weekdayMeal,
-  String? boughtFish,
-  String? boughtMeat,
-  String? boughtVegetarian,
+  int? boughtFish,
+  int? boughtMeat,
+  int? boughtVegetarian,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
