@@ -22,6 +22,8 @@ import 'package:flutter/scheduler.dart';
 import 'checkout_model.dart';
 export 'checkout_model.dart';
 
+
+
 class CheckoutWidget extends StatefulWidget {
   const CheckoutWidget({
     super.key,
@@ -149,6 +151,51 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
         "scanned" : false,
         "upCode" : session.username
       });
+
+
+
+      QuerySnapshot mealQuery = await FirebaseFirestore.instance
+          .collection("WeekelyMeals")
+          .where("weekdayMeal", isEqualTo: _model.widget.mealID)
+          .get();
+
+      // Check if the document exists
+      if (mealQuery.docs.isNotEmpty) {
+        // Get the document reference
+        DocumentReference docRef = mealQuery.docs.first.reference;
+
+
+       // print(_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-")));
+        //print("\n");print("\n");print("\n");print("\n");print("\n");
+        //print("Meat");
+        //print("Meat "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-")));
+
+
+        if("Meat "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-"))){
+          DocumentSnapshot docSnapshot = await docRef.get();
+          Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?; // Explicit cast
+          int boughtMeat = data != null ? data['boughtMeat'] ?? 0 : 0;
+          await docRef.update({"boughtMeat": boughtMeat + 1});
+        }
+        else if("Fish "==_model.radioButtonValue?.substring(0,_model.radioButtonValue?.indexOf("-"))) {
+          DocumentSnapshot docSnapshot = await docRef.get();
+          Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?; // Explicit cast
+          int boughtFish = data != null ? data['boughtFish'] ?? 0 : 0;
+          await docRef.update({"boughtFish": boughtFish + 1});
+        }
+        else
+          {
+            DocumentSnapshot docSnapshot = await docRef.get();
+            Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?; // Explicit cast
+            int boughtVegetarian = data != null ? data['boughtVegetarian'] ?? 0 : 0;
+            await docRef.update({"boughtVegetarian": boughtVegetarian + 1});
+          }
+
+      }
+
+
+
+
   }
 
   @override

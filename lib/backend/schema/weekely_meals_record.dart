@@ -40,12 +40,30 @@ class WeekelyMealsRecord extends FirestoreRecord {
   String get weekdayMeal => _weekdayMeal ?? '';
   bool hasWeekdayMeal() => _weekdayMeal != null;
 
+  //"boughtFish" field
+  int? _boughtFish;
+  int get boughtFish => _boughtFish ?? 0;
+  bool hasBoughtFish() => _boughtFish != null;
+
+  //"boughtFish" field
+  int? _boughtMeat;
+  int get boughtMeat => _boughtMeat ?? 0;
+  bool hasBoughtMeat() => _boughtMeat != null;
+
+  //"boughtFish" field
+  int? _boughtVegetarian;
+  int get boughtVegetarian => _boughtVegetarian ?? 0;
+  bool hasBoughtVegetarian() => _boughtVegetarian != null;
+
   void _initializeFields() {
     _date = snapshotData['date'] as DateTime?;
     _descriptionMeat = snapshotData['descriptionMeat'] as String?;
     _descriptionFish = snapshotData['descriptionFish'] as String?;
     _descriptionVegetarian = snapshotData['descriptionVegetarian'] as String?;
     _weekdayMeal = snapshotData['weekdayMeal'] as String?;
+    _boughtFish = snapshotData['boughtFish'] as int?;
+    _boughtMeat = snapshotData['boughtMeat'] as int?;
+    _boughtVegetarian = snapshotData['boughtVegetarian'] as int?;
   }
 
   static CollectionReference get collection =>
@@ -88,6 +106,9 @@ Map<String, dynamic> createWeekelyMealsRecordData({
   String? descriptionFish,
   String? descriptionVegetarian,
   String? weekdayMeal,
+  int? boughtFish,
+  int? boughtMeat,
+  int? boughtVegetarian,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -96,6 +117,9 @@ Map<String, dynamic> createWeekelyMealsRecordData({
       'descriptionFish': descriptionFish,
       'descriptionVegetarian': descriptionVegetarian,
       'weekdayMeal': weekdayMeal,
+      'boughtFish' : boughtFish,
+      'boughtMeat' : boughtMeat,
+      'boughtVegetarian' : boughtVegetarian,
     }.withoutNulls,
   );
 
@@ -112,7 +136,11 @@ class WeekelyMealsRecordDocumentEquality
         e1?.descriptionMeat == e2?.descriptionMeat &&
         e1?.descriptionFish == e2?.descriptionFish &&
         e1?.descriptionVegetarian == e2?.descriptionVegetarian &&
-        e1?.weekdayMeal == e2?.weekdayMeal;
+        e1?.weekdayMeal == e2?.weekdayMeal &&
+        e1?.boughtFish == e2?.boughtFish &&
+        e1?.boughtMeat == e2?.boughtMeat &&
+        e1?.boughtVegetarian == e2?.boughtVegetarian;
+
   }
 
   @override
@@ -121,7 +149,10 @@ class WeekelyMealsRecordDocumentEquality
         e?.descriptionMeat,
         e?.descriptionFish,
         e?.descriptionVegetarian,
-        e?.weekdayMeal
+        e?.weekdayMeal,
+        e?.boughtFish,
+        e?.boughtMeat,
+        e?.boughtVegetarian
       ]);
 
   @override
