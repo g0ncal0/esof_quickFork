@@ -1,6 +1,10 @@
 import 'dart:math';
 
+import 'package:esof/sigarraApi/session.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../backend/mbWay/mbway_payments.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/stripe/payment_manager.dart';
@@ -87,11 +91,14 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   void showPaymentStatus(BuildContext context, bool paymentSuccessful) {
@@ -120,6 +127,17 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
       String qrcode = _model.widget.createQrCode();
       String currentTime = DateTime.now().secondsSinceEpoch.toString();
       CollectionReference<Map<String, dynamic>> ticketRef = FirebaseFirestore.instance.collection("bought_ticket");
+
+      // Query device store info for sigarra login.
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      Session? session = await sigarraLogin(prefs.getString('user_up_code')!, prefs.getString('user_password')!);
+
+      if (session == null) {
+        context.go('/sigarraLogin');
+        return;
+      }
+
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await ticketRef.get();
       await FirebaseFirestore.instance.collection("bought_ticket").doc(qrcode).set({
         "date" : currentTime, // Incrementing the value
@@ -128,17 +146,21 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
         "fullDish" : _model.widget.fullMeal,
         "type" : _model.radioButtonValue,
         "meal_id" : _model.widget.mealID,
-        "scanned" : false
+        "scanned" : false,
+        "upCode" : session.username
       });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return PopScope (
+        canPop: false,
+        child: GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset : false,
         key: scaffoldKey,
         backgroundColor: Theme.of(context).brightness == Brightness.light
             ? Color(0xFFf2cece)
@@ -157,7 +179,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('Store');
+              final returnValue = {'success': false};
+              while (!Navigator.of(context).canPop()) {}
+              Navigator.of(context).pop(returnValue);
+              //context.pushNamed('Store');
             },
           ),
           title: Text(
@@ -255,19 +280,25 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                     ],
                                     onChanged: (val) async {
                                       if (val?.firstOrNull == 'Full Meal') {
+                                        if (!_dispose){
                                         setState(() =>
                                         _model.choiceChipsValue =
                                             val?.firstOrNull);
-                                        setState(() {
-                                          _model.fullMeal = true;
-                                        });
+                                        }
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _model.fullMeal = true;
+                                          });
+                                        }
                                       }
                                       else {
-                                        setState(() => _model.choiceChipsValue =
-                                            val?.firstOrNull);
-                                        setState(() {
-                                          _model.fullMeal = false;
-                                        });
+                                        if (!_dispose){
+                                          setState(() => _model.choiceChipsValue =
+                                          val?.firstOrNull);
+                                          setState(() {
+                                            _model.fullMeal = false;
+                                          });
+                                        }
                                       }
                                     },
                                     selectedChipStyle: ChipStyle(
@@ -457,6 +488,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ///////////////////////
                               if (paymentSuccessful) {
                                 addTicketToFirebase();
+                                final returnValue = {'success': true};
+                                while (!Navigator.of(context).canPop()) {}
+                                Navigator.of(context).pop(returnValue);
+                                Navigator.of(context).pop(returnValue);
                               }
                               /*if (paymentSuccessful){
                                 String generateRandomId(int length) {
@@ -483,7 +518,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               }*/
                               ///////////////////////
 
-                              setState(() {});
+                              if (!_dispose) {
+                                setState(() {});
+                              }
                             },
                             text: 'Pay with card',
                             options: FFButtonOptions(
@@ -545,15 +582,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                             child: const Text(
                                                 'Ok!'),
                                             onPressed: () {
+                                              final returnValue = {'success': true, 'message': 'Purchase completed!'};
                                               addTicketToFirebase();
-                                              Navigator
-                                                  .of(
-                                                  context)
-                                                  .pop();
-                                              Navigator
-                                                  .of(
-                                                  context)
-                                                  .pop();
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop(returnValue);
                                             },
                                           )
                                         ]
@@ -580,7 +612,6 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                             child: const Text(
                                                 'Dismiss'),
                                             onPressed: () {
-                                              Navigator.of(context).pop();
                                               Navigator.of(context).pop();
                                             },
                                           )
@@ -632,6 +663,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                     String response = result
                                                         .entries.first.value;
 
+
                                                     if (result.keys.first) {
                                                       return showDialog<void>(
                                                           context: context,
@@ -652,8 +684,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                                     child: const Text('Ok!'),
                                                                     onPressed: () {
                                                                       addTicketToFirebase();
+                                                                      final returnValue = {'success': true, 'message': 'Purchase completed!'};
                                                                       Navigator.of(context).pop();
                                                                       Navigator.of(context).pop();
+                                                                      Navigator.of(context).pop(returnValue);
                                                                     },
                                                                   )
                                                                 ]
@@ -681,7 +715,6 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                                     child: const Text('Dismiss'),
                                                                     onPressed: () {
                                                                       Navigator.of(context).pop();
-                                                                      Navigator.of(context).pop();
                                                                     },
                                                                   )
                                                                 ]
@@ -703,7 +736,6 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                                                 TextButton(
                                                                   child: const Text('Dismiss'),
                                                                   onPressed: () {
-                                                                    Navigator.of(context).pop();
                                                                     Navigator.of(context).pop();
                                                                   },
                                                                 )
@@ -767,6 +799,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
           ),
         ),
       ),
+    ),
     );
   }
 }

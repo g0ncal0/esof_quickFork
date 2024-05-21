@@ -7,3 +7,4 @@ export './pages/perfil/perfil_widget.dart' show PerfilWidget;
 export './pages/bought_meals/bought_meals_widget.dart' show BoughtMealsWidget;
 export './pages/store/store_widget.dart' show StoreWidget;
 export './pages/qr_code/qr_code_widget.dart' show QrCodeWidget;
+export './pages/sigarraLogin/sigarraLogin_widget.dart' show SigarraLoginWidget;

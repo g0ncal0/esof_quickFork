@@ -38,11 +38,14 @@ class _ValidationWidgetState extends State<ValidationWidget> {
     _model = createModel(context, () => ValidationModel());
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+        _dispose = true;
+        super.dispose();
+    } catch(_) {}
   }
 
   @override
@@ -92,8 +95,9 @@ class _ValidationWidgetState extends State<ValidationWidget> {
                         );
 
                         _model.scanQrCode();
-
-                        setState(() {});
+                        if (!_dispose){
+                          setState(() {});
+                        }
                       },
                       text: 'Scan Ticket',
                       options: FFButtonOptions(

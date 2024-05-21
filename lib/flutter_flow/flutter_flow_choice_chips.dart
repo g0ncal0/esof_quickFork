@@ -87,8 +87,11 @@ class _FlutterFlowChoiceChipsState extends State<FlutterFlowChoiceChips> {
     }
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
+    _dispose = true;
     super.dispose();
   }
 

@@ -1,4 +1,12 @@
+import 'dart:async';
+import 'dart:ui';
+
+import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../sigarraApi/session.dart';
+import '../../sigarraApi/sigarraApi.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -25,6 +33,9 @@ class QrCodeWidget extends StatefulWidget {
 
 class _QrCodeWidgetState extends State<QrCodeWidget> {
   late QrCodeModel _model;
+  Timer? _timer;
+  bool _scanned = true;
+  bool _isLoading = true;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -36,13 +47,16 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
       // Check if the document exists
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
       if (documentSnapshot.exists) {
+        _model.upCode = documentSnapshot.data()!["upCode"];
         _model.email = documentSnapshot.data()!["uid"];
         _model.type = documentSnapshot.data()!["type"];
         _model.fullDish = documentSnapshot.data()!["fullDish"];
 
-        setState(() {
+        if (!_dispose) {
+          setState(() {
 
-        });
+          });
+        }
 
       }
     }
@@ -53,25 +67,76 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
     super.initState();
     _model = createModel(context, () => QrCodeModel());
 
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+
+      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(widget.qrCodeValue);
+      if (documentRef != null){
+        // Check if the document exists
+        DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+        if (documentSnapshot.exists) {
+
+          _scanned = documentSnapshot.data()!["scanned"];
+
+          if (!_dispose) {
+            setState(() {
+              if (_scanned) _timer!.cancel();
+            });
+          }
+
+        }
+      }
+
+      Logger().i('Was scanned: ' + _scanned.toString());
+    });
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+
+      if (!_dispose) {
+        setState(() {
+          _isLoading = true;
+        });
+      }
+
+      // Query device store info for sigarra login.
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Session? session = await sigarraLogin(prefs.getString('user_up_code')!, prefs.getString('user_password')!);
+
+      if (session == null) {
+        context.go('/sigarraLogin');
+        return;
+      }
+
+
       queryFirebase();
       await queryUserBoughtTicketsRecordOnce(
         queryBuilder: (userBoughtTicketsRecord) =>
             userBoughtTicketsRecord.where(
-          'email',
-          isEqualTo: currentUserEmail,
+          'upCode',
+          isEqualTo: session.username,
         ),
         singleRecord: true,
       ).then((s) => s.firstOrNull);
+
+      if (!_dispose) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      if (_timer != null) {
+        _timer!.cancel();
+      }
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override
@@ -113,7 +178,8 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
           centerTitle: false,
           elevation: 2.0,
         ),
-        body: SafeArea(
+        body: _isLoading
+            ? Center(child: SpinningFork()) : SafeArea(
           top: true,
           child: Align(
             alignment: const AlignmentDirectional(0.0, 0.0),
@@ -194,17 +260,42 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
                             ),
                           ),
                         ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'User upcode: ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                          Text(
+                            _model.upCode,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),
                 ),
+                if (!_scanned)
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: BarcodeWidget(
+                        child:
+                        BarcodeWidget(
                           data: widget.qrCodeValue!,
                           barcode: Barcode.qrCode(),
                           width: MediaQuery.sizeOf(context).width * 0.6,
@@ -220,7 +311,60 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
                       ),
                     ),
                   ],
-                ),
+                )
+                else
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child:
+                          Stack(
+                            children: [
+                              ImageFiltered(
+                                imageFilter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0, tileMode: TileMode.decal),
+                                child: BarcodeWidget(
+                                  data: 'Already Scanned',
+                                  barcode: Barcode.qrCode(),
+                                  width: MediaQuery.sizeOf(context).width * 0.6,
+                                  height: MediaQuery.sizeOf(context).height * 0.5,
+                                  color: FlutterFlowTheme.of(context).primaryText,
+                                  backgroundColor: Colors.transparent,
+                                  errorBuilder: (context, error) => SizedBox(
+                                    width: MediaQuery.sizeOf(context).width * 0.6,
+                                    height: MediaQuery.sizeOf(context).height * 0.5,
+                                  ),
+                                  drawText: false,
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                child: Transform.rotate(
+                                  angle: -0.5, // Adjust the angle to get the desired diagonal text
+                                  child: Center(
+                                    child: Text(
+                                      'Already Scanned',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.red.withOpacity(0.8),
+                                        fontSize: 40.0,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+                      ),
+                    ],
+                  ),
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,

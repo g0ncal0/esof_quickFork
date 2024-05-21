@@ -10,6 +10,7 @@ class QrCodeModel extends FlutterFlowModel<QrCodeWidget> {
   bool fullDish = false;
   String type = '';
   String email = '';
+  String upCode = '';
 
   @override
   void initState(BuildContext context) {}

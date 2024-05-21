@@ -31,10 +31,12 @@ class _CustomChoiceChipsWidgetState extends State<CustomChoiceChipsWidget> {
     _model = createModel(context, () => CustomChoiceChipsModel());
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
     _model.maybeDispose();
-
+    _dispose = true;
     super.dispose();
   }
 
