@@ -25,11 +25,14 @@ class _MealWidgetState extends State<MealWidget> {
     _model = createModel(context, () => MealModel());
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override

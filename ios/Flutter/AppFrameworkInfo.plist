@@ -22,5 +22,7 @@
   <string>1.0</string>
   <key>MinimumOSVersion</key>
   <string>13.0</string>
+  <key>NSCameraUsageDescription</key>
+  <string>We need access to your camera to take photos and videos.</string>
 </dict>
 </plist>

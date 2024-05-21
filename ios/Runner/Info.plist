@@ -16,6 +16,8 @@
 	<string>ESOF</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take photos and videos.</string>
 
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>

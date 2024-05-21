@@ -80,9 +80,12 @@ class _FlutterFlowRadioButtonState extends State<FlutterFlowRadioButton> {
     _maybeSetOnChangedListener();
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
     _maybeRemoveOnChangedListener();
+    _dispose = true;
     super.dispose();
   }
 

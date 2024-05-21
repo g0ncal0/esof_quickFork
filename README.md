@@ -63,7 +63,7 @@ That's it, if you are a user of FEUP's canteen you'll surely love our app.
 ### Domain model
 
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/2eb6f1bea2a86e18a017122e3141f1a873e62d38/images/classDiagram.png?raw=true"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/ceced840dc27bdebbf4181781868f22bc4a677c8/images/DomainModel.png?raw=true"/>
 </p>
 
 The user can be either a student or an employee. From the student it is relevant to know the year and the degree they are on. As for the employee, their function must be known.
@@ -212,3 +212,40 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >
 >   Team Wishes:
 >   - Better team communication
+
+### Sprint 3
+
+>   ### Github Projects Board
+>
+>   #### Beginning
+>   <p align="center" justify="center">
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/ceced840dc27bdebbf4181781868f22bc4a677c8/images/sprint3_beginning.png" width="100%"/>
+>   </p>
+>
+>   #### End
+>   <p align="center" justify="center">
+>  <img src="" width="100%"/>
+>   </p>
+>
+>   ### Retrospectives
+>
+>   In this sprint we did:
+>   - Possibility to check already bought meals
+>   - Highlight the next meal for easier use 
+>   - Login with SIGARRA credentials
+>   - Visible statistics of purchased meals
+>
+>   What went well:
+>   - We managed to do everything we had planned
+>   - Division of work
+>   - The use of pair programming, improved the efficiency of the group
+>   - We ended all the user-stories proposed in the beginning of this project
+>
+>   What we will do differently:
+>   - More small meetings
+>
+>   What still puzzles me is:
+>   - Unit Tests
+>
+>   Team Wishes:
+>   - Deploy this app in the real world
