@@ -52,9 +52,11 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
         _model.type = documentSnapshot.data()!["type"];
         _model.fullDish = documentSnapshot.data()!["fullDish"];
 
-        setState(() {
+        if (!_dispose) {
+          setState(() {
 
-        });
+          });
+        }
 
       }
     }
@@ -75,9 +77,11 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
 
           _scanned = documentSnapshot.data()!["scanned"];
 
-          setState(() {
-            if (_scanned) _timer!.cancel();
-          });
+          if (!_dispose) {
+            setState(() {
+              if (_scanned) _timer!.cancel();
+            });
+          }
 
         }
       }
@@ -88,9 +92,11 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
 
-      setState(() {
-        _isLoading = true;
-      });
+      if (!_dispose) {
+        setState(() {
+          _isLoading = true;
+        });
+      }
 
       // Query device store info for sigarra login.
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -112,19 +118,25 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
         singleRecord: true,
       ).then((s) => s.firstOrNull);
 
-      setState(() {
-        _isLoading = false;
-      });
+      if (!_dispose) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _timer!.cancel();
-
-    _model.dispose();
-
-    super.dispose();
+    try {
+      if (_timer != null) {
+        _timer!.cancel();
+      }
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override

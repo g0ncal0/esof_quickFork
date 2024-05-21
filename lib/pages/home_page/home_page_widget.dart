@@ -41,13 +41,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    setState(() {
-      _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
-      _appStateNotifier.password = prefs.getString('user_password') ?? "";
-      _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
-      _appStateNotifier.image_small = prefs.getString('user_image_small') ?? "";
-      _appStateNotifier.image_big = prefs.getString('user_image_big') ?? "";
-    });
+    if (!_dispose) {
+      setState(() {
+        _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
+        _appStateNotifier.password = prefs.getString('user_password') ?? "";
+        _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
+        _appStateNotifier.image_small =
+            prefs.getString('user_image_small') ?? "";
+        _appStateNotifier.image_big = prefs.getString('user_image_big') ?? "";
+      });
+    }
 
     return sigarraLogin(_appStateNotifier.username, _appStateNotifier.password);
   }
@@ -98,10 +101,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           _model.descriptionsLunch = ['No meals available at this time.'];
           _model.descriptionsDinner = ['No meals available at this time.'];
         }
-        setState(() {});
+        if (!_dispose) {
+          setState(() {});
+        }
       });
     } catch (e) {
-      setState(() {});
+      if (!_dispose) {
+        setState(() {});
+      }
       _model.descriptionsLunch = ['No meals available at this time.'];
       _model.descriptionsDinner = ['No meals available at this time.'];
     }
@@ -120,16 +127,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         context.go('/sigarraLogin');
       }
 
-      setState(() {_isLoading = false;});
+      if (!_dispose){
+        setState(() {_isLoading = false;});
+      }
     });
 
   }
 
+  bool _dispose = false;
+
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override
@@ -141,6 +154,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset : false,
         key: scaffoldKey,
         backgroundColor: Theme.of(context).brightness.name == "dark" ? Colors.black12 : Color(0xFFf2cece),
         appBar: AppBar(

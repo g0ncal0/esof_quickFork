@@ -485,6 +485,8 @@ class _FlutterFlowButtonTabBarState extends State<FlutterFlowButtonTabBar>
     }
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
     _indicatorPainter!.dispose();
@@ -493,6 +495,7 @@ class _FlutterFlowButtonTabBarState extends State<FlutterFlowButtonTabBar>
       _controller!.removeListener(_handleTabControllerTick);
     }
     _controller = null;
+    _dispose = true;
     // We don't own the _controller Animation, so it's not disposed here.
     super.dispose();
   }

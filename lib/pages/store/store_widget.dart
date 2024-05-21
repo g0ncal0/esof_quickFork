@@ -107,34 +107,49 @@ class _StoreWidgetState extends State<StoreWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
 
-      setState(() {
-        _isLoading = true;
-      });
+      if (!_dispose) {
+        setState(() {
+          _isLoading = true;
+        });
+      }
+
 
       try {
          await _getBoughtTickets();
       } finally {
-        setState(() {
-          _isLoading = false;
-        });
+        if (!_dispose) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
 
       _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
         await _getBoughtTickets();
-        setState(() {
-          _isLoading = false;
-        });
+        if (!_dispose) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
         Logger().i('Firebase query');
       });
 
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _timer!.cancel();
-    _model.dispose();
-    super.dispose();
+
+    try {
+      if (_timer != null) {
+        _timer!.cancel();
+      }
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
+
   }
 
   @override
@@ -221,9 +236,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                       onPressed:
                                         _model.alreadyBought[0] ? () {} : () async {
                                           _model.alreadyBought[0] = true;
-                                          setState(() {
-                                            _isLoading = true; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              true; // Update this based on your requirement
+                                            });
+                                          }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -240,11 +258,14 @@ class _StoreWidgetState extends State<StoreWidget> {
                                         if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                         _model.alreadyBought[0] = value['success'] as bool;
                                         }
+                                        if (!_dispose){
                                         setState(() {_isLoading = false; // Update this based on your requirement
-                                        }); }).catchError((error) {
-                                          setState(() {
-                                          _isLoading = false;
-                                          });
+                                        });} }).catchError((error) {
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[0] ? 'Bought' : 'Buy lunch',
@@ -281,9 +302,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[1] ? () {} : () async {
                                         _model.alreadyBought[1] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _isLoading =
+                                            true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -300,12 +324,16 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[1] = value['success'] as bool;
                                           }
+                                          if (!_dispose){
                                           setState(() {_isLoading = false; // Update this based on your requirement
                                           });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[1] ? 'Bought' : 'Buy Dinner',
@@ -390,9 +418,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[2] ? () {} : () async {
                                         _model.alreadyBought[2] = true;
+                                        if (!_dispose){
                                         setState(() {
                                           _isLoading = true; // Update this based on your requirement
-                                        });
+                                        });}
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -409,12 +438,15 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[2] = value['success'] as bool;
                                           }
+                                          if (!_dispose){
                                           setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          });}
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[2] ? 'Bought' : 'Buy lunch',
@@ -451,9 +483,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[3] ? () {} : () async {
                                         _model.alreadyBought[3] = true;
+                                        if (!_dispose){
                                         setState(() {
                                           _isLoading = true; // Update this based on your requirement
-                                        });
+                                        });}
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -470,12 +503,14 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[3] = value['success'] as bool;
                                           }
+                                          if (!_dispose){
                                           setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          });}
                                         }).catchError((error) {
+                                          if (!_dispose){
                                           setState(() {
                                             _isLoading = false;
-                                          });
+                                          });}
                                         });
                                       },
                                       text: _model.alreadyBought[3] ? 'Bought' : 'Buy Dinner',
@@ -560,9 +595,11 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[4] ? () {} : () async {
                                         _model.alreadyBought[4] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose){
+                                          setState(() {
+                                            _isLoading = true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -579,12 +616,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[4] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[4] ? 'Bought' : 'Buy lunch',
@@ -621,9 +664,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[5] ? () {} : () {
                                         _model.alreadyBought[5] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _isLoading =
+                                            true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -640,12 +686,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[5] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[5] ? 'Bought' : 'Buy Dinner',
@@ -726,9 +778,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[6] ? () {} : () async {
                                         _model.alreadyBought[6] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _isLoading =
+                                            true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -745,12 +800,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[6] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[6] ? 'Bought' : 'Buy lunch',
@@ -787,9 +848,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[7] ? () {} : () async {
                                         _model.alreadyBought[7] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _isLoading =
+                                            true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -806,12 +870,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[7] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[7] ? 'Bought' : 'Buy Dinner',
@@ -896,9 +966,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[8] ? () {} : () async {
                                         _model.alreadyBought[8] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _isLoading =
+                                            true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -915,12 +988,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[8] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[8] ? 'Bought' : 'Buy lunch',
@@ -957,9 +1036,11 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[9] ? () {} : () async {
                                         _model.alreadyBought[9] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose){
+                                          setState(() {
+                                            _isLoading = true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -976,12 +1057,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[9] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading =
+                                              false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[9] ? 'Bought' : 'Buy Dinner',
@@ -1066,9 +1153,12 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[10] ? () {} : () async {
                                         _model.alreadyBought[10] = true;
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _isLoading =
+                                            true; // Update this based on your requirement
+                                          });
+                                        }
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -1085,12 +1175,16 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[10] = value['success'] as bool;
                                           }
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
+                                          if (!_dispose){
+                                            setState(() {_isLoading = false; // Update this based on your requirement
+                                            });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[10] ? 'Bought' : 'Buy lunch',
@@ -1127,9 +1221,10 @@ class _StoreWidgetState extends State<StoreWidget> {
                                     child: FFButtonWidget(
                                       onPressed: _model.alreadyBought[11] ? () {} : () async {
                                         _model.alreadyBought[11] = true;
+                                        if (!_dispose){
                                         setState(() {
                                           _isLoading = true; // Update this based on your requirement
-                                        });
+                                        });}
                                         context.pushNamed(
                                           'Checkout',
                                           queryParameters: {
@@ -1146,12 +1241,18 @@ class _StoreWidgetState extends State<StoreWidget> {
                                           if (value != null && value is Map<String, bool> && value['success'] is bool) {
                                             _model.alreadyBought[11] = value['success'] as bool;
                                           }
+                                          if (!_dispose){
                                           setState(() {_isLoading = false; // Update this based on your requirement
                                           });
+                                          }
                                         }).catchError((error) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
+                                          if (!_dispose) {
+                                            if (!_dispose) {
+                                              setState(() {
+                                                _isLoading = false;
+                                              });
+                                            }
+                                          }
                                         });
                                       },
                                       text: _model.alreadyBought[11] ? 'Bought' : 'Buy Dinner',

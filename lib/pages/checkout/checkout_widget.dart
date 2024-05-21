@@ -91,11 +91,14 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   void showPaymentStatus(BuildContext context, bool paymentSuccessful) {
@@ -157,6 +160,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset : false,
         key: scaffoldKey,
         backgroundColor: Theme.of(context).brightness == Brightness.light
             ? Color(0xFFf2cece)
@@ -276,19 +280,25 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                     ],
                                     onChanged: (val) async {
                                       if (val?.firstOrNull == 'Full Meal') {
+                                        if (!_dispose){
                                         setState(() =>
                                         _model.choiceChipsValue =
                                             val?.firstOrNull);
-                                        setState(() {
-                                          _model.fullMeal = true;
-                                        });
+                                        }
+                                        if (!_dispose) {
+                                          setState(() {
+                                            _model.fullMeal = true;
+                                          });
+                                        }
                                       }
                                       else {
-                                        setState(() => _model.choiceChipsValue =
-                                            val?.firstOrNull);
-                                        setState(() {
-                                          _model.fullMeal = false;
-                                        });
+                                        if (!_dispose){
+                                          setState(() => _model.choiceChipsValue =
+                                          val?.firstOrNull);
+                                          setState(() {
+                                            _model.fullMeal = false;
+                                          });
+                                        }
                                       }
                                     },
                                     selectedChipStyle: ChipStyle(
@@ -508,7 +518,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               }*/
                               ///////////////////////
 
-                              setState(() {});
+                              if (!_dispose) {
+                                setState(() {});
+                              }
                             },
                             text: 'Pay with card',
                             options: FFButtonOptions(

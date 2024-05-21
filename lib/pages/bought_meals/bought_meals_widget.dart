@@ -310,11 +310,13 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
           throw ArgumentError('ERROR.');
       }
 
-      setState(() {
-
-      });
+      if (!_dispose) {
+        setState(() {});
+      }
     });
   }
+
+  bool _dispose = false;
 
   @override
   void initState() {
@@ -325,9 +327,10 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override
@@ -370,9 +373,11 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
 
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        showMore = !showMore;
-                      });
+                      if (!_dispose) {
+                        setState(() {
+                          showMore = !showMore;
+                        });
+                      }
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

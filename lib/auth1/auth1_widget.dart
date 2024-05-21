@@ -106,11 +106,13 @@ class _Auth1WidgetState extends State<Auth1Widget>
     _model.passwordConfirmFocusNode ??= FocusNode();
   }
 
+  bool _dispose = false;
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override

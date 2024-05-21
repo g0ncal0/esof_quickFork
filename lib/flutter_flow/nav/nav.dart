@@ -40,9 +40,12 @@ class _SpinningForkState extends State<SpinningFork> with SingleTickerProviderSt
     )..repeat();
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
     _controller.dispose();
+    _dispose = true;
     super.dispose();
   }
 

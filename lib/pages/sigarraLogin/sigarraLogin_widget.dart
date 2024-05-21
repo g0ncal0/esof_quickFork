@@ -45,7 +45,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
       vsync: this,
       length: 1,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
+    )..addListener(_dispose ? () => {} :() => setState(() {}));
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
@@ -82,11 +82,14 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   @override
@@ -136,7 +139,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                       color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
                   ),
                   alignment: AlignmentDirectional(0, -1),
-                  child: SafeArea(
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisSize: MainAxisSize.max,
@@ -443,7 +446,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                         contentPadding:
                                                         EdgeInsets.all(24),
                                                         suffixIcon: InkWell(
-                                                          onTap: () => setState(
+                                                          onTap: _dispose ? () => {} : () => setState(
                                                                 () => _model
                                                                 .passwordVisibility =
                                                             !_model
@@ -511,14 +514,36 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                           } else {
                                                             SharedPreferences prefs = await SharedPreferences.getInstance();
                                                             Uint8List imageBytes = (await getImage(session.cookies, session.username)).bodyBytes;
-                                                            setState(() {
-                                                              prefs.setString('user_up_code', _model.emailAddressTextController.text);
-                                                              prefs.setString('user_password', _model.passwordTextController.text);
-                                                              prefs.setString('user_faculty', 'feup');
-                                                              prefs.setString('user_image_small', base64Encode(imageBytes as List<int>));
-                                                              prefs.setString('user_image_big', base64Encode(imageBytes as List<int>));
-                                                              prefs.setBool('persistent_session', true);
-                                                            });
+                                                            if (!_dispose) {
+                                                              setState(() {
+                                                                prefs.setString(
+                                                                    'user_up_code',
+                                                                    _model
+                                                                        .emailAddressTextController
+                                                                        .text);
+                                                                prefs.setString(
+                                                                    'user_password',
+                                                                    _model
+                                                                        .passwordTextController
+                                                                        .text);
+                                                                prefs.setString(
+                                                                    'user_faculty',
+                                                                    'feup');
+                                                                prefs.setString(
+                                                                    'user_image_small',
+                                                                    base64Encode(
+                                                                        imageBytes as List<
+                                                                            int>));
+                                                                prefs.setString(
+                                                                    'user_image_big',
+                                                                    base64Encode(
+                                                                        imageBytes as List<
+                                                                            int>));
+                                                                prefs.setBool(
+                                                                    'persistent_session',
+                                                                    true);
+                                                              });
+                                                            }
                                                             context.go('/');
                                                           }
                                                         },

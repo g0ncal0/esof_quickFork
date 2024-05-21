@@ -40,21 +40,22 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
   void _clearLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
+    if (!_dispose) {
+      setState(() {
+        prefs.setString('user_up_code', '');
+        prefs.setString('user_password', '');
+        prefs.setString('user_faculty', '');
+        prefs.setString('user_image_small', '');
 
-      prefs.setString('user_up_code', '');
-      prefs.setString('user_password', '');
-      prefs.setString('user_faculty', '');
-      prefs.setString('user_image_small','');
+        _appStateNotifier.username = '';
+        _appStateNotifier.password = '';
+        _appStateNotifier.faculty = '';
+        _appStateNotifier.image_small = '';
 
-      _appStateNotifier.username = '';
-      _appStateNotifier.password = '';
-      _appStateNotifier.faculty = '';
-      _appStateNotifier.image_small = '';
-
-      final authManager = FirebaseAuthManager();
-      authManager.signOut();
-    });
+        final authManager = FirebaseAuthManager();
+        authManager.signOut();
+      });
+    }
 
   }
 
@@ -84,17 +85,22 @@ class _PerfilWidgetState extends State<PerfilWidget> {
         context.go('/sigarraLogin');
       }
 
-      setState(() {
-        _isLoading = false;
-      });
+      if (!_dispose){
+        setState(() {
+          _isLoading = false;
+        });
+      }
     });
   }
 
+  bool _dispose = false;
+
   @override
   void dispose() {
-    _model.dispose();
-
-    super.dispose();
+    try {
+      _dispose = true;
+      super.dispose();
+    } catch(_) {}
   }
 
   void _showWorkerLoginPopup() {
@@ -126,7 +132,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                       content: Text('Worker access granted!'),
                     ),
                   );
-                  Navigator.pop(context);
+                  this.context.pushReplacement('/');
                 } else {
                   // Show error message
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -151,6 +157,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset : false,
         key: scaffoldKey,
         backgroundColor: Theme.of(context).brightness.name == "dark" ? Color(
             0xff2c2c2c) : Color(0xFFf2cece),
@@ -757,6 +764,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                           content: Text('Worker Logout done successfully!'),
                         ),
                       );
+                      this.context.pushReplacement('/');
                     },
                     text: 'Worker Logout',
                     options: FFButtonOptions(
