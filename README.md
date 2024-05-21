@@ -212,3 +212,40 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >
 >   Team Wishes:
 >   - Better team communication
+
+### Sprint 3
+
+>   ### Github Projects Board
+>
+>   #### Beginning
+>   <p align="center" justify="center">
+>  <img src="" width="100%"/>
+>   </p>
+>
+>   #### End
+>   <p align="center" justify="center">
+>  <img src="" width="100%"/>
+>   </p>
+>
+>   ### Retrospectives
+>
+>   In this sprint we did:
+>   - Possibility to check already bought meals
+>   - Highlight the next meal for easier use 
+>   - Established connection of server with request cookie
+>   - Login with SIGARRA credentials
+>
+>   What went well:
+>   - We managed to do everything we had planned
+>   - Division of work
+>   - The use of pair programming, improved the efficiency of the group
+>   - We ended all the user-stories proposed in the beginning of this project
+>
+>   What we will do differently:
+>   - More small meetings
+>
+>   What still puzzles me is:
+>   - Unit Tests
+>
+>   Team Wishes:
+>   - Deploy this app in the real world
