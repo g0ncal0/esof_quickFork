@@ -63,7 +63,7 @@ That's it, if you are a user of FEUP's canteen you'll surely love our app.
 ### Domain model
 
 <p align="center" justify="center">
-  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/ceced840dc27bdebbf4181781868f22bc4a677c8/images/DomainModel.png?raw=true"/>
+  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/4d7cdbd910a2e96782669d082f4f9a44601ae377/images/DomainModel.png?raw=true"/>
 </p>
 
 The user can be either a student or an employee. From the student it is relevant to know the year and the degree they are on. As for the employee, their function must be known.
@@ -224,7 +224,7 @@ A vertical prototype was created with a simple menu, using both flutter and fire
 >
 >   #### End
 >   <p align="center" justify="center">
->  <img src="" width="100%"/>
+>  <img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC18T2/blob/4d7cdbd910a2e96782669d082f4f9a44601ae377/images/sprint3_end.png" width="100%"/>
 >   </p>
 >
 >   ### Retrospectives
