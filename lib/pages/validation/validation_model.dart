@@ -11,25 +11,12 @@ class ValidationModel extends FlutterFlowModel<ValidationWidget> {
   final unfocusNode = FocusNode();
   var scannedValue = '';
   var scan = '';
-  FirebaseFirestore? firebaseFirestore;
 
-  get getFirebaseFirestore => firebaseFirestore;
-
-  void set setFirebaseFirestore(FirebaseFirestore? firebaseFirestore2) {
-    firebaseFirestore = firebaseFirestore2;
-  }
-
-  void scanQrCode() async {
+  Future<void> scanQrCode() async {
     DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore
         .instance
         .collection("bought_ticket")
         .doc(scannedValue);
-
-    final firebaseFirestore = this.firebaseFirestore;
-    if (firebaseFirestore != null) {
-      documentRef =
-          firebaseFirestore.collection("bought_ticket").doc(scannedValue);
-    }
 
     if (documentRef != null) {
       // Check if the document exists

@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -16,12 +16,32 @@ class ValidationWidget extends StatefulWidget {
 
   final String outputTest;
 
+
   @override
   State<ValidationWidget> createState() => _ValidationWidgetState();
 }
 
 class _ValidationWidgetState extends State<ValidationWidget> {
   late ValidationModel _model;
+  bool _isValid = true;
+
+  Future<void> checkIfScannedCodeValid() async {
+    DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore
+        .instance
+        .collection("bought_ticket")
+        .doc(_model.scannedValue);
+
+    if (documentRef != null) {
+      // Check if the document exists
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+      await documentRef.get();
+      if (documentSnapshot.exists && documentSnapshot.data()!["scanned"]) {
+        _isValid = false;
+      }
+    } else {
+      _isValid = false;
+    }
+  }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -89,7 +109,27 @@ class _ValidationWidgetState extends State<ValidationWidget> {
                           ScanMode.QR,
                         );
 
-                        _model.scanQrCode();
+                        if (!_dispose) {
+                          setState(() {
+                            _isValid = true;
+                          });
+                        }
+
+                        await checkIfScannedCodeValid();
+
+                        if (_isValid) {
+                          await _model.scanQrCode();
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The Qrcode is valid.')));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('The Qrcode is invalid.')));
+                        }
+
+                        if (!_dispose) {
+                          setState(() {
+                            _isValid = true;
+                          });
+                        }
+
                         if (!_dispose) {
                           setState(() {});
                         }
