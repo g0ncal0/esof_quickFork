@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
-
 import 'index.dart';
 
 class BoughtTicketRecord extends FirestoreRecord {
@@ -17,43 +16,59 @@ class BoughtTicketRecord extends FirestoreRecord {
 
   // "date" field.
   String? _date;
+
   String get date => _date ?? '';
+
   bool hasDate() => _date != null;
 
   // "fullDish" field.
   bool? _fullDish;
+
   bool get fullDish => _fullDish ?? false;
+
   bool hasFulldish() => _fullDish != null;
 
   // "meal_id" field.
   String? _meal_id;
+
   String get meal_id => _meal_id ?? '';
+
   bool hasMeal_id() => _meal_id != null;
 
   // "qrcodeinfo" field.
   String? _qrcodeinfo;
+
   String get qrcodeinfo => _qrcodeinfo ?? '';
+
   bool hasQrcodeinfo() => _qrcodeinfo != null;
 
   // "type" field.
   String? _type;
+
   String get type => _type ?? '';
+
   bool hasType() => _type != null;
 
   // "uid" field.
   String? _uid;
+
   String get uid => _uid ?? '';
+
   bool hasUid() => _uid != null;
 
   // "scanned" field
   bool? _scanned;
+
   bool get scanned => _scanned ?? false;
+
   bool hasScanned() => _scanned != null;
 
   // "upCode" field
 
   String? _upCode;
+
   String get upCode => _upCode ?? '';
+
   bool hasUpCode() => _upCode != null;
 
   void _initializeFields() {
@@ -101,26 +116,25 @@ class BoughtTicketRecord extends FirestoreRecord {
       reference.path.hashCode == other.reference.path.hashCode;
 }
 
-Map<String, dynamic> createBoughtTicketRecordData({
-  String? date,
-  bool? fullDish,
-  String? meal_id,
-  String? qrcodeinfo,
-  String? type,
-  String? uid,
-  bool? scanned,
-  String? upCode
-}) {
+Map<String, dynamic> createBoughtTicketRecordData(
+    {String? date,
+    bool? fullDish,
+    String? meal_id,
+    String? qrcodeinfo,
+    String? type,
+    String? uid,
+    bool? scanned,
+    String? upCode}) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'date' : date,
-      'fullDish' : fullDish,
-      'meal_id' : meal_id,
-      'qrcodeinfo' : qrcodeinfo,
-      'type' : type,
-      'uid' : uid,
-      'scanned' : scanned,
-      'upCode' : upCode
+      'date': date,
+      'fullDish': fullDish,
+      'meal_id': meal_id,
+      'qrcodeinfo': qrcodeinfo,
+      'type': type,
+      'uid': uid,
+      'scanned': scanned,
+      'upCode': upCode
     }.withoutNulls,
   );
 
@@ -144,9 +158,15 @@ class BoughtTicketRecordDocumentEquality
   }
 
   @override
-  int hash(BoughtTicketRecord? e) =>
-      const ListEquality().hash([
-e?.date,e?.fullDish,e?.meal_id,e?.qrcodeinfo,e?.type,e?.uid,e?.scanned,e?.upCode
+  int hash(BoughtTicketRecord? e) => const ListEquality().hash([
+        e?.date,
+        e?.fullDish,
+        e?.meal_id,
+        e?.qrcodeinfo,
+        e?.type,
+        e?.uid,
+        e?.scanned,
+        e?.upCode
       ]);
 
   @override

@@ -114,6 +114,7 @@ class _IndicatorPainter extends CustomPainter {
 
   BoxPainter? _painter;
   bool _needsPaint = false;
+
   void markNeedsPaint() {
     _needsPaint = true;
   }

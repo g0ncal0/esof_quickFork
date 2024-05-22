@@ -1,17 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:esof/auth/base_auth_user_provider.dart';
-import 'package:esof/flutter_flow/nav/nav.dart';
 import 'package:esof/sigarraApi/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/firebase_auth/firebase_auth_manager.dart';
-import '../../backend/mbWay/mbway_payments.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -20,7 +14,6 @@ import '../../sigarraApi/sigarraApi.dart';
 import './perfil_model.dart';
 
 export './perfil_model.dart';
-
 
 class PerfilWidget extends StatefulWidget {
   const PerfilWidget({super.key});
@@ -56,10 +49,9 @@ class _PerfilWidgetState extends State<PerfilWidget> {
         authManager.signOut();
       });
     }
-
   }
 
-  Future<Session?> _loadSession() async{
+  Future<Session?> _loadSession() async {
     return sigarraLogin(_appStateNotifier.username, _appStateNotifier.password);
   }
 
@@ -72,7 +64,6 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     _appStateNotifier = AppStateNotifier.instance;
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-
       Session? session = await _loadSession();
 
       if (session != null) {
@@ -81,11 +72,10 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           image = (await getImage(session.cookies, session.username)).bodyBytes;
         }
       } else {
-        Logger().i(_appStateNotifier.username);
         context.go('/sigarraLogin');
       }
 
-      if (!_dispose){
+      if (!_dispose) {
         setState(() {
           _isLoading = false;
         });
@@ -100,14 +90,15 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     try {
       _dispose = true;
       super.dispose();
-    } catch(_) {}
+    } catch (_) {}
   }
 
   void _showWorkerLoginPopup() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        final TextEditingController passwordController = TextEditingController();
+        final TextEditingController passwordController =
+            TextEditingController();
 
         return AlertDialog(
           title: Text('Worker Login'),
@@ -157,10 +148,11 @@ class _PerfilWidgetState extends State<PerfilWidget> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
-        backgroundColor: Theme.of(context).brightness.name == "dark" ? Color(
-            0xff2c2c2c) : Color(0xFFf2cece),
+        backgroundColor: Theme.of(context).brightness.name == "dark"
+            ? Color(0xff2c2c2c)
+            : Color(0xFFf2cece),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -178,620 +170,349 @@ class _PerfilWidgetState extends State<PerfilWidget> {
               final returnValue = {'success': false};
               while (!Navigator.of(context).canPop()) {}
               Navigator.of(context).pop(returnValue);
-              //context.pushNamed('Store');
             },
           ),
           title: Text(
             '',
             style: FlutterFlowTheme.of(context).bodyMedium.override(
-              fontFamily: 'Readex Pro',
-              color: Colors.white,
-              fontSize: 22.0,
-              letterSpacing: 0.0,
-            ),
+                  fontFamily: 'Readex Pro',
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  letterSpacing: 0.0,
+                ),
           ),
           actions: const [],
           centerTitle: true,
           elevation: 0.0,
         ),
         body: _isLoading
-            ? Center(child: SpinningFork()) : SafeArea(
-          top: true,
-          child: Stack(
-            children: [
-              Align(
-                alignment: AlignmentDirectional(-0.59, -0.77),
-                child: Text(
-                  'Profile',
-                  style: FlutterFlowTheme.of(context).headlineLarge.override(
-                    fontFamily: 'Outfit',
-                    color: Color(0xFFD2AD94),
-                  ),
-                ),
-              ),
-              if (image != null)
-              Align(
-                alignment: AlignmentDirectional(0.82, -0.92),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18.0),
-                  child: Image.memory(image!),
-
-                    /*FadeInImage(image: .image, placeholder: Image.network(
-                      'https://picsum.photos/seed/331/600',
-                      width: 150.0,
-                      height: 150.0,
-                      fit: BoxFit.cover,
-                    ).image)*/
-                  ),
-              ),
-
-
-
-              if(_appStateNotifier.cardNum.isEmpty)
-                Align(
-                  alignment: AlignmentDirectional(0, -0.20),
-                  child: FFButtonWidget(
-                    onPressed: () {
-                      var clickedStatus = ValueNotifier<bool>(false);
-                      return showDialog<void>(
-
-                          context: context,
-                          barrierDismissible: true, // user must tap button!
-                          builder: (BuildContext context) {
-                            RegExp regex = RegExp(r'^[0-9]{9,}$');
-                            var inputController = TextEditingController();
-                            var cvvController = TextEditingController();
-                            return AlertDialog(
-                                clipBehavior: Clip.none,
-                                title: const Text('Add credit card number'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      TextField(
-                                        keyboardType: TextInputType.phone,
-                                        maxLength: 16,
-                                        autofocus: true,
-                                        controller: inputController,
-                                      ),
-                                      TextField(
-                                        keyboardType: TextInputType.text,
-                                        maxLength: 3,
-                                        controller: cvvController,
-                                        decoration: InputDecoration(labelText: 'CVV'),
-                                      ),
-                                    ],
-                                  ),
+            ? Center(child: SpinningFork())
+            : SafeArea(
+                top: true,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(-0.59, -0.77),
+                      child: Text(
+                        'Profile',
+                        style:
+                            FlutterFlowTheme.of(context).headlineLarge.override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFFD2AD94),
                                 ),
-                                actions: <Widget>[
-                                  ValueListenableBuilder(
-                                      valueListenable: clickedStatus,
-                                      builder: (context, bool isClicked, _) {
-                                        return TextButton(
-                                          child: const Text('Ok!'),
-                                          onPressed: isClicked
-                                              ? () {}
-                                              : () async {
-                                            clickedStatus.value = true;
-                                            if (regex.hasMatch(
-                                                inputController.text)) {
-                                              _appStateNotifier.setCardNum(inputController.text);
-                                              _appStateNotifier.setCVV(cvvController.text);
-                                              //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
-
-
-                                              if ((_appStateNotifier.cardNum.length == 16) && (_appStateNotifier.cvv.length == 3)) {
-                                                return showDialog<void>(
-                                                    context: context,
-                                                    barrierDismissible: false,
-                                                    // user must tap button!
-                                                    builder: (
-                                                        BuildContext context) {
-                                                      return AlertDialog(
-                                                          title: const Text(
-                                                              'Add your card'),
-                                                          content: SingleChildScrollView(
-                                                            child: ListBody(
-                                                              children: <
-                                                                  Widget>[
-                                                                Text(
-                                                                    "Sucessufully added card"),
-                                                              ],
-                                                            ),
-                                                          ),
-
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              onPressed: () {
-
-                                                                Navigator.of(
-                                                                    context)
-                                                                    .pop();
-                                                                Navigator.of(
-                                                                    context)
-                                                                    .pop();
-
-                                                              },
-                                                              child: Text('Ok'),
-                                                            )
-                                                          ]
-                                                      );
-                                                    }
-                                                );
-                                              }
-                                            }
-                                            else {
-                                              _appStateNotifier.setCardNum("");
-                                              _appStateNotifier.setCVV("");
-                                              return showDialog<void>(
-                                                  context: context,
-                                                  barrierDismissible: false,
-                                                  // user must tap button!
-                                                  builder: (
-                                                      BuildContext context) {
-                                                    return AlertDialog(
-                                                        title: const Text(
-                                                            'Invalid card number.'),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text(
-                                                                'Dismiss'),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                  context)
-                                                                  .pop();
-                                                              Navigator.of(
-                                                                  context)
-                                                                  .pop();
-                                                            },
-                                                          )
-                                                        ]
-                                                    );
-                                                  }
-                                              );
-                                            }
-                                          },
-                                        );
-                                      })
-                                ]
-                            );
-                          }
-                      );
-
-
-                    },
-
-                    text: 'Add credit card',
-                    options: FFButtonOptions(
-                      width: 325.0,
-                      height: 100.0,
-                      padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme
-                          .of(context)
-                          .secondaryBackground,
-                      textStyle: FlutterFlowTheme
-                          .of(context)
-                          .titleSmall
-                          .override(
-                        fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme
-                            .of(context)
-                            .primaryText,
-                        fontSize: 25.0,
                       ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ),
-                ),
-
-
-
-              if(_appStateNotifier.cardNum.isNotEmpty)
-                Align(
-                  alignment: AlignmentDirectional(0, -0.20),
-                  child: FFButtonWidget(
-                    onPressed: () {
-
-                      var clickedStatus = ValueNotifier<bool>(false);
-                      return showDialog<void>(
-
-                          context: context,
-                          barrierDismissible: true, // user must tap button!
-                          builder: (BuildContext context) {
-                            var inputController = TextEditingController();
-                            return AlertDialog(
-                                clipBehavior: Clip.none,
-                                title: const Text('Removing card'),
-                                content:Text('Do you wish to proceed?'),
-                                actions: [
-                                  TextButton(onPressed: () {
-                                    _appStateNotifier.setCardNum("");
-                                    _appStateNotifier.setCVV("");
-                                    Navigator.of(context).pop(true);
-                                  },
-
-                                    child: Text('Yes'),
-                                  ),
-                                  TextButton(onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-
-                                    child: Text('No'),
-                                  )
-                                ]
-                            );
-                          }
-                      );
-
-
-                    },
-                    text: 'xxxx xxxx xxxx xxxx ${_appStateNotifier.cardNum.substring(12)}',
-                    options: FFButtonOptions(
-                      width: 325.0,
-                      height: 100.0,
-                      padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme
-                          .of(context)
-                          .secondaryBackground,
-                      textStyle: FlutterFlowTheme
-                          .of(context)
-                          .titleSmall
-                          .override(
-                        fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme
-                            .of(context)
-                            .primaryText,
-                        fontSize: 25.0,
-                      ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-
-
-
-
-
-
-
-              if(_appStateNotifier.phoneNum.isEmpty)
-                Align(
-                  alignment: AlignmentDirectional(0.04, 0.34),
-                  child: FFButtonWidget(
-                    onPressed: () {
-                      var clickedStatus = ValueNotifier<bool>(false);
-                      return showDialog<void>(
-
-                          context: context,
-                          barrierDismissible: true, // user must tap button!
-                          builder: (BuildContext context) {
-                            RegExp regex = RegExp(r'^[0-9]{9,}$');
-                            var inputController = TextEditingController();
-                            return AlertDialog(
-                                clipBehavior: Clip.none,
-                                title: const Text('Add your number'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      TextField(
-                                        keyboardType: TextInputType.phone,
-                                        maxLength: 9,
-                                        autofocus: true,
-                                        controller: inputController,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  ValueListenableBuilder(
-                                      valueListenable: clickedStatus,
-                                      builder: (context, bool isClicked, _) {
-                                        return TextButton(
-                                          child: const Text('Ok!'),
-                                          onPressed: isClicked
-                                              ? () {}
-                                              : () async {
-                                            clickedStatus.value = true;
-                                            if (regex.hasMatch(
-                                                inputController.text)) {
-                                              _appStateNotifier.setPhoneNum("351#${inputController.text}");
-                                              //aqui esta errado o result e response. é necessario verificar se existe conta mbway associada
-
-
-                                              if (_appStateNotifier.phoneNum.length == 13) {
-                                                return showDialog<void>(
-                                                    context: context,
-                                                    barrierDismissible: false,
-                                                    // user must tap button!
-                                                    builder: (
-                                                        BuildContext context) {
-                                                      return AlertDialog(
-                                                          title: const Text(
-                                                              'Add your number'),
-                                                          content: SingleChildScrollView(
-                                                            child: ListBody(
-                                                              children: <
-                                                                  Widget>[
-                                                                Text(
-                                                                    "Sucessufully added number"),
-                                                              ],
-                                                            ),
-                                                          ),
-
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              onPressed: () {
-
-                                                                Navigator.of(
-                                                                    context)
-                                                                    .pop();
-                                                                Navigator.of(
-                                                                    context)
-                                                                    .pop();
-
-                                                              },
-                                                              child: Text('Ok'),
-                                                            )
-                                                          ]
-                                                      );
-                                                    }
-                                                );
-                                              }
-                                            }
-                                            else {
-                                              return showDialog<void>(
-                                                  context: context,
-                                                  barrierDismissible: false,
-                                                  // user must tap button!
-                                                  builder: (
-                                                      BuildContext context) {
-                                                    return AlertDialog(
-                                                        title: const Text(
-                                                            'Missing Phone Number.'),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                            child: const Text(
-                                                                'Dismiss'),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                  context)
-                                                                  .pop();
-                                                              Navigator.of(
-                                                                  context)
-                                                                  .pop();
-                                                            },
-                                                          )
-                                                        ]
-                                                    );
-                                                  }
-                                              );
-                                            }
-                                          },
-                                        );
-                                      })
-                                ]
-                            );
-                          }
-                      );
-
-
-                    },
-
-                    text: 'Associate MBWay',
-                    options: FFButtonOptions(
-                      width: 300.0,
-                      height: 68.0,
-                      padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme
-                          .of(context)
-                          .primaryBackground,
-                      textStyle: FlutterFlowTheme
-                          .of(context)
-                          .titleSmall
-                          .override(
-                        fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme
-                            .of(context)
-                            .primaryText,
-                        fontSize: 25.0,
-                      ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-
-
-              if(_appStateNotifier.phoneNum.isNotEmpty)
-                Align(
-                  alignment: AlignmentDirectional(0.04, 0.34),
-                  child: FFButtonWidget(
-                    onPressed: () {
-
-                      var clickedStatus = ValueNotifier<bool>(false);
-                      return showDialog<void>(
-
-                          context: context,
-                          barrierDismissible: true, // user must tap button!
-                          builder: (BuildContext context) {
-                            var inputController = TextEditingController();
-                            return AlertDialog(
-                                clipBehavior: Clip.none,
-                                title: const Text('Removing number'),
-                                content:Text('Do you wish to proceed?'),
-                                actions: [
-                                  TextButton(onPressed: () {
-                                    _appStateNotifier.setPhoneNum("");
-                                    Navigator.of(context).pop(true);
-                                  },
-
-                                    child: Text('Yes'),
-                                  ),
-                                  TextButton(onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-
-                                    child: Text('No'),
-                                  )
-                                ]
-                            );
-                          }
-                      );
-
-
-                    },
-                    text: _appStateNotifier.phoneNum.split('#')[1],
-                    options: FFButtonOptions(
-                      width: 300.0,
-                      height: 68.0,
-                      padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme
-                          .of(context)
-                          .primaryBackground,
-                      textStyle: FlutterFlowTheme
-                          .of(context)
-                          .titleSmall
-                          .override(
-                        fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme
-                            .of(context)
-                            .primaryText,
-                        fontSize: 25.0,
-                      ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-              Align(
-                alignment: AlignmentDirectional(-0.01, 0.92),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    _appStateNotifier.setAdmin(false);
-                    _clearLogin();
-                    context.go('/sigarraLogin');
-                  },
-                  text: 'Sign Out',
-                  options: FFButtonOptions(
-                    width: 200.0,
-                    height: 66.0,
-                    padding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                    EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: Color(0xFF252322),
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      fontFamily: 'Readex Pro',
-                      color: Color(0xFFD2AD94),
-                      fontSize: 25.0,
-                    ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-              if (!_appStateNotifier.isAdmin)
-                Align(
-                  alignment: AlignmentDirectional(-0.01, 0.65),
-                  child: FFButtonWidget(
-                    onPressed: () {
-                      _showWorkerLoginPopup();
-                    },
-                    text: 'Worker Login',
-                    options: FFButtonOptions(
-                      width: 200.0,
-                      height: 66.0,
-                      padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xFF252322),
-                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Readex Pro',
-                        color: Color(0xFFD2AD94),
-                        fontSize: 25.0,
-                      ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-              if (_appStateNotifier.isAdmin)
-                Align(
-                  alignment: AlignmentDirectional(-0.01, 0.65),
-                  child: FFButtonWidget(
-                    onPressed: () {
-                      _appStateNotifier.setAdmin(false);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Worker Logout done successfully!'),
+                    if (image != null)
+                      Align(
+                        alignment: AlignmentDirectional(0.82, -0.92),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(18.0),
+                          child: Image.memory(image!),
                         ),
-                      );
-                      this.context.pushReplacement('/');
-                    },
-                    text: 'Worker Logout',
-                    options: FFButtonOptions(
-                      width: 200.0,
-                      height: 66.0,
-                      padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xFF252322),
-                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Readex Pro',
-                        color: Color(0xFFD2AD94),
-                        fontSize: 25.0,
                       ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
+                    if (_appStateNotifier.phoneNum.isEmpty)
+                      Align(
+                        alignment: AlignmentDirectional(0.04, 0.34),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            var clickedStatus = ValueNotifier<bool>(false);
+                            return showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    true, // user must tap button!
+                                builder: (BuildContext context) {
+                                  RegExp regex = RegExp(r'^[0-9]{9,}$');
+                                  var inputController = TextEditingController();
+                                  return AlertDialog(
+                                      clipBehavior: Clip.none,
+                                      title: const Text('Add your number'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            TextField(
+                                              keyboardType: TextInputType.phone,
+                                              maxLength: 9,
+                                              autofocus: true,
+                                              controller: inputController,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        ValueListenableBuilder(
+                                            valueListenable: clickedStatus,
+                                            builder:
+                                                (context, bool isClicked, _) {
+                                              return TextButton(
+                                                child: const Text('Ok!'),
+                                                onPressed: isClicked
+                                                    ? () {}
+                                                    : () async {
+                                                        clickedStatus.value =
+                                                            true;
+                                                        if (regex.hasMatch(
+                                                            inputController
+                                                                .text)) {
+                                                          _appStateNotifier
+                                                              .setPhoneNum(
+                                                                  "351#${inputController.text}");
+                                                          this.context.pushReplacement('/');
+                                                          if (_appStateNotifier.phoneNum.length == 13) {
+                                                            return showDialog<void>(
+                                                                context: context,
+                                                                barrierDismissible: false,
+                                                                // user must tap button!
+                                                                builder: (BuildContext context) {
+                                                                  return AlertDialog(
+                                                                      title: const Text('Add your number'),
+                                                                      content:
+                                                                          SingleChildScrollView(
+                                                                        child:
+                                                                            ListBody(
+                                                                          children: <Widget>[
+                                                                            Text("Sucessufully added number"),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      actions: <Widget>[
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                              this.context.pushReplacement('/');
+                                                                          },
+                                                                          child:
+                                                                              Text('Ok'),
+                                                                        )
+                                                                      ]);
+                                                                });
+                                                          }
+                                                        } else {
+                                                          return showDialog<
+                                                                  void>(
+                                                              context: context,
+                                                              barrierDismissible:
+                                                                  false,
+                                                              // user must tap button!
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Missing Phone Number.'),
+                                                                    actions: <Widget>[
+                                                                      TextButton(
+                                                                        child: const Text(
+                                                                            'Dismiss'),
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        },
+                                                                      )
+                                                                    ]);
+                                                              });
+                                                        }
+                                                      },
+                                              );
+                                            })
+                                      ]);
+                                });
+                          },
+                          text: 'Associate MBWay',
+                          options: FFButtonOptions(
+                            width: 300.0,
+                            height: 68.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 25.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(10.0),
+                    if (_appStateNotifier.phoneNum.isNotEmpty)
+                      Align(
+                        alignment: AlignmentDirectional(0.04, 0.34),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            var clickedStatus = ValueNotifier<bool>(false);
+                            return showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    true, // user must tap button!
+                                builder: (BuildContext context) {
+                                  var inputController = TextEditingController();
+                                  return AlertDialog(
+                                      clipBehavior: Clip.none,
+                                      title: const Text('Removing number'),
+                                      content: Text('Do you wish to proceed?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            _appStateNotifier.setPhoneNum("");
+                                            this.context.pushReplacement('/');
+                                          },
+                                          child: Text('Yes'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            this.context.pushReplacement('/');
+                                          },
+                                          child: Text('No'),
+                                        )
+                                      ]);
+                                });
+                          },
+                          text: _appStateNotifier.phoneNum.split('#')[1],
+                          options: FFButtonOptions(
+                            width: 300.0,
+                            height: 68.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 25.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    Align(
+                      alignment: AlignmentDirectional(-0.01, 0.92),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          _appStateNotifier.setAdmin(false);
+                          _clearLogin();
+                          context.go('/sigarraLogin');
+                        },
+                        text: 'Sign Out',
+                        options: FFButtonOptions(
+                          width: 200.0,
+                          height: 66.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: Color(0xFF252322),
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Color(0xFFD2AD94),
+                                    fontSize: 25.0,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
                     ),
-                  ),
+                    if (!_appStateNotifier.isAdmin)
+                      Align(
+                        alignment: AlignmentDirectional(-0.01, 0.65),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            _showWorkerLoginPopup();
+                          },
+                          text: 'Worker Login',
+                          options: FFButtonOptions(
+                            width: 200.0,
+                            height: 66.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: Color(0xFF252322),
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Color(0xFFD2AD94),
+                                  fontSize: 25.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    if (_appStateNotifier.isAdmin)
+                      Align(
+                        alignment: AlignmentDirectional(-0.01, 0.65),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            _appStateNotifier.setAdmin(false);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text('Worker Logout done successfully!'),
+                              ),
+                            );
+                            this.context.pushReplacement('/');
+                          },
+                          text: 'Worker Logout',
+                          options: FFButtonOptions(
+                            width: 200.0,
+                            height: 66.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: Color(0xFF252322),
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Color(0xFFD2AD94),
+                                  fontSize: 25.0,
+                                ),
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-            ],
-          ),
-        ),
+              ),
       ),
     );
   }

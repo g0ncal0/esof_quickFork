@@ -1,19 +1,13 @@
 import 'package:esof/pages/checkfirebasestats/checkfirebasestats_widget.dart';
+import 'package:flutter/material.dart';
 
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'stats_model.dart';
+
 export 'stats_model.dart';
+
 class StatsWidget extends StatefulWidget {
   const StatsWidget({super.key});
 
@@ -56,11 +50,11 @@ class _StatsWidget extends State<StatsWidget> {
           title: Text(
             'Stats',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-              fontFamily: 'Outfit',
-              color: Colors.white,
-              fontSize: 22,
-              letterSpacing: 0,
-            ),
+                  fontFamily: 'Outfit',
+                  color: Colors.white,
+                  fontSize: 22,
+                  letterSpacing: 0,
+                ),
           ),
           actions: [],
           centerTitle: false,
@@ -94,14 +88,14 @@ class _StatsWidget extends State<StatsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Color(0xFFFFFFFFF),
+                                            letterSpacing: 0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -123,7 +117,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "monday-lunch";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -133,16 +129,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -163,7 +159,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "monday-dinner";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -173,16 +171,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -223,14 +221,14 @@ class _StatsWidget extends State<StatsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Color(0xFFFFFFFFF),
+                                            letterSpacing: 0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -251,7 +249,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "tuesday-lunch";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -261,16 +261,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -291,7 +291,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "tuesday-dinner";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -301,16 +303,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -351,14 +353,14 @@ class _StatsWidget extends State<StatsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Color(0xFFFFFFFFF),
+                                            letterSpacing: 0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -379,7 +381,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "wednesday-lunch";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -389,16 +393,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -419,7 +423,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "wednesday-dinner";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -429,16 +435,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -479,14 +485,14 @@ class _StatsWidget extends State<StatsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Color(0xFFFFFFFFF),
+                                            letterSpacing: 0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -507,7 +513,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "thursday-lunch";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -517,16 +525,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -547,7 +555,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "thursday-dinner";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -557,16 +567,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -607,14 +617,14 @@ class _StatsWidget extends State<StatsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Color(0xFFFFFFFFF),
+                                            letterSpacing: 0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -635,7 +645,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "friday-lunch";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -645,16 +657,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -675,7 +687,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "friday-dinner";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -685,16 +699,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -735,14 +749,14 @@ class _StatsWidget extends State<StatsWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Readex Pro',
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.light
+                                                    ? Colors.black
+                                                    : Color(0xFFFFFFFFF),
+                                            letterSpacing: 0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -763,7 +777,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "saturday-lunch";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -773,16 +789,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -803,7 +819,9 @@ class _StatsWidget extends State<StatsWidget> {
                                         String mealId = "saturday-dinner";
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) => CheckFirebaseStatsWidget(mealID: mealId),
+                                            builder: (context) =>
+                                                CheckFirebaseStatsWidget(
+                                                    mealID: mealId),
                                           ),
                                         );
                                       },
@@ -813,16 +831,16 @@ class _StatsWidget extends State<StatsWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             24, 0, 24, 0),
                                         iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 0),
                                         color: Color(0xFF2E1F1F),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0,
+                                            ),
                                         elevation: 3,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,

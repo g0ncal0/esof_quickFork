@@ -23,8 +23,4 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

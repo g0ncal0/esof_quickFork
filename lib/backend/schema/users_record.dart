@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
-
 import 'index.dart';
 
 class UsersRecord extends FirestoreRecord {
@@ -17,12 +16,16 @@ class UsersRecord extends FirestoreRecord {
 
   // "name" field.
   String? _name;
+
   String get name => _name ?? '';
+
   bool hasName() => _name != null;
 
   // "email" field.
   String? _email;
+
   String get email => _email ?? '';
+
   bool hasEmail() => _email != null;
 
   void _initializeFields() {

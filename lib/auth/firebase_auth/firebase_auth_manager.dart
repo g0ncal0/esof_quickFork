@@ -17,10 +17,12 @@ class FirebasePhoneAuthManager extends ChangeNotifier {
   void Function(BuildContext)? _onCodeSent;
 
   bool get triggerOnCodeSent => _triggerOnCodeSent ?? false;
+
   set triggerOnCodeSent(bool val) => _triggerOnCodeSent = val;
 
   void Function(BuildContext) get onCodeSent =>
       _onCodeSent == null ? (_) {} : _onCodeSent!;
+
   set onCodeSent(void Function(BuildContext) func) => _onCodeSent = func;
 
   void update(VoidCallback callback) {
@@ -29,8 +31,7 @@ class FirebasePhoneAuthManager extends ChangeNotifier {
   }
 }
 
-class FirebaseAuthManager extends AuthManager with EmailSignInManager{
-
+class FirebaseAuthManager extends AuthManager with EmailSignInManager {
   @override
   Future signOut() {
     return FirebaseAuth.instance.signOut();

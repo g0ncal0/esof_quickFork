@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
-
 import 'index.dart';
 
 class WeekelyMealsRecord extends FirestoreRecord {
@@ -17,42 +16,58 @@ class WeekelyMealsRecord extends FirestoreRecord {
 
   // "date" field.
   DateTime? _date;
+
   DateTime? get date => _date;
+
   bool hasDate() => _date != null;
 
   // "descriptionMeat" field.
   String? _descriptionMeat;
+
   String get descriptionMeat => _descriptionMeat ?? '';
+
   bool hasDescriptionMeat() => _descriptionMeat != null;
 
   // "descriptionFish" field.
   String? _descriptionFish;
+
   String get descriptionFish => _descriptionFish ?? '';
+
   bool hasDescriptionFish() => _descriptionFish != null;
 
   // "descriptionVegetarian" field.
   String? _descriptionVegetarian;
+
   String get descriptionVegetarian => _descriptionVegetarian ?? '';
+
   bool hasDescriptionVegetarian() => _descriptionVegetarian != null;
 
   // "weekdayMeal" field.
   String? _weekdayMeal;
+
   String get weekdayMeal => _weekdayMeal ?? '';
+
   bool hasWeekdayMeal() => _weekdayMeal != null;
 
   //"boughtFish" field
   int? _boughtFish;
+
   int get boughtFish => _boughtFish ?? 0;
+
   bool hasBoughtFish() => _boughtFish != null;
 
   //"boughtFish" field
   int? _boughtMeat;
+
   int get boughtMeat => _boughtMeat ?? 0;
+
   bool hasBoughtMeat() => _boughtMeat != null;
 
   //"boughtFish" field
   int? _boughtVegetarian;
+
   int get boughtVegetarian => _boughtVegetarian ?? 0;
+
   bool hasBoughtVegetarian() => _boughtVegetarian != null;
 
   void _initializeFields() {
@@ -117,9 +132,9 @@ Map<String, dynamic> createWeekelyMealsRecordData({
       'descriptionFish': descriptionFish,
       'descriptionVegetarian': descriptionVegetarian,
       'weekdayMeal': weekdayMeal,
-      'boughtFish' : boughtFish,
-      'boughtMeat' : boughtMeat,
-      'boughtVegetarian' : boughtVegetarian,
+      'boughtFish': boughtFish,
+      'boughtMeat': boughtMeat,
+      'boughtVegetarian': boughtVegetarian,
     }.withoutNulls,
   );
 
@@ -140,7 +155,6 @@ class WeekelyMealsRecordDocumentEquality
         e1?.boughtFish == e2?.boughtFish &&
         e1?.boughtMeat == e2?.boughtMeat &&
         e1?.boughtVegetarian == e2?.boughtVegetarian;
-
   }
 
   @override

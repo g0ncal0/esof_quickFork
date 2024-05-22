@@ -1,17 +1,12 @@
-import 'package:esof/pages/bought_meals/bought_meals_widget.dart';
+import 'package:esof/pages/stats/stats_widget.dart';
 import 'package:esof/pages/validation/validation_widget.dart';
 import 'package:esof/sigarraApi/session.dart';
 import 'package:esof/sigarraApi/sigarraApi.dart';
-import 'package:esof/pages/stats/stats_widget.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth/firebase_auth/auth_util.dart';
@@ -50,13 +45,13 @@ class QuickFork extends StatefulWidget {
 
   // This widget is the root of your application.
   @override
-  State<QuickFork> createState() => _MyAppState();
+  State<QuickFork> createState() => _QuickForkState();
 
-  static _MyAppState of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>()!;
+  static _QuickForkState of(BuildContext context) =>
+      context.findAncestorStateOfType<_QuickForkState>()!;
 }
 
-class _MyAppState extends State<QuickFork> {
+class _QuickForkState extends State<QuickFork> {
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
   late Stream<BaseAuthUser> userStream;
@@ -70,8 +65,10 @@ class _MyAppState extends State<QuickFork> {
       _appStateNotifier.username = prefs.getString('user_up_code') ?? "";
       _appStateNotifier.password = prefs.getString('user_password') ?? "";
       _appStateNotifier.faculty = prefs.getString('user_faculty') ?? "";
-      _appStateNotifier.image_small = prefs.getString('user_image_small_small') ?? "";
-      _appStateNotifier.image_big = prefs.getString('user_image_small_small') ?? "";
+      _appStateNotifier.image_small =
+          prefs.getString('user_image_small_small') ?? "";
+      _appStateNotifier.image_big =
+          prefs.getString('user_image_small_small') ?? "";
     });
 
     if (_appStateNotifier.username == "" ||
@@ -79,7 +76,9 @@ class _MyAppState extends State<QuickFork> {
         _appStateNotifier.faculty == "") {
       _router.goNamed('SigarraLogin');
     } else {
-      Session? session = await sigarraLogin(_appStateNotifier.username, _appStateNotifier.password).timeout(const Duration(seconds: 30));
+      Session? session = await sigarraLogin(
+              _appStateNotifier.username, _appStateNotifier.password)
+          .timeout(const Duration(seconds: 30));
       if (session == null) {
         _router.goNamed('SigarraLogin');
       }
@@ -111,7 +110,7 @@ class _MyAppState extends State<QuickFork> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'ESOF',
+      title: 'Quickfork',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

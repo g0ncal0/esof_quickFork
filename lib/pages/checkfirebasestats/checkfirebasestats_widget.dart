@@ -1,22 +1,13 @@
-import 'dart:ffi';
-
-import 'package:flutter/scheduler.dart';
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import '/custom_code/actions/index.dart' as actions;
+import 'package:flutter/scheduler.dart';
 
+import '/backend/backend.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'checkfirebasestats_model.dart';
+
 export 'checkfirebasestats_model.dart';
 
 class CheckFirebaseStatsWidget extends StatefulWidget {
@@ -49,11 +40,10 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
     SchedulerBinding.instance!.addPostFrameCallback((_) async {
       // mealInfoFirestoreQuery
       _model.mealInfo = await queryWeekelyMealsRecordOnce(
-        queryBuilder: (weekelyMealsRecord) =>
-            weekelyMealsRecord.where(
-              'weekdayMeal',
-              isEqualTo: widget.mealID,
-            ),
+        queryBuilder: (weekelyMealsRecord) => weekelyMealsRecord.where(
+          'weekdayMeal',
+          isEqualTo: widget.mealID,
+        ),
         singleRecord: true,
       ).then((s) => s.firstOrNull);
       _model.descriptions = actions.concatDescriptions(
@@ -78,10 +68,8 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
     // Check if the document exists
     if (statDocSnapshot.docs.isNotEmpty) {
       // Get the document data
-      Map<String, dynamic>? data = statDocSnapshot.docs.first.data() as Map<
-          String,
-          dynamic>?;
-      //   print("Data: $data");
+      Map<String, dynamic>? data =
+          statDocSnapshot.docs.first.data() as Map<String, dynamic>?;
 
       // Update boughtItems state
       if (data != null) {
@@ -107,9 +95,8 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-    backgroundColor: Theme.of(context).brightness == Brightness.light
+      backgroundColor: Theme.of(context).brightness == Brightness.light
           ? Color(0xFFf2cece)
           : Color(0xff2c2a2a),
       appBar: AppBar(
@@ -171,8 +158,8 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
 
   Widget _buildBar(String label, int value) {
     double total = ((boughtItems['boughtFish'] ?? 0) +
-        (boughtItems['boughtMeat'] ?? 0) +
-        (boughtItems['boughtVegetarian'] ?? 0))
+            (boughtItems['boughtMeat'] ?? 0) +
+            (boughtItems['boughtVegetarian'] ?? 0))
         .toDouble();
 
     double percentage;
@@ -205,7 +192,8 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 10.0), // Adjust the padding as needed
+            padding: EdgeInsets.only(bottom: 10.0),
+            // Adjust the padding as needed
             child: Text(
               '${value}',
               style: TextStyle(color: Colors.white),
@@ -217,7 +205,8 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
             color: Colors.orange,
             alignment: Alignment.bottomCenter,
             child: Transform.translate(
-              offset: Offset(0.0, -5.0), // Move the percentages text up by 5 units
+              offset: Offset(0.0, -5.0),
+              // Move the percentages text up by 5 units
               child: Text(
                 '${percentage.toInt()}%',
                 style: TextStyle(color: Colors.white),
@@ -233,5 +222,4 @@ class _CheckFirebaseStatsState extends State<CheckFirebaseStatsWidget> {
       ),
     );
   }
-
 }

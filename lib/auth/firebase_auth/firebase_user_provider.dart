@@ -7,7 +7,9 @@ export '../base_auth_user_provider.dart';
 
 class EsofFirebaseUser extends BaseAuthUser {
   EsofFirebaseUser(this.user);
+
   User? user;
+
   @override
   bool get loggedIn => user != null;
 
@@ -54,6 +56,7 @@ class EsofFirebaseUser extends BaseAuthUser {
 
   static BaseAuthUser fromUserCredential(UserCredential userCredential) =>
       fromFirebaseUser(userCredential.user);
+
   static BaseAuthUser fromFirebaseUser(User? user) => EsofFirebaseUser(user);
 }
 

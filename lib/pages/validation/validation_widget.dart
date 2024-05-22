@@ -1,17 +1,11 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'validation_model.dart';
+
 export 'validation_model.dart';
 
 class ValidationWidget extends StatefulWidget {
@@ -31,7 +25,6 @@ class _ValidationWidgetState extends State<ValidationWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   @override
   void initState() {
     super.initState();
@@ -43,9 +36,9 @@ class _ValidationWidgetState extends State<ValidationWidget> {
   @override
   void dispose() {
     try {
-        _dispose = true;
-        super.dispose();
-    } catch(_) {}
+      _dispose = true;
+      super.dispose();
+    } catch (_) {}
   }
 
   @override
@@ -65,11 +58,11 @@ class _ValidationWidgetState extends State<ValidationWidget> {
           title: Text(
             'Ticket Validation',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-              fontFamily: 'Outfit',
-              color: Colors.white,
-              fontSize: 22,
-              letterSpacing: 0,
-            ),
+                  fontFamily: 'Outfit',
+                  color: Colors.white,
+                  fontSize: 22,
+                  letterSpacing: 0,
+                ),
           ),
           actions: [],
           centerTitle: false,
@@ -84,10 +77,12 @@ class _ValidationWidgetState extends State<ValidationWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                     child: FFButtonWidget(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    child: FFButtonWidget(
                       onPressed: () async {
-                        _model.scannedValue = await FlutterBarcodeScanner.scanBarcode(
+                        _model.scannedValue =
+                            await FlutterBarcodeScanner.scanBarcode(
                           '#C62828', // scanning line color
                           'Cancel', // cancel button text
                           true, // whether to show the flash icon
@@ -95,7 +90,7 @@ class _ValidationWidgetState extends State<ValidationWidget> {
                         );
 
                         _model.scanQrCode();
-                        if (!_dispose){
+                        if (!_dispose) {
                           setState(() {});
                         }
                       },
@@ -106,11 +101,12 @@ class _ValidationWidgetState extends State<ValidationWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                         iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         color: FlutterFlowTheme.of(context).primary,
-                        textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
-                          letterSpacing: 0,
-                        ),
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                  letterSpacing: 0,
+                                ),
                         elevation: 3,
                         borderSide: BorderSide(
                           color: Colors.transparent,
@@ -118,8 +114,7 @@ class _ValidationWidgetState extends State<ValidationWidget> {
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                    )
-                ),
+                    )),
               ],
             ),
           ),

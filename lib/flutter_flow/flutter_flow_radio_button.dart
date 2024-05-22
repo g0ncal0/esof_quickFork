@@ -71,6 +71,7 @@ class FlutterFlowRadioButton extends StatefulWidget {
 
 class _FlutterFlowRadioButtonState extends State<FlutterFlowRadioButton> {
   bool get enabled => widget.onChanged != null;
+
   FormFieldController<String> get controller => widget.controller;
   void Function()? _listener;
 
