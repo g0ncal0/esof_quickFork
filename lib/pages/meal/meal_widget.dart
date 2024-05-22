@@ -32,7 +32,7 @@ class _MealWidgetState extends State<MealWidget> {
     try {
       _dispose = true;
       super.dispose();
-    } catch(_) {}
+    } catch (_) {}
   }
 
   @override

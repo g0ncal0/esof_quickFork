@@ -7,6 +7,7 @@ import './form_field_controller.dart';
 
 class ChipData {
   const ChipData(this.label, [this.iconData]);
+
   final String label;
   final IconData? iconData;
 }
@@ -23,6 +24,7 @@ class ChipStyle {
     this.borderWidth,
     this.borderRadius,
   });
+
   final Color? backgroundColor;
   final TextStyle? textStyle;
   final Color? iconColor;
@@ -70,6 +72,7 @@ class FlutterFlowChoiceChips extends StatefulWidget {
 
 class _FlutterFlowChoiceChipsState extends State<FlutterFlowChoiceChips> {
   late List<String> choiceChipValues;
+
   List<String> get selectedValues => widget.controller.value ?? [];
 
   @override

@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:esof/sigarraApi/sigarraApi.dart';
+import 'package:http/http.dart' as http;
 
 class Session {
   Session(this.username, this.cookies);
+
   String username;
   String cookies;
 }
@@ -16,5 +17,6 @@ Session? sessionlogin(http.Response response) {
     return null;
   }
 
-  return Session(documentBody['codigo'] as String, getCookies(response.headers));
+  return Session(
+      documentBody['codigo'] as String, getCookies(response.headers));
 }

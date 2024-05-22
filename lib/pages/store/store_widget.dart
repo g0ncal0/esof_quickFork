@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../backend/backend.dart';
@@ -32,7 +31,8 @@ class _StoreWidgetState extends State<StoreWidget> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (_session == null && _isLoading) {
-      _session = await sigarraLogin(prefs.getString('user_up_code')!, prefs.getString('user_password')!);
+      _session = await sigarraLogin(
+          prefs.getString('user_up_code')!, prefs.getString('user_password')!);
     }
 
     if (_session == null) {
@@ -41,11 +41,10 @@ class _StoreWidgetState extends State<StoreWidget> {
     }
 
     _model.userTickets = await queryBoughtTicketRecordOnce(
-      queryBuilder: (boughtTicketRecord) =>
-          boughtTicketRecord.where(
-            'upCode',
-            isEqualTo: _session!.username,
-          ),
+      queryBuilder: (boughtTicketRecord) => boughtTicketRecord.where(
+        'upCode',
+        isEqualTo: _session!.username,
+      ),
       limit: 12,
     );
 
@@ -106,16 +105,14 @@ class _StoreWidgetState extends State<StoreWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-
       if (!_dispose) {
         setState(() {
           _isLoading = true;
         });
       }
 
-
       try {
-         await _getBoughtTickets();
+        await _getBoughtTickets();
       } finally {
         if (!_dispose) {
           setState(() {
@@ -131,9 +128,7 @@ class _StoreWidgetState extends State<StoreWidget> {
             _isLoading = false;
           });
         }
-        Logger().i('Firebase query');
       });
-
     });
   }
 
@@ -141,15 +136,13 @@ class _StoreWidgetState extends State<StoreWidget> {
 
   @override
   void dispose() {
-
     try {
       if (_timer != null) {
         _timer!.cancel();
       }
       _dispose = true;
       super.dispose();
-    } catch(_) {}
-
+    } catch (_) {}
   }
 
   @override
@@ -169,197 +162,1383 @@ class _StoreWidgetState extends State<StoreWidget> {
           title: Text(
             'Store',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-              fontFamily: 'Outfit',
-              color: Colors.white,
-              fontSize: 22,
-              letterSpacing: 0,
-            ),
+                  fontFamily: 'Outfit',
+                  color: Colors.white,
+                  fontSize: 22,
+                  letterSpacing: 0,
+                ),
           ),
           actions: [],
           centerTitle: false,
           elevation: 2,
         ),
         body: _isLoading
-          ? Center(child: SpinningFork()) : SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Row(
+            ? Center(child: SpinningFork())
+            : SafeArea(
+                top: true,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Monday',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'Monday',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Color(0xFFFFFFFFF),
+                                                  letterSpacing: 0,
+                                                ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 5, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[0]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[0] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Monday - Lunch',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'monday-lunch',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                0] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[0]
+                                                ? 'Bought'
+                                                : 'Buy lunch',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 10, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[1]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[1] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Monday - Dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'monday-dinner',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                1] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[1]
+                                                ? 'Bought'
+                                                : 'Buy Dinner',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                           Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 5, 4),
-                                    child: FFButtonWidget(
-                                      onPressed:
-                                        _model.alreadyBought[0] ? () {} : () async {
-                                          _model.alreadyBought[0] = true;
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              true; // Update this based on your requirement
-                                            });
-                                          }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Monday - Lunch',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'monday-lunch',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                        if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                        _model.alreadyBought[0] = value['success'] as bool;
-                                        }
-                                        if (!_dispose){
-                                        setState(() {_isLoading = false; // Update this based on your requirement
-                                        });} }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[0] ? 'Bought' : 'Buy lunch',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'Tuesday',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Color(0xFFFFFFFFF),
+                                                  letterSpacing: 0,
+                                                ),
+                                          ),
                                         ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 10, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[1] ? () {} : () async {
-                                        _model.alreadyBought[1] = true;
-                                        if (!_dispose) {
-                                          setState(() {
-                                            _isLoading =
-                                            true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Monday - Dinner',
-                                              ParamType.String,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 5, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[2]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[2] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Tuesday - Lunch',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'tuesday-lunch',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                2] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[2]
+                                                ? 'Bought'
+                                                : 'Buy lunch',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                             ),
-                                            'mealID': serializeParam(
-                                              'monday-dinner',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[1] = value['success'] as bool;
-                                          }
-                                          if (!_dispose){
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[1] ? 'Bought' : 'Buy Dinner',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
+                                          ),
                                         ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 10, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[3]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[3] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Tuesday - Dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'tuesday-dinner',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                3] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[3]
+                                                ? 'Bought'
+                                                : 'Buy Dinner',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'Wednesday',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Color(0xFFFFFFFFF),
+                                                  letterSpacing: 0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 5, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[4]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[4] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Wednesday - Lunch',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'wednesday-lunch',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                4] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[4]
+                                                ? 'Bought'
+                                                : 'Buy lunch',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 10, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[5]
+                                                ? () {}
+                                                : () {
+                                                    _model.alreadyBought[5] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Wednesday - Dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'wednesday-dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                5] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[5]
+                                                ? 'Bought'
+                                                : 'Buy Dinner',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              //color: _model.alreadyBought[5] ? Colors.black12 : Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'Thursday',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Color(0xFFFFFFFFF),
+                                                  letterSpacing: 0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 5, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[6]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[6] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Thursday - Lunch',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'thursday-lunch',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                6] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[6]
+                                                ? 'Bought'
+                                                : 'Buy lunch',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 10, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[7]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[7] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Thursday - Dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'thursday-dinner',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                7] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[7]
+                                                ? 'Bought'
+                                                : 'Buy Dinner',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'Friday',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Color(0xFFFFFFFFF),
+                                                  letterSpacing: 0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 5, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[8]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[8] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Friday - Lunch',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'friday-lunch',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                8] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[8]
+                                                ? 'Bought'
+                                                : 'Buy lunch',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 10, 4),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[9]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[9] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Friday - Dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'friday-dinner',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                9] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[9]
+                                                ? 'Bought'
+                                                : 'Buy Dinner',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'Saturday',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.black
+                                                      : Color(0xFFFFFFFFF),
+                                                  letterSpacing: 0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 5, 10),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[10]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[10] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Saturday - Lunch',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'saturday-lunch',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                10] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading = false;
+                                                        });
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[10]
+                                                ? 'Bought'
+                                                : 'Buy lunch',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5, 0, 10, 10),
+                                          child: FFButtonWidget(
+                                            onPressed: _model.alreadyBought[11]
+                                                ? () {}
+                                                : () async {
+                                                    _model.alreadyBought[11] =
+                                                        true;
+                                                    if (!_dispose) {
+                                                      setState(() {
+                                                        _isLoading =
+                                                            true; // Update this based on your requirement
+                                                      });
+                                                    }
+                                                    context
+                                                        .pushNamed(
+                                                      'Checkout',
+                                                      queryParameters: {
+                                                        'weekDay':
+                                                            serializeParam(
+                                                          'Saturday - Dinner',
+                                                          ParamType.String,
+                                                        ),
+                                                        'mealID':
+                                                            serializeParam(
+                                                          'saturday-dinner',
+                                                          ParamType.String,
+                                                        )
+                                                      }.withoutNulls,
+                                                    )
+                                                        .then((value) {
+                                                      if (value != null &&
+                                                          value is Map<String,
+                                                              bool> &&
+                                                          value['success']
+                                                              is bool) {
+                                                        _model.alreadyBought[
+                                                                11] =
+                                                            value['success']
+                                                                as bool;
+                                                      }
+                                                      if (!_dispose) {
+                                                        setState(() {
+                                                          _isLoading =
+                                                              false; // Update this based on your requirement
+                                                        });
+                                                      }
+                                                    }).catchError((error) {
+                                                      if (!_dispose) {
+                                                        if (!_dispose) {
+                                                          setState(() {
+                                                            _isLoading = false;
+                                                          });
+                                                        }
+                                                      }
+                                                    });
+                                                  },
+                                            text: _model.alreadyBought[11]
+                                                ? 'Bought'
+                                                : 'Buy Dinner',
+                                            options: FFButtonOptions(
+                                              height: 58,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(24, 0, 24, 0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 0),
+                                              color: Color(0xFF2E1F1F),
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -371,928 +1550,6 @@ class _StoreWidgetState extends State<StoreWidget> {
                   ],
                 ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Tuesday',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 5, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[2] ? () {} : () async {
-                                        _model.alreadyBought[2] = true;
-                                        if (!_dispose){
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });}
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Tuesday - Lunch',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'tuesday-lunch',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[2] = value['success'] as bool;
-                                          }
-                                          if (!_dispose){
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });}
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[2] ? 'Bought' : 'Buy lunch',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 10, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[3] ? () {} : () async {
-                                        _model.alreadyBought[3] = true;
-                                        if (!_dispose){
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });}
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Tuesday - Dinner',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'tuesday-dinner',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[3] = value['success'] as bool;
-                                          }
-                                          if (!_dispose){
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });}
-                                        }).catchError((error) {
-                                          if (!_dispose){
-                                          setState(() {
-                                            _isLoading = false;
-                                          });}
-                                        });
-                                      },
-                                      text: _model.alreadyBought[3] ? 'Bought' : 'Buy Dinner',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Wednesday',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 5, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[4] ? () {} : () async {
-                                        _model.alreadyBought[4] = true;
-                                        if (!_dispose){
-                                          setState(() {
-                                            _isLoading = true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Wednesday - Lunch',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'wednesday-lunch',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[4] = value['success'] as bool;
-                                          }
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[4] ? 'Bought' : 'Buy lunch',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 10, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[5] ? () {} : () {
-                                        _model.alreadyBought[5] = true;
-                                        if (!_dispose) {
-                                          setState(() {
-                                            _isLoading =
-                                            true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Wednesday - Dinner',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'wednesday-dinner',
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[5] = value['success'] as bool;
-                                          }
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[5] ? 'Bought' : 'Buy Dinner',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        //color: _model.alreadyBought[5] ? Colors.black12 : Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Thursday',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 5, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[6] ? () {} : () async {
-                                        _model.alreadyBought[6] = true;
-                                        if (!_dispose) {
-                                          setState(() {
-                                            _isLoading =
-                                            true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Thursday - Lunch',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'thursday-lunch',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[6] = value['success'] as bool;
-                                          }
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[6] ? 'Bought' : 'Buy lunch',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 10, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[7] ? () {} : () async {
-                                        _model.alreadyBought[7] = true;
-                                        if (!_dispose) {
-                                          setState(() {
-                                            _isLoading =
-                                            true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Thursday - Dinner',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'thursday-dinner',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[7] = value['success'] as bool;
-                                          }
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[7] ? 'Bought' : 'Buy Dinner',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Friday',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 5, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[8] ? () {} : () async {
-                                        _model.alreadyBought[8] = true;
-                                        if (!_dispose) {
-                                          setState(() {
-                                            _isLoading =
-                                            true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Friday - Lunch',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'friday-lunch',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[8] = value['success'] as bool;
-                                          }
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[8] ? 'Bought' : 'Buy lunch',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 10, 4),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[9] ? () {} : () async {
-                                        _model.alreadyBought[9] = true;
-                                        if (!_dispose){
-                                          setState(() {
-                                            _isLoading = true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Friday - Dinner',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'friday-dinner',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[9] = value['success'] as bool;
-                                          }
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading =
-                                              false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[9] ? 'Bought' : 'Buy Dinner',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Saturday',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                        fontFamily: 'Readex Pro',
-                                        color:
-                                        Theme.of(context).brightness ==
-                                            Brightness.light
-                                            ? Colors.black
-                                            : Color(0xFFFFFFFFF),
-                                        letterSpacing: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 5, 10),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[10] ? () {} : () async {
-                                        _model.alreadyBought[10] = true;
-                                        if (!_dispose) {
-                                          setState(() {
-                                            _isLoading =
-                                            true; // Update this based on your requirement
-                                          });
-                                        }
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Saturday - Lunch',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'saturday-lunch',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[10] = value['success'] as bool;
-                                          }
-                                          if (!_dispose){
-                                            setState(() {_isLoading = false; // Update this based on your requirement
-                                            });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[10] ? 'Bought' : 'Buy lunch',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 10, 10),
-                                    child: FFButtonWidget(
-                                      onPressed: _model.alreadyBought[11] ? () {} : () async {
-                                        _model.alreadyBought[11] = true;
-                                        if (!_dispose){
-                                        setState(() {
-                                          _isLoading = true; // Update this based on your requirement
-                                        });}
-                                        context.pushNamed(
-                                          'Checkout',
-                                          queryParameters: {
-                                            'weekDay': serializeParam(
-                                              'Saturday - Dinner',
-                                              ParamType.String,
-                                            ),
-                                            'mealID': serializeParam(
-                                              'saturday-dinner',
-                                              ParamType.String,
-                                            )
-                                          }.withoutNulls,
-                                        ).then((value) {
-                                          if (value != null && value is Map<String, bool> && value['success'] is bool) {
-                                            _model.alreadyBought[11] = value['success'] as bool;
-                                          }
-                                          if (!_dispose){
-                                          setState(() {_isLoading = false; // Update this based on your requirement
-                                          });
-                                          }
-                                        }).catchError((error) {
-                                          if (!_dispose) {
-                                            if (!_dispose) {
-                                              setState(() {
-                                                _isLoading = false;
-                                              });
-                                            }
-                                          }
-                                        });
-                                      },
-                                      text: _model.alreadyBought[11] ? 'Bought' : 'Buy Dinner',
-                                      options: FFButtonOptions(
-                                        height: 58,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            24, 0, 24, 0),
-                                        iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        color: Color(0xFF2E1F1F),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0,
-                                        ),
-                                        elevation: 3,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

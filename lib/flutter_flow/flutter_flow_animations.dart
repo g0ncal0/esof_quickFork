@@ -14,6 +14,7 @@ class AnimationInfo {
     this.reverse = false,
     this.applyInitialState = true,
   });
+
   final AnimationTrigger trigger;
   final List<Effect<dynamic>> effects;
   final bool applyInitialState;

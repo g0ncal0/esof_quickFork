@@ -136,6 +136,7 @@ String formatNumber(
 }
 
 DateTime get getCurrentTimestamp => DateTime.now();
+
 DateTime dateTimeFromSecondsSinceEpoch(int seconds) {
   return DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
 }
@@ -146,8 +147,11 @@ extension DateTimeConversionExtension on DateTime {
 
 extension DateTimeComparisonOperators on DateTime {
   bool operator <(DateTime other) => isBefore(other);
+
   bool operator >(DateTime other) => isAfter(other);
+
   bool operator <=(DateTime other) => this < other || isAtSameMomentAs(other);
+
   bool operator >=(DateTime other) => this > other || isAtSameMomentAs(other);
 }
 
@@ -203,14 +207,18 @@ Rect? getWidgetBoundingBox(BuildContext context) {
 }
 
 bool get isAndroid => !kIsWeb && Platform.isAndroid;
+
 bool get isiOS => !kIsWeb && Platform.isIOS;
+
 bool get isWeb => kIsWeb;
 
 const kBreakpointSmall = 479.0;
 const kBreakpointMedium = 767.0;
 const kBreakpointLarge = 991.0;
+
 bool isMobileWidth(BuildContext context) =>
     MediaQuery.sizeOf(context).width < kBreakpointSmall;
+
 bool responsiveVisibility({
   required BuildContext context,
   bool phone = true,
@@ -239,6 +247,7 @@ const kTextValidatorWebsiteRegex =
 
 extension FFTextEditingControllerExt on TextEditingController? {
   String get text => this == null ? '' : this!.text;
+
   set text(String newText) => this?.text = newText;
 }
 
@@ -341,6 +350,7 @@ extension StatefulWidgetExtensions on State<StatefulWidget> {
 // For iOS 16 and below, set the status bar color to match the app's theme.
 // https://github.com/flutter/flutter/issues/41067
 Brightness? _lastBrightness;
+
 void fixStatusBarOniOS16AndBelow(BuildContext context) {
   if (!isiOS) {
     return;

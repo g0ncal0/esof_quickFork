@@ -1,22 +1,21 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../flutter_flow/flutter_flow_icon_button.dart';
-import '../../sigarraApi/session.dart';
-import '../../sigarraApi/sigarraApi.dart';
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../sigarraApi/session.dart';
+import '../../sigarraApi/sigarraApi.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'qr_code_model.dart';
+
 export 'qr_code_model.dart';
 
 class QrCodeWidget extends StatefulWidget {
@@ -40,12 +39,15 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void queryFirebase() async {
+    DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore
+        .instance
+        .collection("bought_ticket")
+        .doc(widget.qrCodeValue);
 
-    DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(widget.qrCodeValue);
-
-    if (documentRef != null){
+    if (documentRef != null) {
       // Check if the document exists
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await documentRef.get();
       if (documentSnapshot.exists) {
         _model.upCode = documentSnapshot.data()!["upCode"];
         _model.email = documentSnapshot.data()!["uid"];
@@ -53,11 +55,8 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
         _model.fullDish = documentSnapshot.data()!["fullDish"];
 
         if (!_dispose) {
-          setState(() {
-
-          });
+          setState(() {});
         }
-
       }
     }
   }
@@ -68,13 +67,15 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
     _model = createModel(context, () => QrCodeModel());
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-
-      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore.instance.collection("bought_ticket").doc(widget.qrCodeValue);
-      if (documentRef != null){
+      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore
+          .instance
+          .collection("bought_ticket")
+          .doc(widget.qrCodeValue);
+      if (documentRef != null) {
         // Check if the document exists
-        DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentRef.get();
+        DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+            await documentRef.get();
         if (documentSnapshot.exists) {
-
           _scanned = documentSnapshot.data()!["scanned"];
 
           if (!_dispose) {
@@ -82,16 +83,12 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
               if (_scanned) _timer!.cancel();
             });
           }
-
         }
       }
-
-      Logger().i('Was scanned: ' + _scanned.toString());
     });
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-
       if (!_dispose) {
         setState(() {
           _isLoading = true;
@@ -100,14 +97,13 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
 
       // Query device store info for sigarra login.
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      Session? session = await sigarraLogin(prefs.getString('user_up_code')!, prefs.getString('user_password')!);
+      Session? session = await sigarraLogin(
+          prefs.getString('user_up_code')!, prefs.getString('user_password')!);
 
       if (session == null) {
         context.go('/sigarraLogin');
         return;
       }
-
-
       queryFirebase();
       await queryUserBoughtTicketsRecordOnce(
         queryBuilder: (userBoughtTicketsRecord) =>
@@ -136,7 +132,7 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
       }
       _dispose = true;
       super.dispose();
-    } catch(_) {}
+    } catch (_) {}
   }
 
   @override
@@ -179,222 +175,246 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
           elevation: 2.0,
         ),
         body: _isLoading
-            ? Center(child: SpinningFork()) : SafeArea(
-          top: true,
-          child: Align(
-            alignment: const AlignmentDirectional(0.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Align(
+            ? Center(child: SpinningFork())
+            : SafeArea(
+                top: true,
+                child: Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Type: ',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          Text(
-                            _model.fullDish ? 'Full meal' : 'Only main dish',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Food type: ',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                          Text(
-                            _model.type,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'User email: ',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                          Text(
-                            _model.email,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'User upcode: ',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                          Text(
-                            _model.upCode,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                if (!_scanned)
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Align(
+                      Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
-                        child:
-                        BarcodeWidget(
-                          data: widget.qrCodeValue!,
-                          barcode: Barcode.qrCode(),
-                          width: MediaQuery.sizeOf(context).width * 0.6,
-                          height: MediaQuery.sizeOf(context).height * 0.5,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          backgroundColor: Colors.transparent,
-                          errorBuilder: (context, error) => SizedBox(
-                            width: MediaQuery.sizeOf(context).width * 0.6,
-                            height: MediaQuery.sizeOf(context).height * 0.5,
-                          ),
-                          drawText: false,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Type: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                Text(
+                                  _model.fullDish
+                                      ? 'Full meal'
+                                      : 'Only main dish',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Food type: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                Text(
+                                  _model.type,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'User email: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                Text(
+                                  _model.email,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'User upcode: ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                                Text(
+                                  _model.upCode,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                )
-                else
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child:
-                          Stack(
-                            children: [
-                              ImageFiltered(
-                                imageFilter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0, tileMode: TileMode.decal),
+                      if (!_scanned)
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: BarcodeWidget(
-                                  data: 'Already Scanned',
+                                  data: widget.qrCodeValue!,
                                   barcode: Barcode.qrCode(),
                                   width: MediaQuery.sizeOf(context).width * 0.6,
-                                  height: MediaQuery.sizeOf(context).height * 0.5,
-                                  color: FlutterFlowTheme.of(context).primaryText,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.5,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
                                   backgroundColor: Colors.transparent,
                                   errorBuilder: (context, error) => SizedBox(
-                                    width: MediaQuery.sizeOf(context).width * 0.6,
-                                    height: MediaQuery.sizeOf(context).height * 0.5,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.6,
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 0.5,
                                   ),
                                   drawText: false,
                                 ),
                               ),
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                child: Transform.rotate(
-                                  angle: -0.5, // Adjust the angle to get the desired diagonal text
-                                  child: Center(
-                                    child: Text(
-                                      'Already Scanned',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.red.withOpacity(0.8),
-                                        fontSize: 40.0,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 2.0,
+                            ),
+                          ],
+                        )
+                      else
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Align(
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
+                                  child: Stack(
+                                    children: [
+                                      ImageFiltered(
+                                        imageFilter: ImageFilter.blur(
+                                            sigmaX: 15.0,
+                                            sigmaY: 15.0,
+                                            tileMode: TileMode.decal),
+                                        child: BarcodeWidget(
+                                          data: 'Already Scanned',
+                                          barcode: Barcode.qrCode(),
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  0.6,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.5,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          backgroundColor: Colors.transparent,
+                                          errorBuilder: (context, error) =>
+                                              SizedBox(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.6,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height *
+                                                0.5,
+                                          ),
+                                          drawText: false,
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
+                                      Positioned(
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Transform.rotate(
+                                          angle: -0.5,
+                                          // Adjust the angle to get the desired diagonal text
+                                          child: Center(
+                                            child: Text(
+                                              'Already Scanned',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color:
+                                                    Colors.red.withOpacity(0.8),
+                                                fontSize: 40.0,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 2.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                          ],
                         ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          AutoSizeText(
+                            'Show this QR Code',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  fontSize: 20.0,
+                                  letterSpacing: 0.0,
+                                ),
+                            minFontSize: 13.0,
+                          ),
+                          AutoSizeText(
+                            ' when prompted',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  fontSize: 20.0,
+                                  letterSpacing: 0.0,
+                                ),
+                            minFontSize: 13.0,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    AutoSizeText(
-                      'Show this QR Code',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
-                          ),
-                      minFontSize: 13.0,
-                    ),
-                    AutoSizeText(
-                      ' when prompted',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
-                          ),
-                      minFontSize: 13.0,
-                    ),
-                  ],
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

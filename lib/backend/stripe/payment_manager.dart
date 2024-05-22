@@ -21,6 +21,7 @@ const _kAppleMerchantId = '';
 
 String stripePublishableKey() =>
     _isProd ? _kProdStripePublishableKey : _kTestStripePublishableKey;
+
 String merchantIdentifier() => isAndroid ? '' : _kAppleMerchantId;
 
 Future initializeStripe() async {
@@ -33,6 +34,7 @@ Future initializeStripe() async {
 
 class StripePaymentResponse {
   const StripePaymentResponse({this.paymentId, this.errorMessage});
+
   final String? paymentId;
   final String? errorMessage;
 }
@@ -237,7 +239,8 @@ Future<StripePaymentResponse> showWebPaymentSheet(
                         filled: isDarkMode,
                       ),
                       style: GoogleFonts.outfit(
-                        color: isDarkMode ? Colors.white : const Color(0xFF101213),
+                        color:
+                            isDarkMode ? Colors.white : const Color(0xFF101213),
                         fontSize: 14,
                       ),
                       // enablePostalCode: true,

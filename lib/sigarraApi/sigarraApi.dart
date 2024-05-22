@@ -1,26 +1,23 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 import 'package:esof/sigarraApi/session.dart';
-
-import 'package:crypto/crypto.dart';
+import 'package:http/http.dart' as http;
 
 Future<Session?> sigarraLogin(String username, String password) async {
   const url = 'https://sigarra.up.pt/feup/pt/mob_val_geral.autentica';
-  final response = await http.post(Uri.parse(url), body: {'pv_login': username, 'pv_password': password}).timeout(const Duration(seconds: 30));
+  final response = await http.post(Uri.parse(url), body: {
+    'pv_login': username,
+    'pv_password': password
+  }).timeout(const Duration(seconds: 30));
 
   if (response.statusCode != 200) {
-    Logger().e('Error, statusCode: ${response.body}');
     return null;
   }
 
   final session = sessionlogin(response);
 
   if (session == null) {
-    Logger().e('Login failed.');
     return null;
   }
 
@@ -41,22 +38,23 @@ String getCookies(Map<String, String> headers) {
   cookieList.forEach((element) {
     bakedCookie += element.toString();
   });
-  Logger().i('Cookie monster: $bakedCookie');
   return cookieList.join(';');
 }
 
 Future<http.Response> getImage(String cookie, String upNumber) async {
-  Logger().i("Fetching user image");
-  final url = "https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=" + upNumber;
+  final url =
+      "https://sigarra.up.pt/feup/pt/fotografias_service.foto?pct_cod=" +
+          upNumber;
   http.Client? httpClient;
 
   final headers = <String, String>{};
   headers['cookie'] = cookie;
 
-
   final response = await (httpClient != null
-      ? httpClient!.get(Uri.parse(url), headers: headers).timeout(const Duration(seconds: 30))
-      : http.get(Uri.parse(url), headers: headers))
+          ? httpClient!
+              .get(Uri.parse(url), headers: headers)
+              .timeout(const Duration(seconds: 30))
+          : http.get(Uri.parse(url), headers: headers))
       .timeout(const Duration(seconds: 30));
 
   if (response.statusCode == 200) {
@@ -67,16 +65,18 @@ Future<http.Response> getImage(String cookie, String upNumber) async {
 }
 
 Future<http.Response> getName(String cookie, String upNumber) async {
-  final url = "https://sigarra.up.pt/feup/pt/mob_fest_geral.perfil?pv_codigo=" + upNumber;
+  final url = "https://sigarra.up.pt/feup/pt/mob_fest_geral.perfil?pv_codigo=" +
+      upNumber;
   http.Client? httpClient;
 
   final headers = <String, String>{};
   headers['cookie'] = cookie;
 
-
   final response = await (httpClient != null
-      ? httpClient!.get(Uri.parse(url), headers: headers).timeout(const Duration(seconds: 30))
-      : http.get(Uri.parse(url), headers: headers))
+          ? httpClient!
+              .get(Uri.parse(url), headers: headers)
+              .timeout(const Duration(seconds: 30))
+          : http.get(Uri.parse(url), headers: headers))
       .timeout(const Duration(seconds: 30));
 
   if (response.statusCode == 200) {
@@ -85,4 +85,3 @@ Future<http.Response> getName(String cookie, String upNumber) async {
 
   return Future.error('Re-login failed; user might have changed password');
 }
-

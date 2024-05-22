@@ -1,21 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../sigarraApi/session.dart';
 import '../../sigarraApi/sigarraApi.dart';
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'bought_meals_model.dart';
+
 export 'bought_meals_model.dart';
 
 String getMealName(int idx) {
@@ -124,20 +117,16 @@ class NextTicketButton extends StatelessWidget {
             width: double.infinity,
             height: 100,
             color: Color(0xFF2E1F1F),
-            textStyle: FlutterFlowTheme.of(context)
-                .titleLarge
-                .override(
-              fontFamily: 'Readex Pro',
-              color: Colors.white,
-              letterSpacing: 0,
-            ),
+            textStyle: FlutterFlowTheme.of(context).titleLarge.override(
+                  fontFamily: 'Readex Pro',
+                  color: Colors.white,
+                  letterSpacing: 0,
+                ),
             elevation: 2,
           ),
         ),
       );
-    }
-
-    else {
+    } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 235, horizontal: 20),
         child: Container(
@@ -200,13 +189,11 @@ class TicketButton extends StatelessWidget {
           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
           iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
           color: Color(0xFF2E1F1F),
-          textStyle: FlutterFlowTheme.of(context)
-              .titleSmall
-              .override(
-            fontFamily: 'Readex Pro',
-            color: Colors.white,
-            letterSpacing: 0,
-          ),
+          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                fontFamily: 'Readex Pro',
+                color: Colors.white,
+                letterSpacing: 0,
+              ),
           elevation: 2,
         ),
       ),
@@ -232,11 +219,10 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void updateBoughtTickets() async{
-
-
+  void updateBoughtTickets() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Session? session = await sigarraLogin(prefs.getString('user_up_code')!, prefs.getString('user_password')!);
+    Session? session = await sigarraLogin(
+        prefs.getString('user_up_code')!, prefs.getString('user_password')!);
 
     if (session == null) {
       context.go('/sigarraLogin');
@@ -244,11 +230,10 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
     }
 
     _model.userTickets = await queryBoughtTicketRecordOnce(
-      queryBuilder: (boughtTicketRecord) =>
-          boughtTicketRecord.where(
-            'upCode',
-            isEqualTo: session.username,
-          ),
+      queryBuilder: (boughtTicketRecord) => boughtTicketRecord.where(
+        'upCode',
+        isEqualTo: session.username,
+      ),
       limit: 12,
     );
 
@@ -330,7 +315,7 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
     try {
       _dispose = true;
       super.dispose();
-    } catch(_) {}
+    } catch (_) {}
   }
 
   @override
@@ -350,11 +335,11 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
           title: Text(
             'Bought Meals',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-              fontFamily: 'Outfit',
-              color: Colors.white,
-              fontSize: 22,
-              letterSpacing: 0,
-            ),
+                  fontFamily: 'Outfit',
+                  color: Colors.white,
+                  fontSize: 22,
+                  letterSpacing: 0,
+                ),
           ),
           actions: [],
           centerTitle: false,
@@ -370,7 +355,6 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   NextTicketButton(model: _model),
-
                   GestureDetector(
                     onTap: () {
                       if (!_dispose) {
@@ -384,17 +368,21 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
                       children: [
                         Text(
                           showMore ? 'See Less' : 'See More',
-                          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                            fontFamily: 'Outfit',
-                            color: Colors.white,
-                            fontSize: 40,
-                            letterSpacing: 0,
-                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                fontFamily: 'Outfit',
+                                color: Colors.white,
+                                fontSize: 40,
+                                letterSpacing: 0,
+                              ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: Icon(
-                            showMore ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                            showMore
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
                             color: Colors.white,
                             size: 40,
                           ),
@@ -402,18 +390,15 @@ class _BoughtMealsWidgetState extends State<BoughtMealsWidget> {
                       ],
                     ),
                   ),
-
                   if (showMore)
                     for (int i = 0; i < 12; i++)
-                      if (!_model.alreadyScanned[i] && _model.ticketsInfo[i] != '')
-                        TicketButton(
-                            idx: i,
-                            model: _model),
+                      if (!_model.alreadyScanned[i] &&
+                          _model.ticketsInfo[i] != '')
+                        TicketButton(idx: i, model: _model),
                 ],
               ),
             ),
           ),
-
         ),
       ),
     );

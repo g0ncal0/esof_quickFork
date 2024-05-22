@@ -7,6 +7,7 @@ typedef RecordBuilder<T> = T Function(DocumentSnapshot snapshot);
 
 abstract class FirestoreRecord {
   FirestoreRecord(this.reference, this.snapshotData);
+
   Map<String, dynamic> snapshotData;
   DocumentReference reference;
 }
@@ -25,10 +26,12 @@ class FirestoreUtilData {
     this.create = false,
     this.delete = false,
   });
+
   final Map<String, dynamic> fieldValues;
   final bool clearUnsetFields;
   final bool create;
   final bool delete;
+
   static String get name => 'firestoreUtilData';
 }
 

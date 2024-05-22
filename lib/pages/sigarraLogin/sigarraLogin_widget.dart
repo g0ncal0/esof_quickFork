@@ -1,24 +1,18 @@
 import 'dart:convert';
 
-import 'package:logger/logger.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../sigarraApi/session.dart';
 import '../../sigarraApi/sigarraApi.dart';
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'sigarraLogin_model.dart';
+
 export 'sigarraLogin_model.dart';
 
 class SigarraLoginWidget extends StatefulWidget {
@@ -45,7 +39,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
       vsync: this,
       length: 1,
       initialIndex: 0,
-    )..addListener(_dispose ? () => {} :() => setState(() {}));
+    )..addListener(_dispose ? () => {} : () => setState(() {}));
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
@@ -53,32 +47,32 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
     _model.passwordFocusNode ??= FocusNode();
 
     animationsMap.addAll({
-    'columnOnPageLoadAnimation': AnimationInfo(
-    trigger: AnimationTrigger.onPageLoad,
-    effects: [
-    FadeEffect(
-    curve: Curves.easeInOut,
-    delay: 0.ms,
-    duration: 300.ms,
-    begin: 0.0,
-    end: 1.0,
-    ),
-    MoveEffect(
-    curve: Curves.easeInOut,
-    delay: 0.ms,
-    duration: 300.ms,
-    begin: const Offset(0.0, 60.0),
-    end: const Offset(0.0, 0.0),
-    ),
-    TiltEffect(
-    curve: Curves.easeInOut,
-    delay: 0.ms,
-    duration: 300.ms,
-    begin: const Offset(-0.349, 0),
-    end: const Offset(0, 0),
-    ),
-    ],
-    ),
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effects: [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.ms,
+            duration: 300.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.ms,
+            duration: 300.ms,
+            begin: const Offset(0.0, 60.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 0.ms,
+            duration: 300.ms,
+            begin: const Offset(-0.349, 0),
+            end: const Offset(0, 0),
+          ),
+        ],
+      ),
     });
   }
 
@@ -89,7 +83,7 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
     try {
       _dispose = true;
       super.dispose();
-    } catch(_) {}
+    } catch (_) {}
   }
 
   @override
@@ -102,8 +96,9 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: scaffoldKey,
-        //backgroundColor: FlutterFlowTheme.of(context).primaryText,
-        backgroundColor: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
+        backgroundColor: Theme.of(context).brightness.name == "dark"
+            ? Color(0xFF282727)
+            : Color(0xFFf2cece),
         appBar: AppBar(
           backgroundColor: Color(0xFF2E1F1F),
           automaticallyImplyLeading: false,
@@ -113,11 +108,11 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
               'Sign In',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
-                fontFamily: 'Readex Pro',
-                color: Colors.white,
-                fontSize: 30,
-                letterSpacing: 0,
-              ),
+                    fontFamily: 'Readex Pro',
+                    color: Colors.white,
+                    fontSize: 30,
+                    letterSpacing: 0,
+                  ),
             ),
           ),
           actions: [],
@@ -135,8 +130,9 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                   width: 100,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    //color: FlutterFlowTheme.of(context).primaryText,
-                      color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
+                    color: Theme.of(context).brightness.name == "dark"
+                        ? Color(0xFF282727)
+                        : Color(0xFFf2cece),
                   ),
                   alignment: AlignmentDirectional(0, -1),
                   child: SingleChildScrollView(
@@ -153,7 +149,9 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                               maxWidth: 602,
                             ),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
+                              color: Theme.of(context).brightness.name == "dark"
+                                  ? Color(0xFF282727)
+                                  : Color(0xFFf2cece),
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(16),
                                 bottomRight: Radius.circular(16),
@@ -171,11 +169,13 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                             maxWidth: 602,
                           ),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).brightness.name == "dark" ? Color(0xFF282727) : Color(0xFFf2cece),
+                            color: Theme.of(context).brightness.name == "dark"
+                                ? Color(0xFF282727)
+                                : Color(0xFFf2cece),
                           ),
                           child: Padding(
                             padding:
-                            EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                                EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                             child: Column(
                               children: [
                                 Align(
@@ -183,23 +183,28 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                   child: TabBar(
                                     isScrollable: false,
                                     splashFactory: NoSplash.splashFactory,
-                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                    labelColor: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                    //unselectedLabelColor: Color(0xFF57636C),
+                                    overlayColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    labelColor:
+                                        Theme.of(context).brightness.name ==
+                                                "dark"
+                                            ? Colors.white
+                                            : Colors.black,
                                     labelPadding: EdgeInsets.all(16),
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .displaySmall
                                         .override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      color: Color(0xFF101213),
-                                      fontSize: 36,
-                                      letterSpacing: 0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    indicatorColor: FlutterFlowTheme.of(context).accent3,
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: Color(0xFF101213),
+                                          fontSize: 36,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                    indicatorColor:
+                                        FlutterFlowTheme.of(context).accent3,
                                     indicatorWeight: 4,
-                                    indicatorSize: TabBarIndicatorSize.label, // Adjusts indicator width to tab text
-
+                                    indicatorSize: TabBarIndicatorSize.label,
+                                    // Adjusts indicator width to tab text
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 30, 0, 30),
                                     tabs: [
@@ -218,12 +223,12 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                         alignment: AlignmentDirectional(0, 0),
                                         child: Padding(
                                           padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 12, 12),
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12, 0, 12, 12),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
@@ -231,17 +236,22 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                 child: Text(
                                                   'Sign in using your Sigarra credentials',
                                                   style: FlutterFlowTheme.of(
-                                                      context)
+                                                          context)
                                                       .labelMedium
                                                       .override(
-                                                    fontFamily:
-                                                    'Plus Jakarta Sans',
-                                                    color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
-                                                    fontSize: 14,
-                                                    letterSpacing: 0,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
+                                                        fontFamily:
+                                                            'Plus Jakarta Sans',
+                                                        color: Theme.of(context)
+                                                                    .brightness
+                                                                    .name ==
+                                                                "dark"
+                                                            ? Colors.white
+                                                            : Colors.black,
+                                                        fontSize: 14,
+                                                        letterSpacing: 0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                 ),
                                               ),
                                               Padding(
@@ -262,91 +272,98 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                     decoration: InputDecoration(
                                                       labelText: 'UP Number',
                                                       labelStyle:
-                                                      FlutterFlowTheme.of(
-                                                          context)
-                                                          .labelMedium
-                                                          .override(
-                                                        fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                        //color: FlutterFlowTheme.of(context).primaryText,
-                                                        color: Theme.of(context).brightness.name == "dark" ? Colors.white : Colors.black,
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Plus Jakarta Sans',
+                                                                //color: FlutterFlowTheme.of(context).primaryText,
+                                                                color: Theme.of(context)
+                                                                            .brightness
+                                                                            .name ==
+                                                                        "dark"
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Colors
+                                                                        .black,
 
-                                                        fontSize: 14,
-                                                        letterSpacing:
-                                                        0,
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .w500,
-                                                      ),
+                                                                fontSize: 14,
+                                                                letterSpacing:
+                                                                    0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
                                                       enabledBorder:
-                                                      OutlineInputBorder(
+                                                          OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                           color:
-                                                          Color(0xFF4F3B3B),
+                                                              Color(0xFF4F3B3B),
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(24),
+                                                            BorderRadius
+                                                                .circular(24),
                                                       ),
                                                       focusedBorder:
-                                                      OutlineInputBorder(
+                                                          OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                           color:
-                                                          Color(0xFF4F3B3B),
+                                                              Color(0xFF4F3B3B),
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(24),
+                                                            BorderRadius
+                                                                .circular(24),
                                                       ),
                                                       errorBorder:
-                                                      OutlineInputBorder(
+                                                          OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                           color:
-                                                          Color(0xFFFF5963),
+                                                              Color(0xFFFF5963),
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(24),
+                                                            BorderRadius
+                                                                .circular(24),
                                                       ),
                                                       focusedErrorBorder:
-                                                      OutlineInputBorder(
+                                                          OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                           color:
-                                                          Color(0xFFFF5963),
+                                                              Color(0xFFFF5963),
                                                           width: 2,
                                                         ),
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(24),
+                                                            BorderRadius
+                                                                .circular(24),
                                                       ),
                                                       filled: true,
                                                       fillColor:
-                                                      FlutterFlowTheme.of(
-                                                          context)
-                                                          .alternate,
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
                                                       contentPadding:
-                                                      EdgeInsets.all(24),
+                                                          EdgeInsets.all(24),
                                                     ),
                                                     style: FlutterFlowTheme.of(
-                                                        context)
+                                                            context)
                                                         .bodyMedium
                                                         .override(
-                                                      fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                      color:
-                                                      Color(0xFFFFFFFF),
-                                                      fontSize: 14,
-                                                      letterSpacing: 0,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                    ),
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
+                                                          color:
+                                                              Color(0xFFFFFFFF),
+                                                          fontSize: 14,
+                                                          letterSpacing: 0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
                                                     keyboardType: TextInputType
                                                         .emailAddress,
                                                     cursorColor:
-                                                    Color(0xFF4F3B3B),
+                                                        Color(0xFF4F3B3B),
                                                     validator: _model
                                                         .emailAddressTextControllerValidator
                                                         .asValidator(context),
@@ -371,119 +388,122 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                                       obscureText: !_model
                                                           .passwordVisibility,
                                                       decoration:
-                                                      InputDecoration(
+                                                          InputDecoration(
                                                         isDense: false,
                                                         labelText: 'Password',
                                                         labelStyle:
-                                                        FlutterFlowTheme.of(
-                                                            context)
-                                                            .labelMedium
-                                                            .override(
-                                                          fontFamily:
-                                                          'Plus Jakarta Sans',
-                                                          color: FlutterFlowTheme.of(
-                                                              context)
-                                                              .primaryText,
-                                                          fontSize: 14,
-                                                          letterSpacing:
-                                                          0,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                        ),
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Plus Jakarta Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 14,
+                                                                  letterSpacing:
+                                                                      0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
                                                         enabledBorder:
-                                                        OutlineInputBorder(
+                                                            OutlineInputBorder(
                                                           borderSide:
-                                                          BorderSide(
+                                                              BorderSide(
                                                             color: Color(
                                                                 0xFF4F3B3B),
                                                             width: 2,
                                                           ),
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(24),
+                                                              BorderRadius
+                                                                  .circular(24),
                                                         ),
                                                         focusedBorder:
-                                                        OutlineInputBorder(
+                                                            OutlineInputBorder(
                                                           borderSide:
-                                                          BorderSide(
-                                                            color: Color(0xFF4F3B3B),
+                                                              BorderSide(
+                                                            color: Color(
+                                                                0xFF4F3B3B),
                                                             width: 2,
                                                           ),
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(24),
+                                                              BorderRadius
+                                                                  .circular(24),
                                                         ),
                                                         errorBorder:
-                                                        OutlineInputBorder(
+                                                            OutlineInputBorder(
                                                           borderSide:
-                                                          BorderSide(
+                                                              BorderSide(
                                                             color: Color(
                                                                 0xFFFF5963),
                                                             width: 2,
                                                           ),
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(24),
+                                                              BorderRadius
+                                                                  .circular(24),
                                                         ),
                                                         focusedErrorBorder:
-                                                        OutlineInputBorder(
+                                                            OutlineInputBorder(
                                                           borderSide:
-                                                          BorderSide(
+                                                              BorderSide(
                                                             color: Color(
                                                                 0xFFFF5963),
                                                             width: 2,
                                                           ),
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(24),
+                                                              BorderRadius
+                                                                  .circular(24),
                                                         ),
                                                         filled: true,
                                                         fillColor:
-                                                        FlutterFlowTheme.of(
-                                                            context)
-                                                            .alternate,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         contentPadding:
-                                                        EdgeInsets.all(24),
+                                                            EdgeInsets.all(24),
                                                         suffixIcon: InkWell(
-                                                          onTap: _dispose ? () => {} : () => setState(
-                                                                () => _model
-                                                                .passwordVisibility =
-                                                            !_model
-                                                                .passwordVisibility,
-                                                          ),
+                                                          onTap: _dispose
+                                                              ? () => {}
+                                                              : () => setState(
+                                                                    () => _model
+                                                                            .passwordVisibility =
+                                                                        !_model
+                                                                            .passwordVisibility,
+                                                                  ),
                                                           focusNode: FocusNode(
                                                               skipTraversal:
-                                                              true),
+                                                                  true),
                                                           child: Icon(
                                                             _model.passwordVisibility
                                                                 ? Icons
-                                                                .visibility_outlined
+                                                                    .visibility_outlined
                                                                 : Icons
-                                                                .visibility_off_outlined,
+                                                                    .visibility_off_outlined,
                                                             color: FlutterFlowTheme
-                                                                .of(context)
+                                                                    .of(context)
                                                                 .primaryText,
                                                             size: 24,
                                                           ),
                                                         ),
                                                       ),
                                                       style: FlutterFlowTheme
-                                                          .of(context)
+                                                              .of(context)
                                                           .bodyMedium
                                                           .override(
-                                                        fontFamily:
-                                                        'Plus Jakarta Sans',
-                                                        color: FlutterFlowTheme
-                                                            .of(context)
-                                                            .primaryText,
-                                                        fontSize: 14,
-                                                        letterSpacing: 0,
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                      ),
+                                                            fontFamily:
+                                                                'Plus Jakarta Sans',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontSize: 14,
+                                                            letterSpacing: 0,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
                                                       cursorColor:
-                                                      Color(0xFF4F3B3B),
+                                                          Color(0xFF4F3B3B),
                                                       validator: _model
                                                           .passwordTextControllerValidator
                                                           .asValidator(context),
@@ -493,107 +513,135 @@ class _SigarraLoginWidgetState extends State<SigarraLoginWidget>
                                               ),
                                               Align(
                                                 alignment:
-                                                AlignmentDirectional(0, 0),
+                                                    AlignmentDirectional(0, 0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(0, 0, 0, 16),
                                                   child: ValueListenableBuilder(
-                                                    valueListenable: clickedStatus,
-                                                    builder: (context, bool isClicked, _) {
-                                                      return FFButtonWidget(
-                                                        onPressed: isClicked
-                                                            ? () {}
-                                                            : () async {
-                                                          clickedStatus.value = true;
-                                                          Session? session = await sigarraLogin(_model.emailAddressTextController.text, _model.passwordTextController.text);
+                                                      valueListenable:
+                                                          clickedStatus,
+                                                      builder: (context,
+                                                          bool isClicked, _) {
+                                                        return FFButtonWidget(
+                                                          onPressed: isClicked
+                                                              ? () {}
+                                                              : () async {
+                                                                  clickedStatus
+                                                                          .value =
+                                                                      true;
+                                                                  Session? session = await sigarraLogin(
+                                                                      _model
+                                                                          .emailAddressTextController
+                                                                          .text,
+                                                                      _model
+                                                                          .passwordTextController
+                                                                          .text);
 
-                                                          if (session == null) {
-                                                            isClicked = false;
-                                                            clickedStatus.value = false;
-                                                            return;
-                                                          } else {
-                                                            SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                            Uint8List imageBytes = (await getImage(session.cookies, session.username)).bodyBytes;
-                                                            if (!_dispose) {
-                                                              setState(() {
-                                                                prefs.setString(
-                                                                    'user_up_code',
-                                                                    _model
-                                                                        .emailAddressTextController
-                                                                        .text);
-                                                                prefs.setString(
-                                                                    'user_password',
-                                                                    _model
-                                                                        .passwordTextController
-                                                                        .text);
-                                                                prefs.setString(
-                                                                    'user_faculty',
-                                                                    'feup');
-                                                                prefs.setString(
-                                                                    'user_image_small',
-                                                                    base64Encode(
-                                                                        imageBytes as List<
-                                                                            int>));
-                                                                prefs.setString(
-                                                                    'user_image_big',
-                                                                    base64Encode(
-                                                                        imageBytes as List<
-                                                                            int>));
-                                                                prefs.setBool(
-                                                                    'persistent_session',
-                                                                    true);
-                                                              });
-                                                            }
-                                                            context.go('/');
-                                                          }
-                                                        },
-                                                        text: 'Sign In',
-                                                        options: FFButtonOptions(
-                                                          width: 230,
-                                                          height: 52,
-                                                          padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 0, 0),
-                                                          iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 0, 0, 0),
-                                                          color:
-                                                          FlutterFlowTheme
-                                                              .of(
-                                                              context)
-                                                              .accent3,
-                                                          textStyle:
-                                                          FlutterFlowTheme
-                                                              .of(
-                                                              context)
-                                                              .titleSmall
-                                                              .override(
-                                                            fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                            color: Colors
-                                                                .white,
-                                                            fontSize: 16,
-                                                            letterSpacing:
-                                                            0,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .w500,
+                                                                  if (session ==
+                                                                      null) {
+                                                                    isClicked =
+                                                                        false;
+                                                                    clickedStatus
+                                                                            .value =
+                                                                        false;
+                                                                    return;
+                                                                  } else {
+                                                                    SharedPreferences
+                                                                        prefs =
+                                                                        await SharedPreferences
+                                                                            .getInstance();
+                                                                    Uint8List
+                                                                        imageBytes =
+                                                                        (await getImage(session.cookies,
+                                                                                session.username))
+                                                                            .bodyBytes;
+                                                                    if (!_dispose) {
+                                                                      setState(
+                                                                          () {
+                                                                        prefs.setString(
+                                                                            'user_up_code',
+                                                                            _model.emailAddressTextController.text);
+                                                                        prefs.setString(
+                                                                            'user_password',
+                                                                            _model.passwordTextController.text);
+                                                                        prefs.setString(
+                                                                            'user_faculty',
+                                                                            'feup');
+                                                                        prefs.setString(
+                                                                            'user_image_small',
+                                                                            base64Encode(imageBytes
+                                                                                as List<int>));
+                                                                        prefs.setString(
+                                                                            'user_image_big',
+                                                                            base64Encode(imageBytes
+                                                                                as List<int>));
+                                                                        prefs.setBool(
+                                                                            'persistent_session',
+                                                                            true);
+                                                                      });
+                                                                    }
+                                                                    context.go(
+                                                                        '/');
+                                                                  }
+                                                                },
+                                                          text: 'Sign In',
+                                                          options:
+                                                              FFButtonOptions(
+                                                            width: 230,
+                                                            height: 52,
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                            iconPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .accent3,
+                                                            textStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Plus Jakarta Sans',
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16,
+                                                                      letterSpacing:
+                                                                          0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                            elevation: 3,
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 1,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40),
                                                           ),
-                                                          elevation: 3,
-                                                          borderSide: BorderSide(color: Colors.transparent, width: 1,),
-                                                          borderRadius:
-                                                            BorderRadius.circular(40),
-                                                        ),
-                                                      );
-                                                    }
-                                                  ),
+                                                        );
+                                                      }),
                                                 ),
                                               ),
                                             ],
                                           ).animateOnPageLoad(animationsMap[
-                                          'columnOnPageLoadAnimation']!),
+                                              'columnOnPageLoadAnimation']!),
                                         ),
                                       ),
                                     ],

@@ -72,6 +72,7 @@ class _FFButtonWidgetState extends State<FFButtonWidget> {
   bool loading = false;
 
   int get maxLines => widget.options.maxLines ?? 1;
+
   String? get text =>
       widget.options.textStyle?.fontSize == 0 ? null : widget.text;
 
